@@ -1,0 +1,2 @@
+include ':app', ':customviews'
+rootProject.name='Custom views'
