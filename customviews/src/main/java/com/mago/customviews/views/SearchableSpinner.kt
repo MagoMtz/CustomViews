@@ -110,6 +110,7 @@ class SearchableSpinner(context: Context, attributeSet: AttributeSet): com.topto
                 drawRoundRect(clipBounds.toRectF(), 15F, 15F, framePaint)
         }
 
+
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {

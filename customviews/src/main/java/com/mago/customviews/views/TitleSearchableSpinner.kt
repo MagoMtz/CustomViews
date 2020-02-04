@@ -11,7 +11,8 @@ import com.mago.customviews.R
  * @author by jmartinez
  * @since 04/02/2020.
  */
-class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet): LinearLayout(context, attributeSet) {
+class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet) :
+    LinearLayout(context, attributeSet) {
 
     private lateinit var tvTitle: TextView
     var spinner: SearchableSpinner? = null
@@ -37,6 +38,13 @@ class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet): Line
             requestLayout()
         }
 
+    private var hintText: String = ""
+        set(value) {
+            field = value
+            invalidate()
+            requestLayout()
+        }
+
     init {
         View.inflate(context, R.layout.title_searchable_spinner, this)
 
@@ -50,6 +58,7 @@ class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet): Line
             .apply {
                 try {
                     isMandatory = getBoolean(R.styleable.TitleSearchableSpinner_isMandatory, false)
+                    hintText = getString(R.styleable.TitleSearchableSpinner_hintText)!!
                 } finally {
                     recycle()
                 }
@@ -64,6 +73,7 @@ class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet): Line
         tvTitle = findViewById(R.id.tv_tittle)
         spinner = findViewById(R.id.sp_searchable)
         spinner?.isMandatory = isMandatory
+        spinner?.setHintText(hintText)
     }
 
 }

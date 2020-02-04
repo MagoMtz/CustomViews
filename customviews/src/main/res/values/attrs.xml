@@ -27,6 +27,7 @@
     <declare-styleable name="TitleSearchableSpinner" parent="BaseCustomView">
         <attr name="title" />
         <attr name="isMandatory" />
+        <attr name="hintText" format="string" />
     </declare-styleable>
 
 </resources>

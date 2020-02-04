@@ -60,8 +60,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             view:isMandatory="true"
+            view:hintText="Mi spinner 3"
             view:tittle="Mi spinner 3"
-            app:hintText="Mi spinner 3"/>
+            />
 
 
 
