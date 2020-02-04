@@ -9,12 +9,12 @@ import com.mago.customviews.R
 
 /**
  * @author by jmartinez
- * @since 17/01/2020.
+ * @since 04/02/2020.
  */
-class BiographicSpinner (context: Context, attributeSet: AttributeSet): LinearLayout(context, attributeSet) {
+class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet): LinearLayout(context, attributeSet) {
 
     private lateinit var tvTitle: TextView
-    var spinner: CustomSpinner? = null
+    var spinner: SearchableSpinner? = null
         set(value) {
             field = value
             invalidate()
@@ -30,22 +30,40 @@ class BiographicSpinner (context: Context, attributeSet: AttributeSet): LinearLa
             requestLayout()
         }
 
+    private var isMandatory: Boolean = false
+        set(value) {
+            field = value
+            invalidate()
+            requestLayout()
+        }
 
     init {
-        View.inflate(context, R.layout.biographic_spinner, this)
+        View.inflate(context, R.layout.title_searchable_spinner, this)
+
         val sets = intArrayOf(R.attr.tittle)
         val typedArray = context.obtainStyledAttributes(attributeSet, sets)
         val title = typedArray.getText(0)
         typedArray.recycle()
 
-        initComponents()
 
+        context.theme.obtainStyledAttributes(attributeSet, R.styleable.TitleSearchableSpinner, 0, 0)
+            .apply {
+                try {
+                    isMandatory = getBoolean(R.styleable.TitleSearchableSpinner_isMandatory, false)
+                } finally {
+                    recycle()
+                }
+            }
+
+
+        initComponents()
         tittleText = title
     }
 
     private fun initComponents() {
         tvTitle = findViewById(R.id.tv_tittle)
-        spinner = findViewById(R.id.sp_custom)
+        spinner = findViewById(R.id.sp_searchable)
+        spinner?.isMandatory = isMandatory
     }
 
 }

@@ -15,8 +15,18 @@
         <attr name="isMandatory" />
     </declare-styleable>
 
-    <declare-styleable name="BiographicSpinner" parent="BaseCustomView">
+    <declare-styleable name="TitleSpinner" parent="BaseCustomView">
         <attr name="tittle"/>
+    </declare-styleable>
+
+    <declare-styleable name="SearchableSpinner" parent="BaseCustomView">
+        <attr name="title" />
+        <attr name="isMandatory" />
+    </declare-styleable>
+
+    <declare-styleable name="TitleSearchableSpinner" parent="BaseCustomView">
+        <attr name="title" />
+        <attr name="isMandatory" />
     </declare-styleable>
 
 </resources>

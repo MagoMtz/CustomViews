@@ -31,18 +31,38 @@
         <com.mago.customviews.views.CustomSpinner
             android:id="@+id/sp_spinner"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             view:isMandatory="true"
             view:tittle="Mi spinner"
             />
 
-        <com.mago.customviews.views.BiographicSpinner
+        <com.mago.customviews.views.TitleSpinner
             android:id="@+id/sp_biographic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            view:tittle="Mi spinner 2"/>
+
+        <com.mago.customviews.views.SearchableSpinner
+            android:id="@+id/sp_searchable"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="16dp"
-            view:tittle="Mi spinner 2"/>
+            view:isMandatory="true"
+            view:tittle="Mi spinner"
+            app:hintText="Searchable spinner"
+            />
+
+        <com.mago.customviews.views.TitleSearchableSpinner
+            android:id="@+id/sp_title_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            view:isMandatory="true"
+            view:tittle="Mi spinner 3"
+            app:hintText="Mi spinner 3"/>
+
 
 
     </LinearLayout>

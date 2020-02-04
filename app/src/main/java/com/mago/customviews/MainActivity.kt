@@ -1,7 +1,7 @@
 package com.mago.customviews
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.mago.customviews.views.adapter.CustomSpinnerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -18,8 +18,22 @@ class MainActivity : AppCompatActivity() {
         )
 
         sp_spinner.adapter = adapter
+
         sp_biographic.spinner?.adapter = adapter
         sp_biographic.spinner?.isMandatory = true
         sp_biographic.spinner?.tittle = "Mi spinner 2"
+
+        val searchAdapter = CustomSpinnerAdapter(
+            this,
+            arrayListOf("Seleccion 1", "Seleccion 2"),
+            "fff"
+        )
+        sp_searchable.adapter = searchAdapter
+
+        sp_title_search.spinner?.adapter = searchAdapter
+        sp_title_search.spinner?.isMandatory = true
+        sp_title_search.spinner?.tittle = "Spinner 3"
+
+
     }
 }

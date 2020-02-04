@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import com.mago.customviews.R
 
 /**
  * This adapter must have the first element of its data as a placeholder (Empty String)
@@ -17,7 +18,7 @@ class CustomSpinnerAdapter<T : Any>(
     context: Context,
     data: List<T>,
     private val title: String
-) : ArrayAdapter<T>(context, android.R.layout.simple_spinner_item, data) {
+) : ArrayAdapter<T>(context, R.layout.custom_spinner_item, data) {
 
     private val hidingItemIndex = 0
 
