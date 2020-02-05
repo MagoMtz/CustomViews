@@ -18,7 +18,7 @@ import java.util.regex.Pattern
  * @author by jmartinez
  * @since 15/01/2020.
  */
-class BiographicEditText(context: Context, attributeSet: AttributeSet) :
+open class CustomEditText(context: Context, attributeSet: AttributeSet) :
     EditText(context, attributeSet) {
     // Attributes
     private var onlyNumbers: Boolean = false
@@ -59,14 +59,14 @@ class BiographicEditText(context: Context, attributeSet: AttributeSet) :
     }
 
     init {
-        context.theme.obtainStyledAttributes(attributeSet, R.styleable.BiographicEditText, 0, 0)
+        context.theme.obtainStyledAttributes(attributeSet, R.styleable.CustomEditText, 0, 0)
             .apply {
                 try {
                     onlyNumbers =
-                        getBoolean(R.styleable.BiographicEditText_onlyNumbers, false)
+                        getBoolean(R.styleable.CustomEditText_onlyNumbers, false)
                     charsWithBlankSpaces =
-                        getBoolean(R.styleable.BiographicEditText_charsWithBlankSpaces, false)
-                    isMandatory = getBoolean(R.styleable.BiographicEditText_isMandatory, false)
+                        getBoolean(R.styleable.CustomEditText_charsWithBlankSpaces, false)
+                    isMandatory = getBoolean(R.styleable.CustomEditText_isMandatory, false)
 
 
                     background = null
@@ -84,7 +84,7 @@ class BiographicEditText(context: Context, attributeSet: AttributeSet) :
         canvas?.apply {
 
             val cBounds = clipBounds
-            cBounds.inset(0, 35)
+            //cBounds.inset(0, 35)
 
             if (isMandatory)
                 if (textIsEmpty)
@@ -94,8 +94,10 @@ class BiographicEditText(context: Context, attributeSet: AttributeSet) :
             else
                 drawRoundRect(cBounds.toRectF(), 10F, 10F, framePaint)
 
-            if (!textIsEmpty)
+            /*
+            if (!textIsEmpty && !hint.isNullOrEmpty())
                 drawText(hint.toString(), 0F, 27F, hintTextPaint)
+             */
 
         }
     }
@@ -140,8 +142,7 @@ class BiographicEditText(context: Context, attributeSet: AttributeSet) :
             start: Int,
             count: Int,
             after: Int
-        ) {
-        }
+        ) {}
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             invalidate()

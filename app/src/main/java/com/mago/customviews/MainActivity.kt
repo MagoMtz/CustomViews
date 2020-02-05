@@ -32,5 +32,6 @@ class MainActivity : AppCompatActivity() {
 
         sp_title_search.spinner?.adapter = searchAdapter
         sp_title_search.spinner?.isMandatory = true
+
     }
 }

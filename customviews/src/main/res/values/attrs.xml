@@ -4,9 +4,13 @@
     <attr name="isMandatory" format="boolean" />
     <attr name="tittle" format="string" />
 
-    <declare-styleable name="BiographicEditText" parent="BaseCustomView">
+    <declare-styleable name="CustomEditText" parent="BaseCustomView">
         <attr name="onlyNumbers" format="boolean" />
         <attr name="charsWithBlankSpaces" format="boolean" />
+        <attr name="isMandatory" />
+    </declare-styleable>
+
+    <declare-styleable name="TextArea" parent="BaseCustomView">
         <attr name="isMandatory" />
     </declare-styleable>
 
