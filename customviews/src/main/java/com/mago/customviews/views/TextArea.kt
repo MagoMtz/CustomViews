@@ -46,6 +46,10 @@ class TextArea(context: Context, attributeSet: AttributeSet) : EditText(context,
                     recycle()
                 }
             }
+
+        minLines = 1
+        setLines(3)
+        maxLines = 15
     }
 
     override fun onDraw(canvas: Canvas?) {
