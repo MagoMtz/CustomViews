@@ -21,7 +21,7 @@ class TitleSpinner (context: Context, attributeSet: AttributeSet): LinearLayout(
             requestLayout()
         }
 
-    private var tittleText: CharSequence = ""
+    private var titleText: CharSequence = ""
         get() = tvTitle.text
         set(value) {
             field = value
@@ -29,22 +29,39 @@ class TitleSpinner (context: Context, attributeSet: AttributeSet): LinearLayout(
             invalidate()
             requestLayout()
         }
+    private var hintText: String = ""
+        set(value) {
+            field = value
+            invalidate()
+            requestLayout()
+        }
 
     init {
         View.inflate(context, R.layout.title_spinner, this)
-        val sets = intArrayOf(R.attr.tittle)
+        val sets = intArrayOf(R.attr.titleHint)
         val typedArray = context.obtainStyledAttributes(attributeSet, sets)
         val title = typedArray.getText(0)
         typedArray.recycle()
 
+        context.theme.obtainStyledAttributes(attributeSet, R.styleable.TitleSpinner, 0, 0)
+            .apply {
+                try {
+                    hintText = getString(R.styleable.TitleSpinner_hintText)!!
+                } finally {
+                    recycle()
+                }
+            }
+
         initComponents()
 
-        tittleText = title
+        titleText = title
     }
 
     private fun initComponents() {
-        tvTitle = findViewById(R.id.tv_tittle)
+        tvTitle = findViewById(R.id.tv_title)
         spinner = findViewById(R.id.sp_custom)
+
+        spinner?.titleHint = hintText
     }
 
 }

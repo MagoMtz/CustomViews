@@ -17,18 +17,16 @@ class MainActivity : AppCompatActivity() {
             "Mi spinner"
         )
 
-        sp_spinner.adapter = adapter
-
         sp_biographic.spinner?.adapter = adapter
+
         sp_biographic.spinner?.isMandatory = true
-        sp_biographic.spinner?.tittle = "Mi spinner 2"
+        sp_biographic.spinner?.titleHint = "Mi spinner 2"
 
         val searchAdapter = CustomSpinnerAdapter(
             this,
             arrayListOf("Seleccion 1", "Seleccion 2"),
             "fff"
         )
-        sp_searchable.adapter = searchAdapter
 
         sp_title_search.spinner?.adapter = searchAdapter
         sp_title_search.spinner?.isMandatory = true

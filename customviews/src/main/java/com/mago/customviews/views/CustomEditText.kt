@@ -21,19 +21,19 @@ import java.util.regex.Pattern
 open class CustomEditText(context: Context, attributeSet: AttributeSet) :
     EditText(context, attributeSet) {
     // Attributes
-    private var onlyNumbers: Boolean = false
+    var onlyNumbers: Boolean = false
         set(value) {
             field = value
             invalidate()
             requestLayout()
         }
-    private var charsWithBlankSpaces: Boolean = false
+    var charsWithBlankSpaces: Boolean = false
         set(value) {
             field = value
             invalidate()
             requestLayout()
         }
-    private var isMandatory: Boolean = false
+    var isMandatory: Boolean = false
         set(value) {
             field = value
             invalidate()
@@ -51,11 +51,6 @@ open class CustomEditText(context: Context, attributeSet: AttributeSet) :
         color = ContextCompat.getColor(context, R.color.frame_invalid)
         style = Paint.Style.STROKE
         strokeWidth = 3F
-    }
-
-    private val hintTextPaint = Paint(ANTI_ALIAS_FLAG).apply {
-        color = ContextCompat.getColor(context, R.color.colorPrimary)
-        textSize = 38F
     }
 
     init {
@@ -82,9 +77,8 @@ open class CustomEditText(context: Context, attributeSet: AttributeSet) :
         val textIsEmpty = text.toString().isEmpty()
 
         canvas?.apply {
-
             val cBounds = clipBounds
-            //cBounds.inset(0, 35)
+            cBounds.inset(0, 8)
 
             if (isMandatory)
                 if (textIsEmpty)
@@ -93,11 +87,6 @@ open class CustomEditText(context: Context, attributeSet: AttributeSet) :
                     drawRoundRect(cBounds.toRectF(), 10F, 10F, framePaint)
             else
                 drawRoundRect(cBounds.toRectF(), 10F, 10F, framePaint)
-
-            /*
-            if (!textIsEmpty && !hint.isNullOrEmpty())
-                drawText(hint.toString(), 0F, 27F, hintTextPaint)
-             */
 
         }
     }

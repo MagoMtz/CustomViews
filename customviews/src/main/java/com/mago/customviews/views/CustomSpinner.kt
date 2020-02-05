@@ -32,13 +32,13 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : Spinner(cont
             invalidate()
             requestLayout()
         }
-    var tittle: String? = ""
+    var titleHint: String? = ""
         set(value) {
             field = value
             invalidate()
             requestLayout()
         }
-    var tittleColor: Int = R.color.dark_text
+    var titleColor: Int = R.color.dark_text
         set(value) {
             field = value
             invalidate()
@@ -71,8 +71,8 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : Spinner(cont
         strokeWidth = 10f
     }
 
-    private val tittleTextPaint = Paint(ANTI_ALIAS_FLAG).apply {
-        color = ContextCompat.getColor(context, tittleColor)
+    private val titleTextPaint = Paint(ANTI_ALIAS_FLAG).apply {
+        color = ContextCompat.getColor(context, titleColor)
         textSize = 80f
     }
 
@@ -81,7 +81,7 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : Spinner(cont
             .apply {
                 try {
                     isMandatory = getBoolean(R.styleable.CustomSpinner_isMandatory, false)
-                    tittle = getString(R.styleable.CustomSpinner_tittle)
+                    getString(R.styleable.CustomSpinner_titleHint)?.let { titleHint = it }
 
                     background = null
                 } finally {
@@ -99,7 +99,7 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : Spinner(cont
             canvas.drawCircle(xOrigin + rectLarge / 2, yCenter, circleRad, circlePaint)
 
             if (!isElementSelected) {
-                canvas.drawText(tittle!!, 30f, yCenter + (yCenter / 3), tittleTextPaint)
+                canvas.drawText(titleHint!!, 30f, yCenter + (yCenter / 3), titleTextPaint)
                 if (isMandatory)
                     drawRoundRect(clipBounds.toRectF(), 15F, 15F, frameAlertPaint)
                 else

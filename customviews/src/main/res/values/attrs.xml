@@ -2,36 +2,51 @@
 <resources>
 
     <attr name="isMandatory" format="boolean" />
-    <attr name="tittle" format="string" />
+    <attr name="titleHint" format="string" />
+    <attr name="onlyNumbers" format="boolean" />
+    <attr name="charsWithBlankSpaces" format="boolean" />
+    <attr name="hintText" format="string" />
 
     <declare-styleable name="CustomEditText" parent="BaseCustomView">
-        <attr name="onlyNumbers" format="boolean" />
-        <attr name="charsWithBlankSpaces" format="boolean" />
+        <attr name="onlyNumbers" />
+        <attr name="charsWithBlankSpaces" />
         <attr name="isMandatory" />
+    </declare-styleable>
+
+    <declare-styleable name="TitleEditText" parent="BaseCustomView">
+        <attr name="onlyNumbers" />
+        <attr name="charsWithBlankSpaces" />
+        <attr name="isMandatory" />
+        <attr name="titleHint" />
     </declare-styleable>
 
     <declare-styleable name="TextArea" parent="BaseCustomView">
         <attr name="isMandatory" />
     </declare-styleable>
 
+    <declare-styleable name="TitleTextArea" parent="BaseCustomView">
+        <attr name="isMandatory" />
+        <attr name="titleHint" />
+    </declare-styleable>
+
     <declare-styleable name="CustomSpinner" parent="BaseCustomView">
-        <attr name="tittle" />
+        <attr name="titleHint" />
         <attr name="isMandatory" />
     </declare-styleable>
 
     <declare-styleable name="TitleSpinner" parent="BaseCustomView">
-        <attr name="tittle"/>
+        <attr name="titleHint"/>
+        <attr name="hintText" />
     </declare-styleable>
 
     <declare-styleable name="SearchableSpinner" parent="BaseCustomView">
-        <attr name="title" />
         <attr name="isMandatory" />
     </declare-styleable>
 
     <declare-styleable name="TitleSearchableSpinner" parent="BaseCustomView">
-        <attr name="title" />
+        <attr name="titleHint" />
         <attr name="isMandatory" />
-        <attr name="hintText" format="string" />
+        <attr name="hintText" />
     </declare-styleable>
 
 </resources>

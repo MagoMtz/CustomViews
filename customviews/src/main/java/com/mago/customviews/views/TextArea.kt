@@ -13,9 +13,9 @@ import com.mago.customviews.R
  * @author by jmartinez
  * @since 05/02/2020.
  */
-class TextArea(context: Context, attributeSet: AttributeSet): EditText(context, attributeSet) {
+class TextArea(context: Context, attributeSet: AttributeSet) : EditText(context, attributeSet) {
     // Attributes
-    private var isMandatory: Boolean = false
+    var isMandatory: Boolean = false
         set(value) {
             field = value
             invalidate()
@@ -54,14 +54,16 @@ class TextArea(context: Context, attributeSet: AttributeSet): EditText(context, 
         val textIsEmpty = text.toString().isEmpty()
 
         canvas?.apply {
+            val cBounds = clipBounds
+            cBounds.inset(0, 8)
 
             if (isMandatory)
                 if (textIsEmpty)
-                    drawRoundRect(clipBounds.toRectF(), 10F, 10F, frameAlertPaint)
+                    drawRoundRect(cBounds.toRectF(), 10F, 10F, frameAlertPaint)
                 else
-                    drawRoundRect(clipBounds.toRectF(), 10F, 10F, framePaint)
+                    drawRoundRect(cBounds.toRectF(), 10F, 10F, framePaint)
             else
-                drawRoundRect(clipBounds.toRectF(), 10F, 10F, framePaint)
+                drawRoundRect(cBounds.toRectF(), 10F, 10F, framePaint)
 
         }
     }

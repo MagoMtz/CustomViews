@@ -12,7 +12,7 @@ import com.mago.customviews.R
  *
  * @author by jmartinez
  * @since 17/01/2020.
- * @param title is used to display the title of spinner
+ * @param title is used to display the titleHint of spinner
  */
 class CustomSpinnerAdapter<T : Any>(
     context: Context,

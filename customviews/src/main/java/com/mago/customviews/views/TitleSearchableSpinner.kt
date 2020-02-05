@@ -14,7 +14,7 @@ import com.mago.customviews.R
 class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet) :
     LinearLayout(context, attributeSet) {
 
-    private lateinit var tvTitle: TextView
+    private lateinit var tvTitleHint: TextView
     var spinner: SearchableSpinner? = null
         set(value) {
             field = value
@@ -22,11 +22,11 @@ class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet) :
             requestLayout()
         }
 
-    private var tittleText: CharSequence = ""
-        get() = tvTitle.text
+    private var titleHintText: CharSequence = ""
+        get() = tvTitleHint.text
         set(value) {
             field = value
-            tvTitle.text = value
+            tvTitleHint.text = value
             invalidate()
             requestLayout()
         }
@@ -48,7 +48,7 @@ class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet) :
     init {
         View.inflate(context, R.layout.title_searchable_spinner, this)
 
-        val sets = intArrayOf(R.attr.tittle)
+        val sets = intArrayOf(R.attr.titleHint)
         val typedArray = context.obtainStyledAttributes(attributeSet, sets)
         val title = typedArray.getText(0)
         typedArray.recycle()
@@ -64,14 +64,14 @@ class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet) :
                 }
             }
 
-
         initComponents()
-        tittleText = title
+        titleHintText = title
     }
 
     private fun initComponents() {
-        tvTitle = findViewById(R.id.tv_tittle)
+        tvTitleHint = findViewById(R.id.tv_title)
         spinner = findViewById(R.id.sp_searchable)
+
         spinner?.isMandatory = isMandatory
         spinner?.setHintText(hintText)
     }

@@ -24,56 +24,39 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.mago.customviews.views.CustomEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="Es obligatorio y sin espacios"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                view:isMandatory="true" />
-
-            <com.mago.customviews.views.CustomSpinner
-                android:id="@+id/sp_spinner"
+            <com.mago.customviews.views.TitleEditText
+                android:id="@+id/et_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 view:isMandatory="true"
-                view:tittle="Mi spinner" />
+                view:titleHint="Title Edit Text"/>
 
             <com.mago.customviews.views.TitleSpinner
                 android:id="@+id/sp_biographic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                view:tittle="Mi spinner 2" />
-
-            <com.mago.customviews.views.SearchableSpinner
-                android:id="@+id/sp_searchable"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="16dp"
-                app:hintText="Searchable spinner"
-                view:isMandatory="true"
-                view:tittle="Mi spinner" />
+                view:hintText="Select item"
+                view:titleHint="Title spinner" />
 
             <com.mago.customviews.views.TitleSearchableSpinner
                 android:id="@+id/sp_title_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                view:hintText="Mi spinner 3"
                 view:isMandatory="true"
-                view:tittle="Mi spinner 3" />
+                view:hintText="Mi spinner 3"
+                view:titleHint="Title search spinner" />
 
-            <com.mago.customviews.views.TextArea
+            <com.mago.customviews.views.TitleTextArea
                 android:id="@+id/et_textArea"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                view:isMandatory="true" />
+                view:isMandatory="true"
+                view:titleHint="Title Text Area"/>
 
 
         </LinearLayout>
