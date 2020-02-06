@@ -97,8 +97,10 @@ open class CustomEditText(context: Context, attributeSet: AttributeSet) :
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         addTextChangedListener(textWatcher())
-        if (onlyNumbers)
-            inputType = InputType.TYPE_CLASS_NUMBER
+        inputType = if (onlyNumbers)
+            InputType.TYPE_CLASS_NUMBER
+        else
+            InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
     }
 
     override fun onDetachedFromWindow() {
