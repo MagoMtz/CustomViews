@@ -1,6 +1,7 @@
 package com.mago.customviews.views
 
 import android.content.Context
+import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
@@ -66,8 +67,20 @@ class TitleSpinner(context: Context, attributeSet: AttributeSet) :
             }
 
         initComponents()
-
         titleText = title
+        setWillNotDraw(false)
+    }
+
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+        canvas?.let {
+            spinner?.let {
+                tvTitle.visibility = if (it.selectedItemPosition == 0)
+                    View.INVISIBLE
+                else
+                    View.VISIBLE
+            }
+        }
     }
 
     private fun initComponents() {

@@ -23,9 +23,10 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : Spinner(cont
     private val rectHeight = 17.7777777778f
     private val circleRad = 22.2222222222f
 
-    private var isElementSelected = false
 
     //Attributes
+    private var isElementSelected = false
+
     var isMandatory: Boolean = false
         set(value) {
             field = value

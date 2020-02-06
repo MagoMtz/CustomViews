@@ -1,6 +1,7 @@
 package com.mago.customviews.views
 
 import android.content.Context
+import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
@@ -78,6 +79,19 @@ class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet) :
 
         initComponents()
         titleHintText = title
+        setWillNotDraw(false)
+    }
+
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+        canvas?.let {
+            spinner?.let {
+                tvTitleHint.visibility = if (it.selectedItemPosition == -1)
+                    View.INVISIBLE
+                else
+                    View.VISIBLE
+            }
+        }
     }
 
     private fun initComponents() {
