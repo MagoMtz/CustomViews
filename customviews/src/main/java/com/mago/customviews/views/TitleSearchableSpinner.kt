@@ -64,8 +64,13 @@ class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet) :
             .apply {
                 try {
                     isMandatory = getBoolean(R.styleable.TitleSearchableSpinner_isMandatory, false)
-                    hintText = getString(R.styleable.TitleSearchableSpinner_hintText)!!
-                    spinnerHeight = getDimension(R.styleable.TitleSearchableSpinner_spinnerHeight, resources.getDimension(R.dimen.spinner_min_height))
+                    getString(R.styleable.TitleSearchableSpinner_hintText)?.let {
+                        hintText = it
+                    }
+                    spinnerHeight = getDimension(
+                        R.styleable.TitleSearchableSpinner_spinnerHeight,
+                        resources.getDimension(R.dimen.spinner_min_height)
+                    )
                 } finally {
                     recycle()
                 }

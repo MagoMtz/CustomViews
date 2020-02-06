@@ -8,46 +8,50 @@
     <attr name="hintText" format="string" />
     <attr name="spinnerHeight" format="dimension" />
 
-    <declare-styleable name="CustomEditText" parent="BaseCustomView">
+    <declare-styleable name="CustomEditText">
         <attr name="onlyNumbers" />
         <attr name="charsWithBlankSpaces" />
         <attr name="isMandatory" />
     </declare-styleable>
 
-    <declare-styleable name="TitleEditText" parent="BaseCustomView">
+    <declare-styleable name="TitleEditText">
         <attr name="onlyNumbers" />
         <attr name="charsWithBlankSpaces" />
         <attr name="isMandatory" />
         <attr name="titleHint" />
     </declare-styleable>
 
-    <declare-styleable name="TextArea" parent="BaseCustomView">
+    <declare-styleable name="TextArea">
         <attr name="isMandatory" />
     </declare-styleable>
 
-    <declare-styleable name="TitleTextArea" parent="BaseCustomView">
+    <declare-styleable name="TitleTextArea">
         <attr name="isMandatory" />
         <attr name="titleHint" />
     </declare-styleable>
 
-    <declare-styleable name="CustomSpinner" parent="BaseCustomView">
+    <declare-styleable name="DateEditText">
+        <attr name="isMandatory" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomSpinner">
         <attr name="titleHint" />
         <attr name="isMandatory" />
         <attr name="spinnerHeight" />
     </declare-styleable>
 
-    <declare-styleable name="TitleSpinner" parent="BaseCustomView">
+    <declare-styleable name="TitleSpinner">
         <attr name="titleHint"/>
         <attr name="hintText" />
         <attr name="spinnerHeight" />
     </declare-styleable>
 
-    <declare-styleable name="SearchableSpinner" parent="BaseCustomView">
+    <declare-styleable name="SearchableSpinner">
         <attr name="isMandatory" />
         <attr name="spinnerHeight" />
     </declare-styleable>
 
-    <declare-styleable name="TitleSearchableSpinner" parent="BaseCustomView">
+    <declare-styleable name="TitleSearchableSpinner">
         <attr name="titleHint" />
         <attr name="isMandatory" />
         <attr name="hintText" />

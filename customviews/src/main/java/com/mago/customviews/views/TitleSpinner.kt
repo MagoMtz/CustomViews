@@ -11,7 +11,8 @@ import com.mago.customviews.R
  * @author by jmartinez
  * @since 17/01/2020.
  */
-class TitleSpinner (context: Context, attributeSet: AttributeSet): LinearLayout(context, attributeSet) {
+class TitleSpinner(context: Context, attributeSet: AttributeSet) :
+    LinearLayout(context, attributeSet) {
 
     private lateinit var tvTitle: TextView
     var spinner: CustomSpinner? = null
@@ -52,8 +53,13 @@ class TitleSpinner (context: Context, attributeSet: AttributeSet): LinearLayout(
         context.theme.obtainStyledAttributes(attributeSet, R.styleable.TitleSpinner, 0, 0)
             .apply {
                 try {
-                    hintText = getString(R.styleable.TitleSpinner_hintText)!!
-                    spinnerHeight = getDimension(R.styleable.TitleSpinner_spinnerHeight, resources.getDimension(R.dimen.spinner_min_height))
+                    getString(R.styleable.TitleSpinner_hintText)?.let {
+                        hintText = it
+                    }
+                    spinnerHeight = getDimension(
+                        R.styleable.TitleSpinner_spinnerHeight,
+                        resources.getDimension(R.dimen.spinner_min_height)
+                    )
                 } finally {
                     recycle()
                 }

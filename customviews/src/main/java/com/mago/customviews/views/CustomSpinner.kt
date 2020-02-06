@@ -88,6 +88,10 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : Spinner(cont
                 try {
                     isMandatory = getBoolean(R.styleable.CustomSpinner_isMandatory, false)
                     getString(R.styleable.CustomSpinner_titleHint)?.let { titleHint = it }
+                    spinnerHeight = getDimension(
+                        R.styleable.CustomSpinner_spinnerHeight,
+                        resources.getDimension(R.dimen.spinner_min_height)
+                    )
 
                     background = null
                 } finally {
@@ -98,9 +102,6 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : Spinner(cont
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-
-
-
         isElementSelected = selectedItemPosition != 0
 
         canvas?.apply {
@@ -113,15 +114,9 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : Spinner(cont
                     drawRoundRect(clipBounds.toRectF(), 15F, 15F, frameAlertPaint)
                 else
                     drawRoundRect(clipBounds.toRectF(), 15F, 15F, framePaint)
-            }else
+            } else
                 drawRoundRect(clipBounds.toRectF(), 15F, 15F, framePaint)
         }
-        /*
-        val params = layoutParams
-        params.height = spinnerHeight.toInt()
-        //layoutParams = params
-        requestLayout()
-         */
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -131,7 +126,7 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : Spinner(cont
         yOrigin = h - yOrigin
 
         arrowPath = Path().apply {
-            val newOriginL = yCenter - (rectLarge / 4 )
+            val newOriginL = yCenter - (rectLarge / 4)
             moveTo(xOrigin, newOriginL)
             lineTo(xOrigin + rectLarge / 2, newOriginL + rectHeight)
             lineTo(xOrigin + rectLarge, newOriginL)
@@ -145,7 +140,6 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : Spinner(cont
         val params = layoutParams
         params.height = spinnerHeight.toInt()
         requestLayout()
-        //setMeasuredDimension(params.width, params.height)
     }
 
 }

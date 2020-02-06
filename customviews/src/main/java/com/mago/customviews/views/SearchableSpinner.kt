@@ -13,7 +13,8 @@ import com.mago.customviews.R
  * @author by jmartinez
  * @since 04/02/2020.
  */
-class SearchableSpinner(context: Context, attributeSet: AttributeSet): com.toptoche.searchablespinnerlibrary.SearchableSpinner(context, attributeSet) {
+class SearchableSpinner(context: Context, attributeSet: AttributeSet) :
+    com.toptoche.searchablespinnerlibrary.SearchableSpinner(context, attributeSet) {
     private var xOrigin = 100f
     private var yOrigin = 120f
     private var yCenter = 0f
@@ -67,6 +68,10 @@ class SearchableSpinner(context: Context, attributeSet: AttributeSet): com.topto
             .apply {
                 try {
                     isMandatory = getBoolean(R.styleable.SearchableSpinner_isMandatory, false)
+                    spinnerHeight = getDimension(
+                        R.styleable.SearchableSpinner_spinnerHeight,
+                        resources.getDimension(R.dimen.spinner_min_height)
+                    )
 
                     background = null
                 } finally {
@@ -91,7 +96,7 @@ class SearchableSpinner(context: Context, attributeSet: AttributeSet): com.topto
                     drawRoundRect(clipBounds.toRectF(), 15F, 15F, frameAlertPaint)
                 else
                     drawRoundRect(clipBounds.toRectF(), 15F, 15F, framePaint)
-            }else
+            } else
                 drawRoundRect(clipBounds.toRectF(), 15F, 15F, framePaint)
         }
 /*
@@ -109,7 +114,7 @@ class SearchableSpinner(context: Context, attributeSet: AttributeSet): com.topto
         yOrigin = h - yOrigin
 
         arrowPath = Path().apply {
-            val newOriginL = yCenter - (rectLarge / 4 )
+            val newOriginL = yCenter - (rectLarge / 4)
             moveTo(xOrigin, newOriginL)
             lineTo(xOrigin + rectLarge / 2, newOriginL + rectHeight)
             lineTo(xOrigin + rectLarge, newOriginL)
