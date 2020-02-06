@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Paint.ANTI_ALIAS_FLAG
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.widget.EditText
@@ -69,6 +70,8 @@ open class CustomEditText(context: Context, attributeSet: AttributeSet) :
                     recycle()
                 }
             }
+
+
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -94,6 +97,8 @@ open class CustomEditText(context: Context, attributeSet: AttributeSet) :
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         addTextChangedListener(textWatcher())
+        if (onlyNumbers)
+            inputType = InputType.TYPE_CLASS_NUMBER
     }
 
     override fun onDetachedFromWindow() {
