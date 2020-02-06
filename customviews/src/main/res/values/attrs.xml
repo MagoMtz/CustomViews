@@ -6,6 +6,7 @@
     <attr name="onlyNumbers" format="boolean" />
     <attr name="charsWithBlankSpaces" format="boolean" />
     <attr name="hintText" format="string" />
+    <attr name="spinnerHeight" format="dimension" />
 
     <declare-styleable name="CustomEditText" parent="BaseCustomView">
         <attr name="onlyNumbers" />
@@ -32,21 +33,25 @@
     <declare-styleable name="CustomSpinner" parent="BaseCustomView">
         <attr name="titleHint" />
         <attr name="isMandatory" />
+        <attr name="spinnerHeight" />
     </declare-styleable>
 
     <declare-styleable name="TitleSpinner" parent="BaseCustomView">
         <attr name="titleHint"/>
         <attr name="hintText" />
+        <attr name="spinnerHeight" />
     </declare-styleable>
 
     <declare-styleable name="SearchableSpinner" parent="BaseCustomView">
         <attr name="isMandatory" />
+        <attr name="spinnerHeight" />
     </declare-styleable>
 
     <declare-styleable name="TitleSearchableSpinner" parent="BaseCustomView">
         <attr name="titleHint" />
         <attr name="isMandatory" />
         <attr name="hintText" />
+        <attr name="spinnerHeight" />
     </declare-styleable>
 
 </resources>

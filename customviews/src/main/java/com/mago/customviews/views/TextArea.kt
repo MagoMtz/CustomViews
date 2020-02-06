@@ -24,7 +24,7 @@ class TextArea(context: Context, attributeSet: AttributeSet) : EditText(context,
 
     // Paint objects
     private val framePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = ContextCompat.getColor(context, R.color.dark_gray)
+        color = ContextCompat.getColor(context, R.color.border)
         style = Paint.Style.STROKE
         strokeWidth = 3F
     }

@@ -19,9 +19,9 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : Spinner(cont
     private var xOrigin = 100f
     private var yOrigin = 120f
     private var yCenter = 0f
-    private val rectLarge = 60f
-    private val rectHeight = 40f
-    private val circleRad = 50f
+    private val rectLarge = 26.6666666667f
+    private val rectHeight = 17.7777777778f
+    private val circleRad = 22.2222222222f
 
     private var isElementSelected = false
 
@@ -44,10 +44,16 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : Spinner(cont
             invalidate()
             requestLayout()
         }
+    var spinnerHeight: Float = 0F
+        set(value) {
+            field = value
+            invalidate()
+            requestLayout()
+        }
 
     // Paint objects
     private val framePaint = Paint(ANTI_ALIAS_FLAG).apply {
-        color = ContextCompat.getColor(context, R.color.dark_gray)
+        color = ContextCompat.getColor(context, R.color.border)
         style = Paint.Style.STROKE
         strokeWidth = 3F
     }
@@ -68,7 +74,7 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : Spinner(cont
     private val circlePaint = Paint(ANTI_ALIAS_FLAG).apply {
         color = ContextCompat.getColor(context, R.color.dark_gray)
         style = Paint.Style.STROKE
-        strokeWidth = 10f
+        strokeWidth = 5f
     }
 
     private val titleTextPaint = Paint(ANTI_ALIAS_FLAG).apply {
@@ -92,6 +98,9 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : Spinner(cont
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
+
+
+
         isElementSelected = selectedItemPosition != 0
 
         canvas?.apply {
@@ -107,7 +116,12 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : Spinner(cont
             }else
                 drawRoundRect(clipBounds.toRectF(), 15F, 15F, framePaint)
         }
-
+        /*
+        val params = layoutParams
+        params.height = spinnerHeight.toInt()
+        //layoutParams = params
+        requestLayout()
+         */
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -124,6 +138,14 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : Spinner(cont
             lineTo(xOrigin, newOriginL)
             close()
         }
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        val params = layoutParams
+        params.height = spinnerHeight.toInt()
+        requestLayout()
+        //setMeasuredDimension(params.width, params.height)
     }
 
 }

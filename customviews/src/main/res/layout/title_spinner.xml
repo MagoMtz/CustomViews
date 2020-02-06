@@ -13,7 +13,7 @@
     <com.mago.customviews.views.CustomSpinner
         android:id="@+id/sp_custom"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/spinner_min_height"
         />
 
 </LinearLayout>

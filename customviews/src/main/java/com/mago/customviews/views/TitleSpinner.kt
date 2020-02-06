@@ -35,6 +35,12 @@ class TitleSpinner (context: Context, attributeSet: AttributeSet): LinearLayout(
             invalidate()
             requestLayout()
         }
+    var spinnerHeight: Float = 0F
+        set(value) {
+            field = value
+            invalidate()
+            requestLayout()
+        }
 
     init {
         View.inflate(context, R.layout.title_spinner, this)
@@ -47,6 +53,7 @@ class TitleSpinner (context: Context, attributeSet: AttributeSet): LinearLayout(
             .apply {
                 try {
                     hintText = getString(R.styleable.TitleSpinner_hintText)!!
+                    spinnerHeight = getDimension(R.styleable.TitleSpinner_spinnerHeight, resources.getDimension(R.dimen.spinner_min_height))
                 } finally {
                     recycle()
                 }
@@ -62,6 +69,7 @@ class TitleSpinner (context: Context, attributeSet: AttributeSet): LinearLayout(
         spinner = findViewById(R.id.sp_custom)
 
         spinner?.titleHint = hintText
+        spinner?.spinnerHeight = spinnerHeight
     }
 
 }

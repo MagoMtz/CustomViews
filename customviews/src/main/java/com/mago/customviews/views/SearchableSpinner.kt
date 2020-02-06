@@ -17,11 +17,12 @@ class SearchableSpinner(context: Context, attributeSet: AttributeSet): com.topto
     private var xOrigin = 100f
     private var yOrigin = 120f
     private var yCenter = 0f
-    private val rectLarge = 60f
-    private val rectHeight = 40f
-    private val circleRad = 50f
+    private val rectLarge = 26.6666666667f
+    private val rectHeight = 17.7777777778f
+    private val circleRad = 22.2222222222f
 
     private var isElementSelected = false
+    private lateinit var arrowPath: Path
 
     //Attributes
     var isMandatory: Boolean = false
@@ -30,7 +31,7 @@ class SearchableSpinner(context: Context, attributeSet: AttributeSet): com.topto
             invalidate()
             requestLayout()
         }
-    var titleColor: Int = R.color.dark_text
+    var spinnerHeight: Float = 0F
         set(value) {
             field = value
             invalidate()
@@ -39,7 +40,7 @@ class SearchableSpinner(context: Context, attributeSet: AttributeSet): com.topto
 
     // Paint objects
     private val framePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = ContextCompat.getColor(context, R.color.dark_gray)
+        color = ContextCompat.getColor(context, R.color.border)
         style = Paint.Style.STROKE
         strokeWidth = 3F
     }
@@ -55,12 +56,10 @@ class SearchableSpinner(context: Context, attributeSet: AttributeSet): com.topto
         style = Paint.Style.FILL
     }
 
-    private lateinit var arrowPath: Path
-
     private val circlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = ContextCompat.getColor(context, R.color.dark_gray)
         style = Paint.Style.STROKE
-        strokeWidth = 10f
+        strokeWidth = 5f
     }
 
     init {
@@ -74,13 +73,14 @@ class SearchableSpinner(context: Context, attributeSet: AttributeSet): com.topto
                     recycle()
                 }
             }
-
-
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
+
+
         isElementSelected = selectedItemPosition != -1
+
 
         canvas?.apply {
             canvas.drawPath(arrowPath, arrowPaint)
@@ -94,8 +94,12 @@ class SearchableSpinner(context: Context, attributeSet: AttributeSet): com.topto
             }else
                 drawRoundRect(clipBounds.toRectF(), 15F, 15F, framePaint)
         }
-
-
+/*
+        val params = layoutParams
+        params.height = spinnerHeight.toInt()
+        //layoutParams = params
+        requestLayout()
+ */
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -112,6 +116,14 @@ class SearchableSpinner(context: Context, attributeSet: AttributeSet): com.topto
             lineTo(xOrigin, newOriginL)
             close()
         }
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        val params = layoutParams
+        params.height = spinnerHeight.toInt()
+        requestLayout()
+        //setMeasuredDimension(params.width, params.height)
     }
 
 }

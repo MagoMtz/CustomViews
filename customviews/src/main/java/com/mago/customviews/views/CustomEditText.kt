@@ -42,7 +42,7 @@ open class CustomEditText(context: Context, attributeSet: AttributeSet) :
 
     // Paint objects
     private val framePaint = Paint(ANTI_ALIAS_FLAG).apply {
-        color = ContextCompat.getColor(context, R.color.dark_gray)
+        color = ContextCompat.getColor(context, R.color.border)
         style = Paint.Style.STROKE
         strokeWidth = 3F
     }
