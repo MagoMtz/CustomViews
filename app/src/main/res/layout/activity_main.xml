@@ -10,8 +10,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -27,10 +27,10 @@
             <com.mago.customviews.views.TitleEditText
                 android:id="@+id/et_title"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 android:layout_marginTop="16dp"
                 view:isMandatory="true"
-                view:titleHint="Title Edit Text"/>
+                view:titleHint="Title Edit Text" />
 
             <com.mago.customviews.views.TitleSpinner
                 android:id="@+id/sp_biographic"
@@ -38,19 +38,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 view:hintText="Select item"
-                view:titleHint="Title spinner"
-                view:spinnerHeight="60dp"
-                />
+                view:spinnerHeight="50dp"
+                view:titleHint="Title spinner" />
 
             <com.mago.customviews.views.TitleSearchableSpinner
                 android:id="@+id/sp_title_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                view:isMandatory="true"
                 view:hintText="Mi spinner 3"
-                view:titleHint="Title search spinner"
-                />
+                view:isMandatory="true"
+                view:titleHint="Title search spinner" />
 
             <com.mago.customviews.views.TitleTextArea
                 android:id="@+id/et_textArea"
@@ -59,7 +57,15 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 view:isMandatory="true"
-                view:titleHint="Title Text Area"/>
+                view:titleHint="Title Text Area" />
+
+            <com.mago.customviews.views.SingleDate
+                android:id="@+id/et_date"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_marginBottom="16dp"
+                app:titleHint="Fecha"
+                />
 
 
         </LinearLayout>

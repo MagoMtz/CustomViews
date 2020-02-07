@@ -30,10 +30,6 @@
         <attr name="titleHint" />
     </declare-styleable>
 
-    <declare-styleable name="DateEditText">
-        <attr name="isMandatory" />
-    </declare-styleable>
-
     <declare-styleable name="CustomSpinner">
         <attr name="titleHint" />
         <attr name="isMandatory" />
@@ -56,6 +52,11 @@
         <attr name="isMandatory" />
         <attr name="hintText" />
         <attr name="spinnerHeight" />
+    </declare-styleable>
+
+    <declare-styleable name="SingleDate">
+        <attr name="isMandatory" />
+        <attr name="titleHint" />
     </declare-styleable>
 
 </resources>
