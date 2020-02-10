@@ -5,7 +5,7 @@ import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
-import android.widget.EditText
+import androidx.appcompat.widget.AppCompatEditText
 import com.mago.customviews.util.Constants.DATE_FORMAT
 import com.mago.customviews.util.Constants.REPLACE_DATE_FORMAT
 import com.mago.customviews.util.Regex.DATE
@@ -15,7 +15,7 @@ import java.util.*
  * @author by jmartinez
  * @since 06/02/2020.
  */
-class DateEditText(context: Context, attributeSet: AttributeSet) : EditText(context, attributeSet) {
+class DateEditText(context: Context, attributeSet: AttributeSet) : AppCompatEditText(context, attributeSet) {
 
     private var current = ""
     private val ddmmyyyy = "DDMMYYYY"

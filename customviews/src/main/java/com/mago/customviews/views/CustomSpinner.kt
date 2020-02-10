@@ -6,7 +6,7 @@ import android.graphics.Paint
 import android.graphics.Paint.ANTI_ALIAS_FLAG
 import android.graphics.Path
 import android.util.AttributeSet
-import android.widget.Spinner
+import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toRectF
 import com.mago.customviews.R
@@ -15,7 +15,7 @@ import com.mago.customviews.R
  * @author by jmartinez
  * @since 17/01/2020.
  */
-class CustomSpinner(context: Context, attributeSet: AttributeSet) : Spinner(context, attributeSet) {
+class CustomSpinner(context: Context, attributeSet: AttributeSet) : AppCompatSpinner(context, attributeSet) {
     private var xOrigin = 100f
     private var yOrigin = 120f
     private var yCenter = 0f

@@ -4,6 +4,9 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+// Publish script
+apply from: '../customviews/publish.gradle'
+
 android {
     compileSdkVersion 29
     defaultConfig {

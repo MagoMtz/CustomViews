@@ -1,4 +1,4 @@
-package com.mago.customviews
+package com.mago.customviewsapp
 
 import org.junit.Test
 

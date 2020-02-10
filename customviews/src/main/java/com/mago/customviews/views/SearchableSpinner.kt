@@ -22,7 +22,6 @@ class SearchableSpinner(context: Context, attributeSet: AttributeSet) :
     private val rectHeight = 17.7777777778f
     private val circleRad = 22.2222222222f
 
-
     private lateinit var arrowPath: Path
 
     //Attributes

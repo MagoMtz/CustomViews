@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet
-import android.widget.EditText
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toRectF
 import com.mago.customviews.R
@@ -13,7 +13,7 @@ import com.mago.customviews.R
  * @author by jmartinez
  * @since 05/02/2020.
  */
-class TextArea(context: Context, attributeSet: AttributeSet) : EditText(context, attributeSet) {
+class TextArea(context: Context, attributeSet: AttributeSet) : AppCompatEditText(context, attributeSet) {
     // Attributes
     var isMandatory: Boolean = false
         set(value) {

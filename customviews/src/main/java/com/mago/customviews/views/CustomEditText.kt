@@ -8,7 +8,7 @@ import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
-import android.widget.EditText
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toRectF
 import com.mago.customviews.R
@@ -20,7 +20,7 @@ import java.util.regex.Pattern
  * @since 15/01/2020.
  */
 open class CustomEditText(context: Context, attributeSet: AttributeSet) :
-    EditText(context, attributeSet) {
+    AppCompatEditText(context, attributeSet) {
     // Attributes
     var onlyNumbers: Boolean = false
         set(value) {
