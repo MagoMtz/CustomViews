@@ -11,10 +11,10 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.mago.customviews.R
 import com.mago.customviews.util.Constants.DATE_PLACE_HOLDER
+import com.mago.customviews.util.Regex.DATE
 import java.util.*
 
 /**
@@ -25,9 +25,9 @@ class SingleDate(context: Context, attributeSet: AttributeSet) :
     LinearLayout(context, attributeSet) {
 
     // Views
-    private lateinit var tvTitle: TextView
+    private var tvTitle: TextView? = null
     private lateinit var lyDate: LinearLayout
-    private lateinit var btnCalendar: ImageView
+    lateinit var btnCalendar: ImageView
     var dateEditText: DateEditText? = null
         set(value) {
             field = value
@@ -36,13 +36,20 @@ class SingleDate(context: Context, attributeSet: AttributeSet) :
         }
 
     // Attributes
-    private var titleHint: String = ""
+    var titleHint: String = ""
+        set(value) {
+            field = value
+            tvTitle?.text = value
+            invalidate()
+            requestLayout()
+        }
+    var isMandatory: Boolean = false
         set(value) {
             field = value
             invalidate()
             requestLayout()
         }
-    private var isMandatory: Boolean = false
+    var futureDate: Boolean = false
         set(value) {
             field = value
             invalidate()
@@ -72,6 +79,7 @@ class SingleDate(context: Context, attributeSet: AttributeSet) :
                     getString(R.styleable.SingleDate_titleHint)?.let {
                         titleHint = it
                     }
+                    futureDate = getBoolean(R.styleable.SingleDate_futureDate, false)
                 } finally {
                     recycle()
                 }
@@ -118,7 +126,7 @@ class SingleDate(context: Context, attributeSet: AttributeSet) :
         dateEditText = findViewById(R.id.date_edit_text)
         btnCalendar = findViewById(R.id.btn_calendar)
 
-        tvTitle.text = titleHint
+        tvTitle?.text = titleHint
         dateEditText!!.hint = DATE_PLACE_HOLDER
     }
 
@@ -135,12 +143,12 @@ class SingleDate(context: Context, attributeSet: AttributeSet) :
         var year = calendar.get(Calendar.YEAR)
 
         val dateText = dateEditText!!.text.toString()
-        val dateIsComplete = dateText.replace("[^\\d.]|\\.".toRegex(), "").length == 8
+        val dateIsComplete = dateText.replace(DATE.toRegex(), "").length == 8
 
         if (dateText.isNotEmpty() && dateIsComplete) {
             val date = dateEditText!!.text.toString().split("/")
             day = date[0].toInt()
-            month = date[1].toInt()
+            month = date[1].toInt() - 1
             year = date[2].toInt()
         }
         val initialDatePicker = DatePickerDialog(
@@ -150,13 +158,11 @@ class SingleDate(context: Context, attributeSet: AttributeSet) :
                     (if (dayOfMonth.toString().length < 2) "0".plus(dayOfMonth.toString()) else dayOfMonth.toString()) + "/" +
                             (if ((monthOfYear + 1).toString().length < 2) "0" + (monthOfYear + 1).toString() else (monthOfYear + 1).toString()) + "/" + mYear
                 dateEditText!!.setText(initialDate)
-                //et_final_date.setText(initialDate)
-                //setupFinalDatePicker()
-                //finalDatePicker.show()
-
-            }, year, month-1, day
+            }, year, month, day
         )
-        initialDatePicker.datePicker.maxDate = Date().time
+        if (!futureDate)
+            initialDatePicker.datePicker.maxDate = Date().time
+
         initialDatePicker.show()
     }
 

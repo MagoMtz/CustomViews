@@ -65,6 +65,19 @@
                 android:layout_height="60dp"
                 android:layout_marginBottom="16dp"
                 app:titleHint="Fecha"
+                app:futureDate="true"
+                />
+
+            <com.mago.customviews.views.DateRange
+                android:id="@+id/et_date_range"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="16dp"
+                app:isMandatory="true"
+                app:initDateTitle="Fecha inicial"
+                app:finalDateTitle="Fecha final"
+                app:daysRange="10"
+                app:futureDate="true"
                 />
 
 

@@ -7,6 +7,7 @@
     <attr name="charsWithBlankSpaces" format="boolean" />
     <attr name="hintText" format="string" />
     <attr name="spinnerHeight" format="dimension" />
+    <attr name="futureDate" format="boolean" />
 
     <declare-styleable name="CustomEditText">
         <attr name="onlyNumbers" />
@@ -57,6 +58,15 @@
     <declare-styleable name="SingleDate">
         <attr name="isMandatory" />
         <attr name="titleHint" />
+        <attr name="futureDate" />
+    </declare-styleable>
+
+    <declare-styleable name="DateRange">
+        <attr name="isMandatory" />
+        <attr name="futureDate" />
+        <attr name="initDateTitle" format="string" />
+        <attr name="finalDateTitle" format="string" />
+        <attr name="daysRange" format="integer" />
     </declare-styleable>
 
 </resources>

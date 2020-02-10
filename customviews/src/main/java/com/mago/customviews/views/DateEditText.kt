@@ -1,15 +1,13 @@
 package com.mago.customviews.views
 
 import android.content.Context
-import android.graphics.Paint
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.widget.EditText
-import androidx.core.content.ContextCompat
-import com.mago.customviews.R
-import com.mago.customviews.util.Regex
+import com.mago.customviews.util.Constants.DATE_FORMAT
+import com.mago.customviews.util.Constants.REPLACE_DATE_FORMAT
 import com.mago.customviews.util.Regex.DATE
 import java.util.*
 
@@ -48,8 +46,8 @@ class DateEditText(context: Context, attributeSet: AttributeSet) : EditText(cont
                     setSelection(0)
                 }
 
-                var clean = data.replace("[^\\d.]|\\.".toRegex(), "")
-                val cleanC = current.replace("[^\\d.]|\\.".toRegex(), "")
+                var clean = data.replace(DATE.toRegex(), "")
+                val cleanC = current.replace(DATE.toRegex(), "")
 
                 val cl = clean.length
                 var sel = cl
@@ -84,11 +82,11 @@ class DateEditText(context: Context, attributeSet: AttributeSet) : EditText(cont
                         if (day > cal.getActualMaximum(Calendar.DATE)) cal.getActualMaximum(
                             Calendar.DATE
                         ) else day
-                    clean = String.format("%02d%02d%02d", day, mon, year)
+                    clean = String.format(DATE_FORMAT, day, mon, year)
                 }
 
                 clean = String.format(
-                    "%s/%s/%s", clean.substring(0, 2),
+                    REPLACE_DATE_FORMAT, clean.substring(0, 2),
                     clean.substring(2, 4),
                     clean.substring(4, 8)
                 )
