@@ -31,17 +31,17 @@ class TitleSpinner(context: Context, attributeSet: AttributeSet) :
             invalidate()
             requestLayout()
         }
-    private var hintText: String = ""
-        set(value) {
-            field = value
-            invalidate()
-            requestLayout()
-        }
     var spinnerHeight: Float = 0F
         set(value) {
             field = value
             invalidate()
             requestLayout()
+        }
+    var isMandatory: Boolean = false
+        set(value) {
+            field = value
+            requestLayout()
+            invalidate()
         }
 
     init {
@@ -54,13 +54,11 @@ class TitleSpinner(context: Context, attributeSet: AttributeSet) :
         context.theme.obtainStyledAttributes(attributeSet, R.styleable.TitleSpinner, 0, 0)
             .apply {
                 try {
-                    getString(R.styleable.TitleSpinner_hintText)?.let {
-                        hintText = it
-                    }
                     spinnerHeight = getDimension(
                         R.styleable.TitleSpinner_spinnerHeight,
                         resources.getDimension(R.dimen.spinner_min_height)
                     )
+                    isMandatory = getBoolean(R.styleable.TitleSpinner_isMandatory, false)
                 } finally {
                     recycle()
                 }
@@ -87,8 +85,8 @@ class TitleSpinner(context: Context, attributeSet: AttributeSet) :
         tvTitle = findViewById(R.id.tv_title)
         spinner = findViewById(R.id.sp_custom)
 
-        spinner?.titleHint = hintText
         spinner?.spinnerHeight = spinnerHeight
+        spinner?.isMandatory = isMandatory
     }
 
 }

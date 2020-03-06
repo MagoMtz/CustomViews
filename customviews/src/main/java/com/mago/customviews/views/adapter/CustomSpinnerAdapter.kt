@@ -16,7 +16,7 @@ import com.mago.customviews.R
  */
 class CustomSpinnerAdapter<T : Any>(
     context: Context,
-    data: List<T>,
+    private val data: List<T>,
     private val title: String
 ) : ArrayAdapter<T>(context, R.layout.custom_spinner_item, data) {
 
@@ -34,6 +34,10 @@ class CustomSpinnerAdapter<T : Any>(
         } else {
             super.getDropDownView(position, convertView, parent)
         }
+    }
+
+    override fun getCount(): Int {
+        return data.size
     }
 
 }

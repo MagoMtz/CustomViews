@@ -39,8 +39,8 @@
 
     <declare-styleable name="TitleSpinner">
         <attr name="titleHint"/>
-        <attr name="hintText" />
         <attr name="spinnerHeight" />
+        <attr name="isMandatory" />
     </declare-styleable>
 
     <declare-styleable name="SearchableSpinner">
@@ -51,7 +51,6 @@
     <declare-styleable name="TitleSearchableSpinner">
         <attr name="titleHint" />
         <attr name="isMandatory" />
-        <attr name="hintText" />
         <attr name="spinnerHeight" />
     </declare-styleable>
 

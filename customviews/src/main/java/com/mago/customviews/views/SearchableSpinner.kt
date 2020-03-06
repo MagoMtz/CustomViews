@@ -39,6 +39,12 @@ class SearchableSpinner(context: Context, attributeSet: AttributeSet) :
             invalidate()
             requestLayout()
         }
+    var hintText: String = ""
+        set(value) {
+            field = value
+            requestLayout()
+            invalidate()
+        }
 
     // Paint objects
     private val framePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -64,6 +70,11 @@ class SearchableSpinner(context: Context, attributeSet: AttributeSet) :
         strokeWidth = 5f
     }
 
+    private val titleTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = ContextCompat.getColor(context, R.color.dark_text)
+        textSize = 50f
+    }
+
     init {
         context.theme.obtainStyledAttributes(attributeSet, R.styleable.SearchableSpinner, 0, 0)
             .apply {
@@ -85,7 +96,7 @@ class SearchableSpinner(context: Context, attributeSet: AttributeSet) :
         super.onDraw(canvas)
 
 
-        isElementSelected = selectedItemPosition != -1
+        isElementSelected = selectedItemPosition != 0
 
 
         canvas?.apply {
@@ -93,6 +104,7 @@ class SearchableSpinner(context: Context, attributeSet: AttributeSet) :
             canvas.drawCircle(xOrigin + rectLarge / 2, yCenter, circleRad, circlePaint)
 
             if (!isElementSelected) {
+                canvas.drawText(hintText, 30f, yCenter + (yCenter / 3), titleTextPaint)
                 if (isMandatory)
                     drawRoundRect(clipBounds.toRectF(), 15F, 15F, frameAlertPaint)
                 else
