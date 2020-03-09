@@ -143,16 +143,6 @@ public class SearchableSpinner extends Spinner implements View.OnTouchListener,
         _searchableListDialog.setOnSearchTextChangedListener(onSearchTextChanged);
     }
 
-    public void setHintText(String hintText) {
-        _strHintText = hintText;
-        if (!TextUtils.isEmpty(_strHintText)) {
-            ArrayAdapter arrayAdapter = new ArrayAdapter(_context, android.R.layout
-                    .simple_list_item_1, new String[]{_strHintText});
-            _isFromInit = true;
-            setAdapter(arrayAdapter);
-        }
-    }
-
     private Activity scanForActivity(Context cont) {
         if (cont == null)
             return null;

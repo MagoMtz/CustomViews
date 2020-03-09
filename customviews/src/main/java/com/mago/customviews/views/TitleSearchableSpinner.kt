@@ -19,8 +19,8 @@ class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet) :
     var spinner: SearchableSpinner? = null
         set(value) {
             field = value
-            invalidate()
             requestLayout()
+            invalidate()
         }
 
     private var titleHintText: CharSequence = ""
@@ -28,28 +28,20 @@ class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet) :
         set(value) {
             field = value
             tvTitleHint.text = value
-            invalidate()
             requestLayout()
+            invalidate()
         }
-
     private var isMandatory: Boolean = false
         set(value) {
             field = value
-            invalidate()
             requestLayout()
-        }
-
-    private var hintText: String = ""
-        set(value) {
-            field = value
             invalidate()
-            requestLayout()
         }
     var spinnerHeight: Float = 0F
         set(value) {
             field = value
-            invalidate()
             requestLayout()
+            invalidate()
         }
 
     init {
@@ -65,9 +57,6 @@ class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet) :
             .apply {
                 try {
                     isMandatory = getBoolean(R.styleable.TitleSearchableSpinner_isMandatory, false)
-                    getString(R.styleable.TitleSearchableSpinner_hintText)?.let {
-                        hintText = it
-                    }
                     spinnerHeight = getDimension(
                         R.styleable.TitleSearchableSpinner_spinnerHeight,
                         resources.getDimension(R.dimen.spinner_min_height)
@@ -99,7 +88,6 @@ class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet) :
         spinner = findViewById(R.id.sp_searchable)
 
         spinner?.isMandatory = isMandatory
-        spinner?.setHintText(hintText)
         spinner?.spinnerHeight = spinnerHeight
     }
 

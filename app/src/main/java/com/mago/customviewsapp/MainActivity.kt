@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
 
         val adapter = CustomSpinnerAdapter(
             this,
-            arrayListOf("", "Seleccion 1", "Seleccion 2"),
+            arrayListOf("", "Seleccion 1", "Seleccion 2", "Seleccion 3"),
             "Mi spinner"
         )
 
@@ -24,12 +24,12 @@ class MainActivity : AppCompatActivity() {
 
         val searchAdapter = CustomSpinnerAdapter(
             this,
-            arrayListOf("Seleccion 1", "Seleccion 2"),
+            arrayListOf("", "Seleccion 1", "Seleccion 2", "Seleccion 3"),
             "fff"
         )
 
-        sp_title_search.spinner?.adapter = searchAdapter
-        sp_title_search.spinner?.isMandatory = true
+        sp_title_search.spinner!!.adapter = searchAdapter
+        sp_title_search.spinner?.setSelection(2)
 
     }
 }

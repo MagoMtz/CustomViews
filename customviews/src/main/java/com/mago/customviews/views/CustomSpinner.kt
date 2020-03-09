@@ -80,7 +80,7 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : AppCompatSpi
 
     private val titleTextPaint = Paint(ANTI_ALIAS_FLAG).apply {
         color = ContextCompat.getColor(context, titleColor)
-        textSize = 80f
+        textSize = 50f
     }
 
     init {
