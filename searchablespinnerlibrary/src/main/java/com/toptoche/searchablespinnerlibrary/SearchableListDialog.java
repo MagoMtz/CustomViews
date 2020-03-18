@@ -19,12 +19,14 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchableListDialog extends DialogFragment implements
         SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
     private static final String ITEMS = "items";
+    private static final String IS_MULTI_SELECT = "is_multi_select";
 
     private ArrayAdapter listAdapter;
 
@@ -46,12 +48,13 @@ public class SearchableListDialog extends DialogFragment implements
 
     }
 
-    public static SearchableListDialog newInstance(List items) {
+    public static SearchableListDialog newInstance(List items, boolean isMultiSelect) {
         SearchableListDialog multiSelectExpandableFragment = new
                 SearchableListDialog();
 
         Bundle args = new Bundle();
         args.putSerializable(ITEMS, (Serializable) items);
+        args.putBoolean(IS_MULTI_SELECT, isMultiSelect);
 
         multiSelectExpandableFragment.setArguments(args);
 
@@ -153,12 +156,22 @@ public class SearchableListDialog extends DialogFragment implements
 
 
         List items = (List) getArguments().getSerializable(ITEMS);
+        // Added
+        final boolean isMultiSelect = getArguments().getBoolean(IS_MULTI_SELECT);
 
         _listViewItems = (ListView) rootView.findViewById(R.id.listItems);
 
+        // Added
+        int view;
+        if (isMultiSelect)
+            view = android.R.layout.simple_list_item_multiple_choice;
+        else
+            view = android.R.layout.simple_list_item_1;
         //create the adapter by passing your ArrayList data
-        listAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,
-                items);
+        // Added
+        listAdapter = new SearchableListAdapter(getActivity(), items, isMultiSelect);
+        //listAdapter = new ArrayAdapter(getActivity(), view,
+        //        items);
         //attach the adapter to the list
         _listViewItems.setAdapter(listAdapter);
 
@@ -168,7 +181,11 @@ public class SearchableListDialog extends DialogFragment implements
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 _searchableItem.onSearchableItemClicked(listAdapter.getItem(position), position);
-                getDialog().dismiss();
+                if (!isMultiSelect) {
+                    getDialog().dismiss();
+                } else {
+                    if (position == 0) getDialog().dismiss();
+                }
             }
         });
     }
@@ -196,9 +213,9 @@ public class SearchableListDialog extends DialogFragment implements
 //        listAdapter.filterData(s);
         if (TextUtils.isEmpty(s)) {
 //                _listViewItems.clearTextFilter();
-            ((ArrayAdapter) _listViewItems.getAdapter()).getFilter().filter(null);
+            ((SearchableListAdapter) _listViewItems.getAdapter()).getFilter().filter(null);
         } else {
-            ((ArrayAdapter) _listViewItems.getAdapter()).getFilter().filter(s);
+            ((SearchableListAdapter) _listViewItems.getAdapter()).getFilter().filter(s);
         }
         if (null != _onSearchTextChanged) {
             _onSearchTextChanged.onSearchTextChanged(s);

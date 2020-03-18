@@ -49,6 +49,14 @@
                 app:isMandatory="true"
                 app:titleHint="Title search spinner" />
 
+            <com.mago.customviews.views.MultiSelectSpinner
+                android:id="@+id/sp_multi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isMandatory="true"
+                app:titleHint="Title search spinner"
+                />
+
             <com.mago.customviews.views.TitleTextArea
                 android:id="@+id/et_textArea"
                 android:layout_width="match_parent"

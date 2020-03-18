@@ -13,8 +13,11 @@ import com.mago.customviews.R
  * @author by jmartinez
  * @since 04/02/2020.
  */
-class SearchableSpinner(context: Context, attributeSet: AttributeSet) :
-    com.toptoche.searchablespinnerlibrary.SearchableSpinner(context, attributeSet) {
+open class SearchableSpinner(context: Context, attributeSet: AttributeSet, isMultiSelect: Boolean = false) :
+    com.toptoche.searchablespinnerlibrary.SearchableSpinner(context, attributeSet, isMultiSelect) {
+
+    constructor(context: Context, attributeSet: AttributeSet): this(context, attributeSet, false)
+
     private var xOrigin = 100f
     private var yOrigin = 120f
     private var yCenter = 0f

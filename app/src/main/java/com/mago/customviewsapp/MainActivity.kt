@@ -1,6 +1,7 @@
 package com.mago.customviewsapp
 
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.mago.customviews.views.adapter.CustomSpinnerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -30,6 +31,21 @@ class MainActivity : AppCompatActivity() {
 
         sp_title_search.spinner!!.adapter = searchAdapter
         sp_title_search.spinner?.setSelection(2)
+
+        /*
+        val multiSelectAdapter = ArrayAdapter<String>(
+            this,
+            android.R.layout.simple_spinner_dropdown_item,
+            arrayListOf("", "Seleccion 1", "Seleccion 2", "Seleccion 3")
+        )
+         */
+        val multiSelectAdapter = CustomSpinnerAdapter(
+            this,
+            arrayListOf("Pick", "Seleccion 1", "Seleccion 2", "Seleccion 3"),
+            ""
+        )
+
+        sp_multi.adapter = multiSelectAdapter
 
     }
 }
