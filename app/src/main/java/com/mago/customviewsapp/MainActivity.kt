@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         sp_multi.adapter = multiSelectAdapter
+        sp_multi.originalAdapter = multiSelectAdapter as ArrayAdapter<Any>
 
     }
 }

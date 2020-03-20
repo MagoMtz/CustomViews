@@ -18,17 +18,17 @@ open class SearchableSpinner(context: Context, attributeSet: AttributeSet, isMul
 
     constructor(context: Context, attributeSet: AttributeSet): this(context, attributeSet, false)
 
-    private var xOrigin = 100f
-    private var yOrigin = 120f
-    private var yCenter = 0f
-    private val rectLarge = 26.6666666667f
-    private val rectHeight = 17.7777777778f
-    private val circleRad = 22.2222222222f
+    protected var xOrigin = 100f
+    protected var yOrigin = 120f
+    protected var yCenter = 0f
+    protected val rectLarge = 26.6666666667f
+    protected val rectHeight = 17.7777777778f
+    protected val circleRad = 22.2222222222f
 
-    private lateinit var arrowPath: Path
+    protected lateinit var arrowPath: Path
 
     //Attributes
-    private var isElementSelected = false
+    protected var isElementSelected = false
 
     var isMandatory: Boolean = false
         set(value) {
@@ -50,30 +50,30 @@ open class SearchableSpinner(context: Context, attributeSet: AttributeSet, isMul
         }
 
     // Paint objects
-    private val framePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    protected val framePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = ContextCompat.getColor(context, R.color.border)
         style = Paint.Style.STROKE
         strokeWidth = 3F
     }
 
-    private val frameAlertPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    protected val frameAlertPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = ContextCompat.getColor(context, R.color.frame_invalid)
         style = Paint.Style.STROKE
         strokeWidth = 3F
     }
 
-    private val arrowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    protected val arrowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = ContextCompat.getColor(context, R.color.dark_gray)
         style = Paint.Style.FILL
     }
 
-    private val circlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    protected val circlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = ContextCompat.getColor(context, R.color.dark_gray)
         style = Paint.Style.STROKE
         strokeWidth = 5f
     }
 
-    private val titleTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    protected val titleTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = ContextCompat.getColor(context, R.color.dark_text)
         textSize = 50f
     }
