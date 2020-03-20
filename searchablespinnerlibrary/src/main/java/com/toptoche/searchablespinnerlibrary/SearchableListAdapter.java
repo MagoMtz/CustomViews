@@ -66,12 +66,6 @@ public class SearchableListAdapter extends ArrayAdapter<Object> {
 
         checkedTextView.setText(item.toString());
 
-        checkedTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkedTextView.setChecked(!checkedTextView.isChecked());
-            }
-        });
         return view;
     }
 
@@ -83,6 +77,24 @@ public class SearchableListAdapter extends ArrayAdapter<Object> {
         textView.setText(item.toString());
 
         return view;
+    }
+
+    @Override
+    public View getDropDownView(int position, View convertView, ViewGroup parent) {
+        if (isMultiSelect) {
+            View view = super.getDropDownView(position, convertView, parent);
+            TextView textView = view.findViewById(android.R.id.text1);
+            textView.setText("Seleccion 1, Seleccion 2");
+            return view;
+        } else {
+            return super.getDropDownView(position, convertView, parent);
+        }
+    }
+
+    public void setData(List<Object> elements) {
+        this.elements = elements;
+        this.originalElements = elements;
+        notifyDataSetChanged();
     }
 
     private Filter filter = new Filter() {
@@ -118,7 +130,8 @@ public class SearchableListAdapter extends ArrayAdapter<Object> {
                 return;
             }
 
-            if (results.count > 0) {
+
+        if (results.count > 0) {
                 elements = (List<Object>) results.values;
                 notifyDataSetChanged();
             } else {

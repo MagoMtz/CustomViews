@@ -1,6 +1,7 @@
 package com.toptoche.searchablespinnerlibrary;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
@@ -28,6 +29,8 @@ public class SearchableSpinner extends Spinner implements View.OnTouchListener,
     private ArrayAdapter _arrayAdapter;
     private String _strHintText;
     private boolean _isFromInit;
+
+    private ArrayList<Object> _selectedItems;
 
     //Added
     private boolean _isMultiSelect;
@@ -80,7 +83,10 @@ public class SearchableSpinner extends Spinner implements View.OnTouchListener,
         _searchableListDialog = SearchableListDialog.newInstance
                 (_items, _isMultiSelect);
         _searchableListDialog.setOnSearchableItemClickListener(this);
+
         setOnTouchListener(this);
+
+        _selectedItems = new ArrayList<Object>();
 
         _arrayAdapter = (ArrayAdapter) getAdapter();
         if (!TextUtils.isEmpty(_strHintText)) {
@@ -162,7 +168,11 @@ public class SearchableSpinner extends Spinner implements View.OnTouchListener,
         _searchableListDialog.setOnSearchTextChangedListener(onSearchTextChanged);
     }
 
-    private Activity scanForActivity(Context cont) {
+    protected SearchableListDialog getSearchableListDialog() {
+        return _searchableListDialog;
+    }
+
+    protected Activity scanForActivity(Context cont) {
         if (cont == null)
             return null;
         else if (cont instanceof Activity)
@@ -190,4 +200,5 @@ public class SearchableSpinner extends Spinner implements View.OnTouchListener,
             return super.getSelectedItem();
         }
     }
+
 }
