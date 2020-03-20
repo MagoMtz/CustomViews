@@ -1,8 +1,9 @@
-package com.mago.customviews.views
+package com.mago.customviews.views.multiselectspinner
 
 import android.content.Context
 import android.util.AttributeSet
 import com.mago.customviews.R
+import com.mago.customviews.views.SearchableSpinner
 
 /**
  * @author by jmartinez
