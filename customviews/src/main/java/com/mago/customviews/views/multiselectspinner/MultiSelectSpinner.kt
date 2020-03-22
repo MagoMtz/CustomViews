@@ -1,4 +1,4 @@
-package com.mago.customviews.views
+package com.mago.customviews.views.multiselectspinner
 
 import android.content.Context
 import android.graphics.Canvas
@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import androidx.core.graphics.toRectF
 import com.mago.customviews.R
+import com.mago.customviews.views.SearchableSpinner
 import com.toptoche.searchablespinnerlibrary.SearchableListDialog
 
 /**

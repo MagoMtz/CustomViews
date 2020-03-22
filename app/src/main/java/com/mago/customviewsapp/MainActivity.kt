@@ -1,10 +1,13 @@
 package com.mago.customviewsapp
 
 import android.os.Bundle
-import android.widget.ArrayAdapter
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.mago.customviews.views.adapter.CustomSpinnerAdapter
+import com.mago.customviews.views.multiselectspinner.ObjectData
+import com.mago.customviews.views.multiselectspinner.SpinnerListener
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -45,8 +48,33 @@ class MainActivity : AppCompatActivity() {
             ""
         )
 
-        sp_multi.adapter = multiSelectAdapter
-        sp_multi.originalAdapter = multiSelectAdapter as ArrayAdapter<Any>
+        val array = arrayListOf("Pick", "Seleccion 1", "Seleccion 2", "Seleccion 3")
+        val items = ArrayList<ObjectData>()
+        for (i in array.indices) {
+            val o = ObjectData(
+                i.toLong(),
+                array[i],
+                false,
+                array[i]
+            )
+            items.add(o)
+        }
+
+        sp_multi.initialize(items, object : SpinnerListener {
+            override fun onItemsSelected(items: List<ObjectData>) {
+
+            }
+            override fun onItemSelected(items: List<ObjectData>) {
+                for (i in items.indices) {
+                    if (items[i].isSelected) {
+                        Log.i("TAG",
+                            i.toString() + " : " + items[i].name + " : " + items[i].isSelected
+                        )
+                    }
+                }
+            }
+        })
+
 
     }
 }

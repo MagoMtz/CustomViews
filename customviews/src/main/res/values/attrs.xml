@@ -53,6 +53,16 @@
         <attr name="spinnerHeight" />
     </declare-styleable>
 
+    <declare-styleable name="MultiSpinnerSearch">
+        <attr name="isMandatory" />
+        <attr name="spinnerHeight" />
+    </declare-styleable>
+
+    <declare-styleable name="MultiSelectSearchSpinner">
+        <attr name="isMandatory" />
+        <attr name="spinnerHeight" />
+    </declare-styleable>
+
     <declare-styleable name="TitleSearchableSpinner">
         <attr name="titleHint" />
         <attr name="isMandatory" />
