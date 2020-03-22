@@ -20,9 +20,11 @@ import com.mago.customviews.R
  */
 class MultiSelectSearchDialog: DialogFragment() {
     private lateinit var items: List<ObjectData>
+    private lateinit var selectedItems: List<ObjectData>
     private lateinit var title: String
 
     private lateinit var multiSelectSearchAdapter: MultiSelectSearchAdapter
+    private lateinit var listener: DialogListener
 
     companion object {
         const val TAG = "MultiSelectSearchDialog"
@@ -60,7 +62,7 @@ class MultiSelectSearchDialog: DialogFragment() {
         val builder = AlertDialog.Builder(activity)
         builder.setTitle(title)
         builder.setView(view)
-        builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
+        builder.setPositiveButton(android.R.string.cancel) { dialog, _ ->
                 dialog.dismiss()
         }
 
@@ -70,11 +72,10 @@ class MultiSelectSearchDialog: DialogFragment() {
     private fun createView(inflater: LayoutInflater): View {
         val view = inflater.inflate(R.layout.dialog_multi_select_search, null)
 
-        //val title = view.findViewById<TextView>(R.id.tv_title)
         val searchView = view.findViewById<SearchView>(R.id.tv_search)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
 
-        //title.text = this.title
+        searchView.onActionViewExpanded()
         setOnQueryTextChanged(searchView)
         setupRecyclerView(recyclerView)
 
@@ -106,6 +107,8 @@ class MultiSelectSearchDialog: DialogFragment() {
         multiSelectSearchAdapter.setSpinnerListener(object : SpinnerListener{
             override fun onItemsSelected(items: List<ObjectData>) {
                 Log.d("TAG", "selectedItems:  ${items.size}")
+                listener.onItemsSelected(items)
+                dialog?.cancel()
             }
             override fun onItemSelected(items: List<ObjectData>) {
                 for (i in items.indices) {
@@ -122,9 +125,8 @@ class MultiSelectSearchDialog: DialogFragment() {
         multiSelectSearchAdapter.notifyDataSetChanged()
     }
 
-    fun setSpinnerListener(listener: SpinnerListener) {
-        //multiSelectSearchAdapter.setSpinnerListener(listener)
-
+    fun setDialogListener(listener: DialogListener) {
+        this.listener = listener
     }
 
 }

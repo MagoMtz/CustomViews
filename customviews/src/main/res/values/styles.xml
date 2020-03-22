@@ -8,6 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="SpinnerStyle" >
+        <item name="android:textAppearance">?android:attr/textAppearanceListItemSmall</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="paddingStart">?android:attr/listPreferredItemPaddingStart</item>
+        <item name="paddingEnd">?android:attr/listPreferredItemPaddingEnd</item>
+        <item name="android:minHeight">?android:attr/listPreferredItemHeightSmall</item>
+    </style>
+
     <style name="HintText" >
         <item name="android:textSize">@dimen/hint_text_size</item>
         <item name="android:textColor">@color/colorAccent</item>

@@ -1,5 +1,6 @@
 package com.mago.customviews.util
 
+import android.content.Context
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -24,4 +25,7 @@ object CommonUtils {
         return c.timeInMillis
     }
 
+    fun intToDp(context: Context, dp: Int): Int {
+        return (context.resources.displayMetrics.density * dp + 0.5F).toInt()
+    }
 }

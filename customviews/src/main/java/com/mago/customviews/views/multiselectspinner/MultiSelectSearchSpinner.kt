@@ -7,23 +7,31 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toRectF
+import androidx.core.view.marginStart
 import com.mago.customviews.R
+import com.mago.customviews.util.CommonUtils
+import java.lang.StringBuilder
 
 /**
  * @author by jmartinez
  * @since 21/03/2020.
  */
 class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
-    : View(context, attributeSet), View.OnClickListener {
+    : AppCompatTextView(context, attributeSet), View.OnClickListener, DialogListener {
 
     private lateinit var multiSelectSearchDialog: MultiSelectSearchDialog
     private lateinit var limitListener: LimitListener
-    private lateinit var listener: SpinnerListener
+    private var selectedItems: List<ObjectData> = listOf()
 
     private var xOrigin = 100f
     private var yOrigin = 120f
@@ -107,7 +115,7 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
         super.onDraw(canvas)
 
 
-        isElementSelected = 1 != 0
+        isElementSelected = selectedItems.size == 2
 
 
         canvas?.apply {
@@ -123,6 +131,14 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
             } else
                 drawRoundRect(clipBounds.toRectF(), 15F, 15F, framePaint)
         }
+        /*gravity = Gravity.CENTER_VERTICAL
+        setTextAppearance(context, android.R.style.TextAppearance_Medium)
+        setPadding(
+            CommonUtils.intToDp(context, 5),
+            0,
+            CommonUtils.intToDp(context, 5),
+            0
+        )*/
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -152,7 +168,24 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
         showDialog()
     }
 
-    fun initialize(items: List<Any>, listener: SpinnerListener) {
+    override fun onItemsSelected(items: List<ObjectData>) {
+        this.selectedItems = items
+        val sb = StringBuilder()
+        for (i in items.indices) {
+            if (items[i].isSelected) {
+                sb.append(items[i].name)
+                sb.append(", ")
+            }
+        }
+        val mText = sb.toString()
+        text = mText.substring(0, mText.length - 2)
+    }
+
+    override fun onCancelButton(items: List<ObjectData>) {
+
+    }
+
+    fun initialize(items: List<Any>, title: String) {
         val data = arrayListOf<ObjectData>()
         for (i in items.indices) {
             val o = ObjectData()
@@ -164,9 +197,10 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
         }
         multiSelectSearchDialog = MultiSelectSearchDialog.newInstance(
             data,
-            "Select item"
+            title
         )
-        this.listener = listener
+        multiSelectSearchDialog.setDialogListener(this)
+        text = title
     }
 
     private fun showDialog() {
@@ -175,7 +209,6 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
             fm,
             MultiSelectSearchDialog.TAG
         )
-        multiSelectSearchDialog.setSpinnerListener(listener)
     }
 
     private fun scanForActivity(context: Context): AppCompatActivity? {
@@ -186,5 +219,7 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
 
         return null
     }
+
+    fun getSelectedItems(): List<ObjectData> = selectedItems
 
 }

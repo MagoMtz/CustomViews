@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
             ""
         )
 
-        val array = arrayListOf("Pick", "Seleccion 1", "Seleccion 2", "Seleccion 3")
+        val array = arrayListOf("Seleccion 1", "Seleccion 2", "Seleccion 3")
         val items = ArrayList<ObjectData>()
         for (i in array.indices) {
             val o = ObjectData(
@@ -60,20 +60,7 @@ class MainActivity : AppCompatActivity() {
             items.add(o)
         }
 
-        sp_multi.initialize(items, object : SpinnerListener {
-            override fun onItemsSelected(items: List<ObjectData>) {
-
-            }
-            override fun onItemSelected(items: List<ObjectData>) {
-                for (i in items.indices) {
-                    if (items[i].isSelected) {
-                        Log.i("TAG",
-                            i.toString() + " : " + items[i].name + " : " + items[i].isSelected
-                        )
-                    }
-                }
-            }
-        })
+        sp_multi.initialize(items, "Pick")
 
 
     }
