@@ -1,4 +1,4 @@
-package com.mago.customviews.views
+package com.mago.customviews.views.edittext
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
@@ -14,7 +14,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.mago.customviews.R
 import com.mago.customviews.util.Constants.DATE_PLACE_HOLDER
-import com.mago.customviews.util.Regex.DATE
+import com.mago.customviews.util.RegexPattern.DATE
 import java.util.*
 
 /**

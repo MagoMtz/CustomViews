@@ -1,25 +1,17 @@
-package com.mago.customviews.views.multiselectspinner
+package com.mago.customviews.views.spinner.multiselectspinner
 
-import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
-import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toRectF
-import androidx.core.view.marginStart
 import com.mago.customviews.R
-import com.mago.customviews.util.CommonUtils
 import java.lang.StringBuilder
 
 /**

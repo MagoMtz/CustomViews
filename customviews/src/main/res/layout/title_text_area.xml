@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         style="@style/TextInputLayoutAppearance">
 
-        <com.mago.customviews.views.TextArea
+        <com.mago.customviews.views.edittext.TextArea
             android:id="@+id/text_area"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

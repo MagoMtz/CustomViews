@@ -1,4 +1,4 @@
-package com.mago.customviews.views
+package com.mago.customviews.views.title
 
 import android.content.Context
 import android.graphics.Canvas
@@ -7,37 +7,38 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.mago.customviews.R
+import com.mago.customviews.views.spinner.CustomSpinner
 
 /**
  * @author by jmartinez
- * @since 04/02/2020.
+ * @since 17/01/2020.
  */
-class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet) :
+class TitleSpinner(context: Context, attributeSet: AttributeSet) :
     LinearLayout(context, attributeSet) {
 
-    private lateinit var tvTitleHint: TextView
-    var spinner: SearchableSpinner? = null
+    private lateinit var tvTitle: TextView
+    var spinner: CustomSpinner? = null
         set(value) {
             field = value
-            requestLayout()
             invalidate()
+            requestLayout()
         }
 
-    private var titleHintText: CharSequence = ""
-        get() = tvTitleHint.text
+    private var titleText: CharSequence = ""
+        get() = tvTitle.text
         set(value) {
             field = value
-            tvTitleHint.text = value
-            requestLayout()
+            tvTitle.text = value
             invalidate()
-        }
-    private var isMandatory: Boolean = false
-        set(value) {
-            field = value
             requestLayout()
-            invalidate()
         }
     var spinnerHeight: Float = 0F
+        set(value) {
+            field = value
+            invalidate()
+            requestLayout()
+        }
+    var isMandatory: Boolean = false
         set(value) {
             field = value
             requestLayout()
@@ -45,29 +46,27 @@ class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet) :
         }
 
     init {
-        View.inflate(context, R.layout.title_searchable_spinner, this)
-
+        View.inflate(context, R.layout.title_spinner, this)
         val sets = intArrayOf(R.attr.titleHint)
         val typedArray = context.obtainStyledAttributes(attributeSet, sets)
         val title = typedArray.getText(0)
         typedArray.recycle()
 
-
-        context.theme.obtainStyledAttributes(attributeSet, R.styleable.TitleSearchableSpinner, 0, 0)
+        context.theme.obtainStyledAttributes(attributeSet, R.styleable.TitleSpinner, 0, 0)
             .apply {
                 try {
-                    isMandatory = getBoolean(R.styleable.TitleSearchableSpinner_isMandatory, false)
                     spinnerHeight = getDimension(
-                        R.styleable.TitleSearchableSpinner_spinnerHeight,
+                        R.styleable.TitleSpinner_spinnerHeight,
                         resources.getDimension(R.dimen.spinner_min_height)
                     )
+                    isMandatory = getBoolean(R.styleable.TitleSpinner_isMandatory, false)
                 } finally {
                     recycle()
                 }
             }
 
         initComponents()
-        titleHintText = title
+        titleText = title
         setWillNotDraw(false)
     }
 
@@ -75,7 +74,7 @@ class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet) :
         super.onDraw(canvas)
         canvas?.let {
             spinner?.let {
-                tvTitleHint.visibility = if (it.selectedItemPosition == -1)
+                tvTitle.visibility = if (it.selectedItemPosition == 0)
                     View.INVISIBLE
                 else
                     View.VISIBLE
@@ -84,11 +83,11 @@ class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet) :
     }
 
     private fun initComponents() {
-        tvTitleHint = findViewById(R.id.tv_title)
-        spinner = findViewById(R.id.sp_searchable)
+        tvTitle = findViewById(R.id.tv_title)
+        spinner = findViewById(R.id.sp_custom)
 
-        spinner?.isMandatory = isMandatory
         spinner?.spinnerHeight = spinnerHeight
+        spinner?.isMandatory = isMandatory
     }
 
 }

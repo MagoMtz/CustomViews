@@ -1,4 +1,4 @@
-package com.mago.customviews.views
+package com.mago.customviews.views.edittext
 
 import android.content.Context
 import android.text.Editable
@@ -8,7 +8,7 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
 import com.mago.customviews.util.Constants.DATE_FORMAT
 import com.mago.customviews.util.Constants.REPLACE_DATE_FORMAT
-import com.mago.customviews.util.Regex.DATE
+import com.mago.customviews.util.RegexPattern.DATE
 import java.util.*
 
 /**

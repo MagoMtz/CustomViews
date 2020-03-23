@@ -1,4 +1,4 @@
-package com.mago.customviews.views
+package com.mago.customviews.views.title
 
 import android.content.Context
 import android.util.AttributeSet
@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.LinearLayout
 import com.google.android.material.textfield.TextInputLayout
 import com.mago.customviews.R
+import com.mago.customviews.views.edittext.CustomEditText
 
 /**
  * @author by jmartinez

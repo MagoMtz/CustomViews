@@ -1,4 +1,4 @@
-package com.mago.customviews.views.multiselectspinner
+package com.mago.customviews.views.spinner.multiselectspinner
 
 /**
  * @author by jmartinez

@@ -5,14 +5,14 @@
     android:layout_weight="1"
     android:orientation="horizontal">
 
-    <com.mago.customviews.views.SingleDate
+    <com.mago.customviews.views.edittext.SingleDate
         android:id="@+id/init_date"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight=".5"
         android:layout_marginEnd="6dp"/>
 
-    <com.mago.customviews.views.SingleDate
+    <com.mago.customviews.views.edittext.SingleDate
         android:id="@+id/final_date"
         android:layout_width="0dp"
         android:layout_height="match_parent"

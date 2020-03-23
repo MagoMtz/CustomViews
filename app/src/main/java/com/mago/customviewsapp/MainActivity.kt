@@ -1,11 +1,9 @@
 package com.mago.customviewsapp
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.mago.customviews.views.adapter.CustomSpinnerAdapter
-import com.mago.customviews.views.multiselectspinner.ObjectData
-import com.mago.customviews.views.multiselectspinner.SpinnerListener
+import com.mago.customviews.views.spinner.multiselectspinner.ObjectData
 import kotlinx.android.synthetic.main.activity_main.*
 
 

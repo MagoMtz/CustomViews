@@ -1,20 +1,20 @@
-package com.mago.customviews.views
+package com.mago.customviews.views.edittext
 
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.text.InputType
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toRectF
 import com.mago.customviews.R
+import com.mago.customviews.util.RegexPattern
+import java.util.regex.Pattern
 
-/**
- * @author by jmartinez
- * @since 05/02/2020.
- */
-class TextArea(context: Context, attributeSet: AttributeSet) : AppCompatEditText(context, attributeSet) {
-    // Attributes
+class EmailEditText(context: Context, attributeSet: AttributeSet):
+    AppCompatEditText(context, attributeSet) {
+
     var isMandatory: Boolean = false
         set(value) {
             field = value
@@ -22,7 +22,6 @@ class TextArea(context: Context, attributeSet: AttributeSet) : AppCompatEditText
             requestLayout()
         }
 
-    // Paint objects
     private val framePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = ContextCompat.getColor(context, R.color.border)
         style = Paint.Style.STROKE
@@ -36,39 +35,39 @@ class TextArea(context: Context, attributeSet: AttributeSet) : AppCompatEditText
     }
 
     init {
-        context.theme.obtainStyledAttributes(attributeSet, R.styleable.TextArea, 0, 0)
+        context.theme.obtainStyledAttributes(attributeSet, R.styleable.EmailEditText, 0, 0)
             .apply {
                 try {
-                    isMandatory = getBoolean(R.styleable.TextArea_isMandatory, false)
+                    isMandatory = getBoolean(R.styleable.EmailEditText_isMandatory, false)
 
                     background = null
                 } finally {
                     recycle()
                 }
             }
-
-        minLines = 1
-        setLines(3)
-        maxLines = 15
+        inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        val textIsEmpty = text.toString().isEmpty()
+        val pattern = Pattern.compile(RegexPattern.E_MAIL, Pattern.CASE_INSENSITIVE)
+        val matcher = pattern.matcher(text.toString())
+        val isValid = matcher.matches()
 
         canvas?.apply {
             val cBounds = clipBounds
             cBounds.inset(0, 8)
 
             if (isMandatory)
-                if (textIsEmpty)
+                if (!isValid)
                     drawRoundRect(cBounds.toRectF(), 10F, 10F, frameAlertPaint)
                 else
                     drawRoundRect(cBounds.toRectF(), 10F, 10F, framePaint)
             else
                 drawRoundRect(cBounds.toRectF(), 10F, 10F, framePaint)
-
         }
+
     }
+
 }

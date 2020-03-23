@@ -83,4 +83,8 @@
         <attr name="daysRange" format="integer" />
     </declare-styleable>
 
+    <declare-styleable name="EmailEditText">
+        <attr name="isMandatory" />
+    </declare-styleable>
+
 </resources>

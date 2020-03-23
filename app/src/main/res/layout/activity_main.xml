@@ -23,7 +23,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.mago.customviews.views.TitleEditText
+            <com.mago.customviews.views.edittext.EmailEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:isMandatory="true"
+                />
+
+            <com.mago.customviews.views.title.TitleEditText
                 android:id="@+id/et_title"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -31,7 +37,7 @@
                 app:isMandatory="true"
                 app:titleHint="Title Edit Text" />
 
-            <com.mago.customviews.views.TitleSpinner
+            <com.mago.customviews.views.title.TitleSpinner
                 android:id="@+id/sp_biographic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -40,7 +46,7 @@
                 app:spinnerHeight="50dp"
                 app:titleHint="Title spinner" />
 
-            <com.mago.customviews.views.TitleSearchableSpinner
+            <com.mago.customviews.views.title.TitleSearchableSpinner
                 android:id="@+id/sp_title_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -49,7 +55,7 @@
                 app:isMandatory="true"
                 app:titleHint="Title search spinner" />
 
-            <com.mago.customviews.views.multiselectspinner.MultiSelectSearchSpinner
+            <com.mago.customviews.views.spinner.multiselectspinner.MultiSelectSearchSpinner
                 android:id="@+id/sp_multi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,7 +69,7 @@
                 android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
                 />
 
-            <com.mago.customviews.views.TitleTextArea
+            <com.mago.customviews.views.title.TitleTextArea
                 android:id="@+id/et_textArea"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -72,7 +78,7 @@
                 app:isMandatory="true"
                 app:titleHint="Title Text Area" />
 
-            <com.mago.customviews.views.SingleDate
+            <com.mago.customviews.views.edittext.SingleDate
                 android:id="@+id/et_date"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
@@ -81,7 +87,7 @@
                 app:futureDate="true"
                 />
 
-            <com.mago.customviews.views.DateRange
+            <com.mago.customviews.views.edittext.DateRange
                 android:id="@+id/et_date_range"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
