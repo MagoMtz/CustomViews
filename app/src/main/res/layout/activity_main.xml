@@ -23,7 +23,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.mago.customviews.views.edittext.ZipCodeEditText
+            <com.mago.customviews.views.edittext.PhoneEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
