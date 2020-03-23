@@ -20,7 +20,7 @@
         android:orientation="horizontal"
         android:weightSum="1">
 
-        <com.mago.customviews.views.DateEditText
+        <com.mago.customviews.views.edittext.DateEditText
             android:id="@+id/date_edit_text"
             android:layout_width="0dp"
             android:layout_height="match_parent"

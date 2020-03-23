@@ -1,20 +1,30 @@
-package com.mago.customviews.views
+package com.mago.customviews.views.spinner.multiselectspinner
 
 import android.content.Context
+import android.content.ContextWrapper
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toRectF
 import com.mago.customviews.R
+import java.lang.StringBuilder
 
 /**
  * @author by jmartinez
- * @since 04/02/2020.
+ * @since 21/03/2020.
  */
-class SearchableSpinner(context: Context, attributeSet: AttributeSet) :
-    com.toptoche.searchablespinnerlibrary.SearchableSpinner(context, attributeSet) {
+class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
+    : AppCompatTextView(context, attributeSet), View.OnClickListener, DialogListener {
+
+    private lateinit var multiSelectSearchDialog: MultiSelectSearchDialog
+    private lateinit var limitListener: LimitListener
+    private var selectedItems: List<ObjectData> = listOf()
+
     private var xOrigin = 100f
     private var yOrigin = 120f
     private var yCenter = 0f
@@ -76,12 +86,12 @@ class SearchableSpinner(context: Context, attributeSet: AttributeSet) :
     }
 
     init {
-        context.theme.obtainStyledAttributes(attributeSet, R.styleable.SearchableSpinner, 0, 0)
+        context.theme.obtainStyledAttributes(attributeSet, R.styleable.MultiSelectSearchSpinner, 0, 0)
             .apply {
                 try {
-                    isMandatory = getBoolean(R.styleable.SearchableSpinner_isMandatory, false)
+                    isMandatory = getBoolean(R.styleable.MultiSelectSearchSpinner_isMandatory, false)
                     spinnerHeight = getDimension(
-                        R.styleable.SearchableSpinner_spinnerHeight,
+                        R.styleable.MultiSelectSearchSpinner_spinnerHeight,
                         resources.getDimension(R.dimen.spinner_min_height)
                     )
 
@@ -90,13 +100,14 @@ class SearchableSpinner(context: Context, attributeSet: AttributeSet) :
                     recycle()
                 }
             }
+        setOnClickListener(this)
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
 
-        isElementSelected = selectedItemPosition != 0
+        isElementSelected = selectedItems.size == 2
 
 
         canvas?.apply {
@@ -112,12 +123,14 @@ class SearchableSpinner(context: Context, attributeSet: AttributeSet) :
             } else
                 drawRoundRect(clipBounds.toRectF(), 15F, 15F, framePaint)
         }
-/*
-        val params = layoutParams
-        params.height = spinnerHeight.toInt()
-        //layoutParams = params
-        requestLayout()
- */
+        /*gravity = Gravity.CENTER_VERTICAL
+        setTextAppearance(context, android.R.style.TextAppearance_Medium)
+        setPadding(
+            CommonUtils.intToDp(context, 5),
+            0,
+            CommonUtils.intToDp(context, 5),
+            0
+        )*/
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -141,7 +154,64 @@ class SearchableSpinner(context: Context, attributeSet: AttributeSet) :
         val params = layoutParams
         params.height = spinnerHeight.toInt()
         requestLayout()
-        //setMeasuredDimension(params.width, params.height)
     }
+
+    override fun onClick(v: View?) {
+        showDialog()
+    }
+
+    override fun onItemsSelected(items: List<ObjectData>) {
+        this.selectedItems = items
+        val sb = StringBuilder()
+        for (i in items.indices) {
+            if (items[i].isSelected) {
+                sb.append(items[i].name)
+                sb.append(", ")
+            }
+        }
+        val mText = sb.toString()
+        text = mText.substring(0, mText.length - 2)
+    }
+
+    override fun onCancelButton(items: List<ObjectData>) {
+
+    }
+
+    fun initialize(items: List<Any>, title: String) {
+        val data = arrayListOf<ObjectData>()
+        for (i in items.indices) {
+            val o = ObjectData()
+            o.id = i.toLong()
+            o.name = items[i].toString()
+            o.isSelected = false
+            o.`object` = items[i]
+            data.add(o)
+        }
+        multiSelectSearchDialog = MultiSelectSearchDialog.newInstance(
+            data,
+            title
+        )
+        multiSelectSearchDialog.setDialogListener(this)
+        text = title
+    }
+
+    private fun showDialog() {
+        val fm = scanForActivity(context)!!.supportFragmentManager
+        multiSelectSearchDialog.show(
+            fm,
+            MultiSelectSearchDialog.TAG
+        )
+    }
+
+    private fun scanForActivity(context: Context): AppCompatActivity? {
+        if (context is AppCompatActivity)
+            return context
+        else if (context is ContextWrapper)
+            return scanForActivity((context).baseContext)
+
+        return null
+    }
+
+    fun getSelectedItems(): List<ObjectData> = selectedItems
 
 }

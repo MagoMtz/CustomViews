@@ -1,4 +1,4 @@
-package com.mago.customviews.views
+package com.mago.customviews.views.edittext
 
 import android.content.Context
 import android.graphics.Canvas
@@ -12,7 +12,7 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toRectF
 import com.mago.customviews.R
-import com.mago.customviews.util.Regex
+import com.mago.customviews.util.RegexPattern
 import java.util.regex.Pattern
 
 /**
@@ -70,8 +70,6 @@ open class CustomEditText(context: Context, attributeSet: AttributeSet) :
                     recycle()
                 }
             }
-
-
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -115,9 +113,9 @@ open class CustomEditText(context: Context, attributeSet: AttributeSet) :
 
                 // Pattern for only text
                 val pattern = when {
-                    onlyNumbers -> Regex.ONLY_NUMBERS
-                    charsWithBlankSpaces -> Regex.A_TO_Z_WITH_BLANK_SPACES
-                    else -> Regex.A_TO_Z
+                    onlyNumbers -> RegexPattern.ONLY_NUMBERS
+                    charsWithBlankSpaces -> RegexPattern.A_TO_Z_WITH_BLANK_SPACES
+                    else -> RegexPattern.A_TO_Z
                 }
                 val mPattern = Pattern.compile(pattern)
 

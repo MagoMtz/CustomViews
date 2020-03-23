@@ -16,7 +16,7 @@ import com.mago.customviews.R
  */
 class CustomSpinnerAdapter<T : Any>(
     context: Context,
-    private val data: List<T>,
+    private var data: List<T>,
     private val title: String
 ) : ArrayAdapter<T>(context, R.layout.custom_spinner_item, data) {
 
@@ -38,6 +38,11 @@ class CustomSpinnerAdapter<T : Any>(
 
     override fun getCount(): Int {
         return data.size
+    }
+
+    fun setData(data: List<T>) {
+        this.data = data
+        notifyDataSetChanged()
     }
 
 }

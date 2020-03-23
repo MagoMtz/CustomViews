@@ -48,6 +48,21 @@
         <attr name="spinnerHeight" />
     </declare-styleable>
 
+    <declare-styleable name="MultiSelectSpinner">
+        <attr name="isMandatory" />
+        <attr name="spinnerHeight" />
+    </declare-styleable>
+
+    <declare-styleable name="MultiSpinnerSearch">
+        <attr name="isMandatory" />
+        <attr name="spinnerHeight" />
+    </declare-styleable>
+
+    <declare-styleable name="MultiSelectSearchSpinner">
+        <attr name="isMandatory" />
+        <attr name="spinnerHeight" />
+    </declare-styleable>
+
     <declare-styleable name="TitleSearchableSpinner">
         <attr name="titleHint" />
         <attr name="isMandatory" />
@@ -66,6 +81,18 @@
         <attr name="initDateTitle" format="string" />
         <attr name="finalDateTitle" format="string" />
         <attr name="daysRange" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="EmailEditText">
+        <attr name="isMandatory" />
+    </declare-styleable>
+
+    <declare-styleable name="PhoneEditText">
+        <attr name="isMandatory" />
+    </declare-styleable>
+
+    <declare-styleable name="ZipCodeEditText">
+        <attr name="isMandatory" />
     </declare-styleable>
 
 </resources>

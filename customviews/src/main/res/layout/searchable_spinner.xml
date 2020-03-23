@@ -11,7 +11,7 @@
         style="@style/EditTextHintAppearance"
         />
 
-    <com.mago.customviews.views.CustomSpinner
+    <com.mago.customviews.views.spinner.CustomSpinner
         android:id="@+id/sp_custom"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

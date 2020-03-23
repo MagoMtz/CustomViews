@@ -1,4 +1,4 @@
-package com.mago.customviews.views
+package com.mago.customviews.views.edittext
 
 import android.app.DatePickerDialog
 import android.content.Context
@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.LinearLayout
 import com.mago.customviews.R
 import com.mago.customviews.util.CommonUtils
-import com.mago.customviews.util.Regex.DATE
+import com.mago.customviews.util.RegexPattern.DATE
 import java.util.*
 
 class DateRange(context: Context, attributeSet: AttributeSet) :
