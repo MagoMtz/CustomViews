@@ -95,6 +95,7 @@ class DateEditText(context: Context, attributeSet: AttributeSet) : AppCompatEdit
                 current = clean
                 setText(current)
                 setSelection(if (sel < current.length) sel else current.length)
+                requestLayout()
             }
         }
 

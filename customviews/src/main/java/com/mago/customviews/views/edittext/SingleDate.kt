@@ -86,11 +86,11 @@ class SingleDate(context: Context, attributeSet: AttributeSet) :
             }
 
         initComponents()
-        setWillNotDraw(false)
         setClickListeners()
+        setWillNotDraw(false)
     }
 
-    @SuppressLint("DrawAllocation")
+    //@SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
