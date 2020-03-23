@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.text.Editable
+import android.text.InputFilter
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
@@ -50,12 +51,13 @@ class PhoneEditText(context: Context, attributeSet: AttributeSet):
                 }
             }
         inputType = InputType.TYPE_CLASS_PHONE
+        filters = arrayOf(InputFilter.LengthFilter(14))
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        val isValid = text.toString().length == 10
+        val isValid = text.toString().length == 14
 
         canvas?.apply {
             val cBounds = clipBounds
@@ -83,19 +85,43 @@ class PhoneEditText(context: Context, attributeSet: AttributeSet):
     }
 
     private fun textWatcher(): TextWatcher = object : TextWatcher {
-        override fun afterTextChanged(s: Editable?) {
-            s?.let { editable ->
-                val count = editable.length
-                if (count >= 11) {
-                    val text = s.substring(0, count - 1)
-                    setText(text)
-                    setSelection(count - 1)
+        private var backspacing = false
+        private var edited = false
+        private var cursorCompleted = 0
+
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+            cursorCompleted = s.length - selectionStart
+
+            backspacing = count > after
+        }
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun afterTextChanged(s: Editable) {
+            val string: String = s.toString()
+            val phone = string.replace("[^\\d]".toRegex(), "")
+
+            if (!edited) {
+                if (phone.length >= 6 && !backspacing) {
+                    edited = true
+                    val ans = "(${phone.substring(0,3)}) ${phone.substring(3,6)}-${phone.substring(6)}"
+                    setText(ans)
+                    setSelection(text!!.length-cursorCompleted)
+                } else if (phone.length >= 3 && !backspacing) {
+                    edited = true
+                    val ans = "(${phone.substring(0,3)}) ${phone.substring(3)}"
+                    setText(ans)
+                    setSelection(text!!.length-cursorCompleted)
                 }
+            } else {
+                edited = false
             }
         }
 
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+    }
+
+    fun getPhoneNumber(): String {
+        return text!!.replace("[^\\d]".toRegex(), "")
     }
 
 }

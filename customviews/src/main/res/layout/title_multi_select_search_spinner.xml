@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/EditTextHintAppearance"
+        />
+
+    <com.mago.customviews.views.spinner.multiselectspinner.MultiSelectSearchSpinner
+        android:id="@+id/sp_searchable"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spinner_min_height"
+        style="?android:attr/spinnerDropDownItemStyle"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+        />
+
+</LinearLayout>

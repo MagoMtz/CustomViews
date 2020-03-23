@@ -47,18 +47,9 @@ class MainActivity : AppCompatActivity() {
         )
 
         val array = arrayListOf("Seleccion 1", "Seleccion 2", "Seleccion 3")
-        val items = ArrayList<ObjectData>()
-        for (i in array.indices) {
-            val o = ObjectData(
-                i.toLong(),
-                array[i],
-                false,
-                array[i]
-            )
-            items.add(o)
-        }
 
-        sp_multi.initialize(items, "Pick")
+
+        sp_multi.spinner.initialize(array, "Pick")
 
 
     }
