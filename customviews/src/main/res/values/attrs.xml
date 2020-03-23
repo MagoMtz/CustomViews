@@ -87,4 +87,12 @@
         <attr name="isMandatory" />
     </declare-styleable>
 
+    <declare-styleable name="PhoneEditText">
+        <attr name="isMandatory" />
+    </declare-styleable>
+
+    <declare-styleable name="ZipCodeEditText">
+        <attr name="isMandatory" />
+    </declare-styleable>
+
 </resources>
