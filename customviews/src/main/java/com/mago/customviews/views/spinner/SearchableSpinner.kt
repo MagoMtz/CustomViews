@@ -18,17 +18,17 @@ open class SearchableSpinner(context: Context, attributeSet: AttributeSet, isMul
 
     constructor(context: Context, attributeSet: AttributeSet): this(context, attributeSet, false)
 
-    protected var xOrigin = 100f
-    protected var yOrigin = 120f
-    protected var yCenter = 0f
-    protected val rectLarge = 26.6666666667f
-    protected val rectHeight = 17.7777777778f
-    protected val circleRad = 22.2222222222f
+    private var xOrigin = 100f
+    private var yOrigin = 120f
+    private var yCenter = 0f
+    private val rectLarge = 26.6666666667f
+    private val rectHeight = 17.7777777778f
+    private val circleRad = 22.2222222222f
 
-    protected lateinit var arrowPath: Path
+    private lateinit var arrowPath: Path
 
     //Attributes
-    protected var isElementSelected = false
+    private var isElementSelected = false
 
     var isMandatory: Boolean = false
         set(value) {
@@ -36,12 +36,15 @@ open class SearchableSpinner(context: Context, attributeSet: AttributeSet, isMul
             invalidate()
             requestLayout()
         }
+    /*
     var spinnerHeight: Float = 0F
         set(value) {
             field = value
             invalidate()
             requestLayout()
         }
+
+     */
     var hintText: String = ""
         set(value) {
             field = value
@@ -50,30 +53,18 @@ open class SearchableSpinner(context: Context, attributeSet: AttributeSet, isMul
         }
 
     // Paint objects
-    protected val framePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = ContextCompat.getColor(context, R.color.border)
-        style = Paint.Style.STROKE
-        strokeWidth = 3F
-    }
-
-    protected val frameAlertPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = ContextCompat.getColor(context, R.color.frame_invalid)
-        style = Paint.Style.STROKE
-        strokeWidth = 3F
-    }
-
-    protected val arrowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    private val arrowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = ContextCompat.getColor(context, R.color.dark_gray)
         style = Paint.Style.FILL
     }
 
-    protected val circlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    private val circlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = ContextCompat.getColor(context, R.color.dark_gray)
         style = Paint.Style.STROKE
         strokeWidth = 5f
     }
 
-    protected val titleTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    private val titleTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = ContextCompat.getColor(context, R.color.dark_text)
         textSize = 50f
     }
@@ -83,12 +74,10 @@ open class SearchableSpinner(context: Context, attributeSet: AttributeSet, isMul
             .apply {
                 try {
                     isMandatory = getBoolean(R.styleable.SearchableSpinner_isMandatory, false)
-                    spinnerHeight = getDimension(
+                    /*spinnerHeight = getDimension(
                         R.styleable.SearchableSpinner_spinnerHeight,
                         resources.getDimension(R.dimen.spinner_min_height)
-                    )
-
-                    background = null
+                    )*/
                 } finally {
                     recycle()
                 }
@@ -97,23 +86,20 @@ open class SearchableSpinner(context: Context, attributeSet: AttributeSet, isMul
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-
-
         isElementSelected = selectedItemPosition != 0
-
 
         canvas?.apply {
             canvas.drawPath(arrowPath, arrowPaint)
             canvas.drawCircle(xOrigin + rectLarge / 2, yCenter, circleRad, circlePaint)
 
-            if (!isElementSelected) {
+            background = if (!isElementSelected) {
                 canvas.drawText(hintText, 30f, yCenter + (yCenter / 3), titleTextPaint)
                 if (isMandatory)
-                    drawRoundRect(clipBounds.toRectF(), 15F, 15F, frameAlertPaint)
+                    ContextCompat.getDrawable(context, R.drawable.bg_spinner_invalid)
                 else
-                    drawRoundRect(clipBounds.toRectF(), 15F, 15F, framePaint)
+                    ContextCompat.getDrawable(context, R.drawable.bg_spinner)
             } else
-                drawRoundRect(clipBounds.toRectF(), 15F, 15F, framePaint)
+                ContextCompat.getDrawable(context, R.drawable.bg_spinner)
         }
 /*
         val params = layoutParams
@@ -141,10 +127,9 @@ open class SearchableSpinner(context: Context, attributeSet: AttributeSet, isMul
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val params = layoutParams
-        params.height = spinnerHeight.toInt()
+        //val params = layoutParams
+        //params.height = spinnerHeight.toInt()
         requestLayout()
-        //setMeasuredDimension(params.width, params.height)
     }
 
 }

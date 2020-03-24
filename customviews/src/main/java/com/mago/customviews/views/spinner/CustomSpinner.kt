@@ -45,26 +45,15 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : AppCompatSpi
             invalidate()
             requestLayout()
         }
+    /*
     var spinnerHeight: Float = 0F
         set(value) {
             field = value
             invalidate()
             requestLayout()
         }
-
+     */
     // Paint objects
-    private val framePaint = Paint(ANTI_ALIAS_FLAG).apply {
-        color = ContextCompat.getColor(context, R.color.border)
-        style = Paint.Style.STROKE
-        strokeWidth = 3F
-    }
-
-    private val frameAlertPaint = Paint(ANTI_ALIAS_FLAG).apply {
-        color = ContextCompat.getColor(context, R.color.frame_invalid)
-        style = Paint.Style.STROKE
-        strokeWidth = 3F
-    }
-
     private val arrowPaint = Paint(ANTI_ALIAS_FLAG).apply {
         color = ContextCompat.getColor(context, R.color.dark_gray)
         style = Paint.Style.FILL
@@ -89,12 +78,10 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : AppCompatSpi
                 try {
                     isMandatory = getBoolean(R.styleable.CustomSpinner_isMandatory, false)
                     getString(R.styleable.CustomSpinner_titleHint)?.let { titleHint = it }
-                    spinnerHeight = getDimension(
+                    /*spinnerHeight = getDimension(
                         R.styleable.CustomSpinner_spinnerHeight,
                         resources.getDimension(R.dimen.spinner_min_height)
-                    )
-
-                    background = null
+                    )*/
                 } finally {
                     recycle()
                 }
@@ -109,14 +96,14 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : AppCompatSpi
             canvas.drawPath(arrowPath, arrowPaint)
             canvas.drawCircle(xOrigin + rectLarge / 2, yCenter, circleRad, circlePaint)
 
-            if (!isElementSelected) {
+            background = if (!isElementSelected) {
                 canvas.drawText(titleHint!!, 30f, yCenter + (yCenter / 3), titleTextPaint)
                 if (isMandatory)
-                    drawRoundRect(clipBounds.toRectF(), 15F, 15F, frameAlertPaint)
+                    ContextCompat.getDrawable(context, R.drawable.bg_spinner_invalid)
                 else
-                    drawRoundRect(clipBounds.toRectF(), 15F, 15F, framePaint)
+                    ContextCompat.getDrawable(context, R.drawable.bg_spinner)
             } else
-                drawRoundRect(clipBounds.toRectF(), 15F, 15F, framePaint)
+                ContextCompat.getDrawable(context, R.drawable.bg_spinner)
         }
     }
 
@@ -138,8 +125,8 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : AppCompatSpi
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val params = layoutParams
-        params.height = spinnerHeight.toInt()
+        //val params = layoutParams
+        //params.height = spinnerHeight.toInt()
         requestLayout()
     }
 

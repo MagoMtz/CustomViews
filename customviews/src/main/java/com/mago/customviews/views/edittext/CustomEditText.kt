@@ -11,7 +11,9 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toRectF
+import androidx.core.view.marginTop
 import com.mago.customviews.R
+import com.mago.customviews.util.CommonUtils
 import com.mago.customviews.util.RegexPattern
 import java.util.regex.Pattern
 
@@ -63,13 +65,11 @@ open class CustomEditText(context: Context, attributeSet: AttributeSet) :
                     charsWithBlankSpaces =
                         getBoolean(R.styleable.CustomEditText_charsWithBlankSpaces, false)
                     isMandatory = getBoolean(R.styleable.CustomEditText_isMandatory, false)
-
-
-                    background = null
                 } finally {
                     recycle()
                 }
             }
+
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -81,15 +81,20 @@ open class CustomEditText(context: Context, attributeSet: AttributeSet) :
             val cBounds = clipBounds
             cBounds.inset(0, 8)
 
-            if (isMandatory)
+            background = if (isMandatory)
                 if (textIsEmpty)
-                    drawRoundRect(cBounds.toRectF(), 10F, 10F, frameAlertPaint)
+                    ContextCompat.getDrawable(context, R.drawable.bg_common_invalid)
                 else
-                    drawRoundRect(cBounds.toRectF(), 10F, 10F, framePaint)
+                    ContextCompat.getDrawable(context, R.drawable.bg_common)
             else
-                drawRoundRect(cBounds.toRectF(), 10F, 10F, framePaint)
+                ContextCompat.getDrawable(context, R.drawable.bg_common)
 
         }
+        setPadding(
+            CommonUtils.intToDp(context, 8),
+            CommonUtils.intToDp(context, 7)
+            ,0
+            ,0)
     }
 
     override fun onAttachedToWindow() {

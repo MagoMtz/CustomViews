@@ -23,7 +23,7 @@ class CustomSpinnerAdapter<T : Any>(
     private val hidingItemIndex = 0
 
     init {
-        setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        setDropDownViewResource(android.R.layout.simple_list_item_1)
     }
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
