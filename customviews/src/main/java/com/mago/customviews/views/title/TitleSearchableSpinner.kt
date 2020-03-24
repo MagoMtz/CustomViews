@@ -38,13 +38,14 @@ class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet) :
             requestLayout()
             invalidate()
         }
+    /*
     var spinnerHeight: Float = 0F
         set(value) {
             field = value
             requestLayout()
             invalidate()
         }
-
+     */
     init {
         View.inflate(context, R.layout.title_searchable_spinner, this)
 
@@ -58,10 +59,12 @@ class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet) :
             .apply {
                 try {
                     isMandatory = getBoolean(R.styleable.TitleSearchableSpinner_isMandatory, false)
+                    /*
                     spinnerHeight = getDimension(
                         R.styleable.TitleSearchableSpinner_spinnerHeight,
                         resources.getDimension(R.dimen.spinner_min_height)
                     )
+                     */
                 } finally {
                     recycle()
                 }
@@ -89,7 +92,7 @@ class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet) :
         spinner = findViewById(R.id.sp_searchable)
 
         spinner?.isMandatory = isMandatory
-        spinner?.spinnerHeight = spinnerHeight
+        //spinner?.spinnerHeight = spinnerHeight
     }
 
 }

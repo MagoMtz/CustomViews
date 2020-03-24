@@ -61,5 +61,9 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        sp.spinner?.adapter = multiSelectAdapter
+
+
     }
+
 }

@@ -14,7 +14,7 @@
     <com.mago.customviews.views.spinner.SearchableSpinner
         android:id="@+id/sp_searchable"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/spinner_min_height"
+        android:layout_height="wrap_content"
         />
 
 </LinearLayout>

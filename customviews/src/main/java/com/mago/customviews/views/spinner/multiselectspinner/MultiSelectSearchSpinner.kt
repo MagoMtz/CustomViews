@@ -6,8 +6,11 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatSpinner
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toRectF
@@ -19,7 +22,7 @@ import java.lang.StringBuilder
  * @since 21/03/2020.
  */
 class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
-    : AppCompatTextView(context, attributeSet), View.OnClickListener, DialogListener {
+    : AppCompatSpinner(context, attributeSet), View.OnClickListener, View.OnTouchListener, DialogListener {
 
     private lateinit var multiSelectSearchDialog: MultiSelectSearchDialog
     private lateinit var limitListener: LimitListener
@@ -44,12 +47,14 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
             invalidate()
             requestLayout()
         }
+    /*
     var spinnerHeight: Float = 0F
         set(value) {
             field = value
             invalidate()
             requestLayout()
         }
+     */
     var hintText: String = ""
         set(value) {
             field = value
@@ -58,18 +63,6 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
         }
 
     // Paint objects
-    private val framePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = ContextCompat.getColor(context, R.color.border)
-        style = Paint.Style.STROKE
-        strokeWidth = 3F
-    }
-
-    private val frameAlertPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = ContextCompat.getColor(context, R.color.frame_invalid)
-        style = Paint.Style.STROKE
-        strokeWidth = 3F
-    }
-
     private val arrowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = ContextCompat.getColor(context, R.color.dark_gray)
         style = Paint.Style.FILL
@@ -91,17 +84,16 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
             .apply {
                 try {
                     isMandatory = getBoolean(R.styleable.MultiSelectSearchSpinner_isMandatory, false)
-                    spinnerHeight = getDimension(
+                    /*spinnerHeight = getDimension(
                         R.styleable.MultiSelectSearchSpinner_spinnerHeight,
                         resources.getDimension(R.dimen.spinner_min_height)
-                    )
-
-                    background = null
+                    )*/
                 } finally {
                     recycle()
                 }
             }
-        setOnClickListener(this)
+        //setOnClickListener(this)
+        setOnTouchListener(this)
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -115,14 +107,14 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
             canvas.drawPath(arrowPath, arrowPaint)
             canvas.drawCircle(xOrigin + rectLarge / 2, yCenter, circleRad, circlePaint)
 
-            if (!isElementSelected) {
+            background = if (!isElementSelected) {
                 canvas.drawText(hintText, 30f, yCenter + (yCenter / 3), titleTextPaint)
                 if (isMandatory)
-                    drawRoundRect(clipBounds.toRectF(), 15F, 15F, frameAlertPaint)
+                    ContextCompat.getDrawable(context, R.drawable.bg_spinner_invalid)
                 else
-                    drawRoundRect(clipBounds.toRectF(), 15F, 15F, framePaint)
+                    ContextCompat.getDrawable(context, R.drawable.bg_spinner)
             } else
-                drawRoundRect(clipBounds.toRectF(), 15F, 15F, framePaint)
+                ContextCompat.getDrawable(context, R.drawable.bg_spinner)
         }
         /*gravity = Gravity.CENTER_VERTICAL
         setTextAppearance(context, android.R.style.TextAppearance_Medium)
@@ -152,13 +144,19 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val params = layoutParams
-        params.height = spinnerHeight.toInt()
+        //val params = layoutParams
+        //params.height = spinnerHeight.toInt()
         requestLayout()
     }
 
     override fun onClick(v: View?) {
         showDialog()
+    }
+
+    override fun onTouch(v: View, event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_UP)
+            showDialog()
+        return true
     }
 
     override fun onItemsSelected(items: List<ObjectData>) {
@@ -171,7 +169,8 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
             }
         }
         val mText = sb.toString()
-        text = mText.substring(0, mText.length - 2)
+        //text = mText.substring(0, mText.length - 2)
+        setAdapter(mText.substring(0, mText.length - 2))
 
         if (::itemsSelectedListener.isInitialized) {
             val arrayList = arrayListOf<Any>()
@@ -182,9 +181,7 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
         }
     }
 
-    override fun onCancelButton(items: List<ObjectData>) {
-
-    }
+    override fun onCancelButton(items: List<ObjectData>) {}
 
     fun initialize(items: List<Any>, title: String) {
         val data = arrayListOf<ObjectData>()
@@ -201,7 +198,8 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
             title
         )
         multiSelectSearchDialog.setDialogListener(this)
-        text = title
+        //text = title
+        setAdapter(title)
     }
 
     private fun showDialog() {
@@ -227,5 +225,8 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
         return null
     }
 
+    private fun setAdapter(title: String) {
+        adapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, listOf(title))
+    }
 
 }

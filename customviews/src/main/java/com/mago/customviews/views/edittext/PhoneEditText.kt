@@ -27,18 +27,6 @@ class PhoneEditText(context: Context, attributeSet: AttributeSet):
             requestLayout()
         }
 
-    private val framePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = ContextCompat.getColor(context, R.color.border)
-        style = Paint.Style.STROKE
-        strokeWidth = 3F
-    }
-
-    private val frameAlertPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = ContextCompat.getColor(context, R.color.frame_invalid)
-        style = Paint.Style.STROKE
-        strokeWidth = 3F
-    }
-
     init {
         context.theme.obtainStyledAttributes(attributeSet, R.styleable.PhoneEditText, 0, 0)
             .apply {
@@ -63,13 +51,13 @@ class PhoneEditText(context: Context, attributeSet: AttributeSet):
             val cBounds = clipBounds
             cBounds.inset(0, 8)
 
-            if (isMandatory)
+            background = if (isMandatory)
                 if (!isValid)
-                    drawRoundRect(cBounds.toRectF(), 10F, 10F, frameAlertPaint)
+                    ContextCompat.getDrawable(context, R.drawable.bg_common_invalid)
                 else
-                    drawRoundRect(cBounds.toRectF(), 10F, 10F, framePaint)
+                    ContextCompat.getDrawable(context, R.drawable.bg_common)
             else
-                drawRoundRect(cBounds.toRectF(), 10F, 10F, framePaint)
+                ContextCompat.getDrawable(context, R.drawable.bg_common)
         }
 
     }

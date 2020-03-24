@@ -34,12 +34,14 @@ class TitleMultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet
             requestLayout()
             invalidate()
         }
+        /*
         var spinnerHeight: Float = 0F
         set(value) {
             field = value
             requestLayout()
             invalidate()
         }
+        */
 
         init {
             View.inflate(context, R.layout.title_multi_select_search_spinner, this)
@@ -54,10 +56,10 @@ class TitleMultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet
                 .apply {
                     try {
                         isMandatory = getBoolean(R.styleable.TitleMultiSelectSearchSpinner_isMandatory, false)
-                        spinnerHeight = getDimension(
+                        /*spinnerHeight = getDimension(
                             R.styleable.TitleMultiSelectSearchSpinner_spinnerHeight,
                             resources.getDimension(R.dimen.spinner_min_height)
-                        )
+                        )*/
                     } finally {
                         recycle()
                     }
@@ -85,7 +87,7 @@ class TitleMultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet
             spinner = findViewById(R.id.sp_searchable)
 
             spinner.isMandatory = isMandatory
-            spinner.spinnerHeight = spinnerHeight
+            //spinner.spinnerHeight = spinnerHeight
         }
 
     }

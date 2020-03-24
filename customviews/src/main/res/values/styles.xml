@@ -21,11 +21,9 @@
     <style name="TextInputLayoutAppearance">
         <item name="hintTextAppearance">@style/HintText</item>
         <item name="errorTextAppearance">@style/HintErrorText</item>
-        <item name="android:textColorHint">@color/colorAccent</item>
     </style>
 
     <style name="EditTextHintAppearance" >
-        <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textSize">@dimen/hint_text_size</item>
         <item name="android:layout_marginStart">@dimen/hint_margin_start</item>
     </style>
