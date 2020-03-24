@@ -23,6 +23,7 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
 
     private lateinit var multiSelectSearchDialog: MultiSelectSearchDialog
     private lateinit var limitListener: LimitListener
+    private lateinit var itemsSelectedListener: ItemsSelectedListener
     private var selectedItems: List<ObjectData> = listOf()
 
     private var xOrigin = 100f
@@ -171,6 +172,14 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
         }
         val mText = sb.toString()
         text = mText.substring(0, mText.length - 2)
+
+        if (::itemsSelectedListener.isInitialized) {
+            val arrayList = arrayListOf<Any>()
+            for (i in items.indices) {
+                arrayList.add(items[i].`object`)
+            }
+            itemsSelectedListener.onItemsSelected(arrayList)::class.java
+        }
     }
 
     override fun onCancelButton(items: List<ObjectData>) {
@@ -203,6 +212,12 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
         )
     }
 
+    fun getSelectedItems(): List<ObjectData> = selectedItems
+
+    fun setOnItemsSelectedListener(listener: ItemsSelectedListener) {
+        itemsSelectedListener = listener
+    }
+
     private fun scanForActivity(context: Context): AppCompatActivity? {
         if (context is AppCompatActivity)
             return context
@@ -212,6 +227,5 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
         return null
     }
 
-    fun getSelectedItems(): List<ObjectData> = selectedItems
 
 }

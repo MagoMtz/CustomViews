@@ -1,8 +1,10 @@
 package com.mago.customviewsapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.mago.customviews.views.adapter.CustomSpinnerAdapter
+import com.mago.customviews.views.spinner.multiselectspinner.ItemsSelectedListener
 import com.mago.customviews.views.spinner.multiselectspinner.ObjectData
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -50,7 +52,14 @@ class MainActivity : AppCompatActivity() {
 
 
         sp_multi.spinner.initialize(array, "Pick")
-
+        sp_multi.spinner.setOnItemsSelectedListener(object : ItemsSelectedListener {
+            override fun onItemsSelected(list: List<Any>) {
+                list as List<String>
+                list.forEach {
+                    Log.d("TAG", "element: $it")
+                }
+            }
+        })
 
     }
 }
