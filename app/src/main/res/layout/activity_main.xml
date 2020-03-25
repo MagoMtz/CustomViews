@@ -25,9 +25,10 @@
             android:layout_weight="0.5"
             app:isMandatory="true"
             app:titleHint="Title Text"
+            app:allChars="true"
             />
 
-        <com.mago.customviews.views.title.TitleSearchableSpinner
+        <com.mago.customviews.views.title.TitleMultiSelectSearchSpinner
             android:id="@+id/sp"
             android:layout_width="0dp"
             android:layout_height="match_parent"

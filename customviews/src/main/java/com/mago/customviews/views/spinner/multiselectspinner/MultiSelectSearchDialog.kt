@@ -7,11 +7,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.mago.customviews.R
 
 /**
@@ -20,27 +19,30 @@ import com.mago.customviews.R
  */
 class MultiSelectSearchDialog: DialogFragment() {
     private lateinit var items: List<ObjectData>
-    private lateinit var selectedItems: List<ObjectData>
     private lateinit var title: String
+    private lateinit var overLimitMsg: String
+    private var limit: Int = 0
 
     private lateinit var multiSelectSearchAdapter: MultiSelectSearchAdapter
     private lateinit var listener: DialogListener
 
+    private var selected = 0
+    private var itemsSelected = arrayListOf<ObjectData>()
+
     companion object {
         const val TAG = "MultiSelectSearchDialog"
 
-        const val PARAM_ITEMS = "param_items"
         const val PARAM_TITLE = "param_title"
+        const val PARAM_OVER_LIMIT_MSG = "param_over_limit_msg"
+        const val PARAM_LIMIT = "param_limit"
 
-        private val listType = object : TypeToken<List<ObjectData>>() {}.type
-
-        fun newInstance(items: List<ObjectData>, title: String): MultiSelectSearchDialog {
+        fun newInstance(title: String, overLimitMsg: String, limit: Int): MultiSelectSearchDialog {
             val dialog = MultiSelectSearchDialog()
             val args = Bundle()
 
-            val listJSON = Gson().toJson(items, listType)
-            args.putString(PARAM_ITEMS, listJSON)
             args.putString(PARAM_TITLE, title)
+            args.putString(PARAM_OVER_LIMIT_MSG, overLimitMsg)
+            args.putInt(PARAM_LIMIT, limit)
 
             dialog.arguments = args
             return dialog
@@ -49,10 +51,9 @@ class MultiSelectSearchDialog: DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val mItems: List<ObjectData> = Gson().fromJson(arguments!!.getString(PARAM_ITEMS)!!, listType)
-        items = mItems
         title = arguments!!.getString(PARAM_TITLE)!!
-
+        overLimitMsg = arguments!!.getString(PARAM_OVER_LIMIT_MSG)!!
+        limit = arguments!!.getInt(PARAM_LIMIT)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -103,11 +104,14 @@ class MultiSelectSearchDialog: DialogFragment() {
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
         recyclerView.layoutManager = LinearLayoutManager(context!!)
-        multiSelectSearchAdapter = MultiSelectSearchAdapter(items)
+        multiSelectSearchAdapter = MultiSelectSearchAdapter(items, selected, itemsSelected)
         multiSelectSearchAdapter.setSpinnerListener(object : SpinnerListener{
             override fun onItemsSelected(items: List<ObjectData>) {
                 Log.d("TAG", "selectedItems:  ${items.size}")
                 listener.onItemsSelected(items)
+
+                selected = items.size
+                itemsSelected = ArrayList(items)
                 dialog?.cancel()
             }
             override fun onItemSelected(items: List<ObjectData>) {
@@ -120,6 +124,12 @@ class MultiSelectSearchDialog: DialogFragment() {
                 }
             }
         })
+        multiSelectSearchAdapter.setLimitListener(object : LimitListener {
+            override fun onLimitListener(data: ObjectData) {
+                Toast.makeText(context, overLimitMsg, Toast.LENGTH_SHORT).show()
+                dialog?.cancel()
+            }
+        }, limit)
 
         recyclerView.adapter = multiSelectSearchAdapter
         multiSelectSearchAdapter.notifyDataSetChanged()
@@ -127,6 +137,10 @@ class MultiSelectSearchDialog: DialogFragment() {
 
     fun setDialogListener(listener: DialogListener) {
         this.listener = listener
+    }
+
+    fun setItems(items: List<ObjectData>) {
+        this.items = items
     }
 
 }

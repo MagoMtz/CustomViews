@@ -21,8 +21,21 @@ import java.util.regex.Pattern
  * @author by jmartinez
  * @since 15/01/2020.
  */
-open class CustomEditText(context: Context, attributeSet: AttributeSet) :
-    AppCompatEditText(context, attributeSet) {
+open class CustomEditText :
+    AppCompatEditText {
+    private lateinit var attributeSet: AttributeSet
+
+    constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
+        this.attributeSet = attributeSet
+        init()
+    }
+    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int):
+            super(context, attributeSet, defStyleAttr) {
+        this.attributeSet = attributeSet
+        init()
+    }
+    constructor(context: Context): super(context)
+
     // Attributes
     var onlyNumbers: Boolean = false
         set(value) {
@@ -31,6 +44,12 @@ open class CustomEditText(context: Context, attributeSet: AttributeSet) :
             requestLayout()
         }
     var charsWithBlankSpaces: Boolean = false
+        set(value) {
+            field = value
+            invalidate()
+            requestLayout()
+        }
+    var allChars: Boolean = false
         set(value) {
             field = value
             invalidate()
@@ -56,7 +75,7 @@ open class CustomEditText(context: Context, attributeSet: AttributeSet) :
         strokeWidth = 3F
     }
 
-    init {
+    fun init() {
         context.theme.obtainStyledAttributes(attributeSet, R.styleable.CustomEditText, 0, 0)
             .apply {
                 try {
@@ -64,6 +83,8 @@ open class CustomEditText(context: Context, attributeSet: AttributeSet) :
                         getBoolean(R.styleable.CustomEditText_onlyNumbers, false)
                     charsWithBlankSpaces =
                         getBoolean(R.styleable.CustomEditText_charsWithBlankSpaces, false)
+                    allChars =
+                        getBoolean(R.styleable.CustomEditText_allChars, false)
                     isMandatory = getBoolean(R.styleable.CustomEditText_isMandatory, false)
                 } finally {
                     recycle()
@@ -120,6 +141,7 @@ open class CustomEditText(context: Context, attributeSet: AttributeSet) :
                 val pattern = when {
                     onlyNumbers -> RegexPattern.ONLY_NUMBERS
                     charsWithBlankSpaces -> RegexPattern.A_TO_Z_WITH_BLANK_SPACES
+                    allChars -> RegexPattern.ALL_CHARS
                     else -> RegexPattern.A_TO_Z
                 }
                 val mPattern = Pattern.compile(pattern)
