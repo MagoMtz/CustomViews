@@ -13,10 +13,24 @@ import com.mago.customviews.R
  * @author by jmartinez
  * @since 04/02/2020.
  */
-open class SearchableSpinner(context: Context, attributeSet: AttributeSet, isMultiSelect: Boolean = false) :
-    com.toptoche.searchablespinnerlibrary.SearchableSpinner(context, attributeSet, isMultiSelect) {
+open class SearchableSpinner :
+    com.toptoche.searchablespinnerlibrary.SearchableSpinner {
+    private lateinit var attributeSet: AttributeSet
 
-    constructor(context: Context, attributeSet: AttributeSet): this(context, attributeSet, false)
+    constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
+        this.attributeSet = attributeSet
+        init()
+    }
+    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attributeSet,
+        defStyleAttr
+    ) {
+        this.attributeSet = attributeSet
+        init()
+    }
+    constructor(context: Context) : super(context)
+
 
     private var xOrigin = 100f
     private var yOrigin = 120f
@@ -45,6 +59,7 @@ open class SearchableSpinner(context: Context, attributeSet: AttributeSet, isMul
         }
 
      */
+
     var hintText: String = ""
         set(value) {
             field = value
@@ -69,7 +84,7 @@ open class SearchableSpinner(context: Context, attributeSet: AttributeSet, isMul
         textSize = 50f
     }
 
-    init {
+    private fun init() {
         context.theme.obtainStyledAttributes(attributeSet, R.styleable.SearchableSpinner, 0, 0)
             .apply {
                 try {
@@ -77,7 +92,9 @@ open class SearchableSpinner(context: Context, attributeSet: AttributeSet, isMul
                     /*spinnerHeight = getDimension(
                         R.styleable.SearchableSpinner_spinnerHeight,
                         resources.getDimension(R.dimen.spinner_min_height)
-                    )*/
+                    )
+
+                     */
                 } finally {
                     recycle()
                 }
@@ -101,12 +118,7 @@ open class SearchableSpinner(context: Context, attributeSet: AttributeSet, isMul
             } else
                 ContextCompat.getDrawable(context, R.drawable.bg_spinner)
         }
-/*
-        val params = layoutParams
-        params.height = spinnerHeight.toInt()
-        //layoutParams = params
-        requestLayout()
- */
+
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -127,9 +139,9 @@ open class SearchableSpinner(context: Context, attributeSet: AttributeSet, isMul
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        //val params = layoutParams
+        val params = layoutParams
         //params.height = spinnerHeight.toInt()
-        requestLayout()
+        //requestLayout()
     }
 
 }

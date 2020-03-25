@@ -15,7 +15,23 @@ import com.mago.customviews.R
  * @author by jmartinez
  * @since 17/01/2020.
  */
-class CustomSpinner(context: Context, attributeSet: AttributeSet) : AppCompatSpinner(context, attributeSet) {
+class CustomSpinner : AppCompatSpinner {
+    private lateinit var attributeSet: AttributeSet
+
+    constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
+        this.attributeSet = attributeSet
+        init()
+    }
+    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attributeSet,
+        defStyleAttr
+    ) {
+        this.attributeSet = attributeSet
+        init()
+    }
+    constructor(context: Context) : super(context)
+
     private var xOrigin = 100f
     private var yOrigin = 120f
     private var yCenter = 0f
@@ -52,6 +68,7 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : AppCompatSpi
             invalidate()
             requestLayout()
         }
+
      */
     // Paint objects
     private val arrowPaint = Paint(ANTI_ALIAS_FLAG).apply {
@@ -72,7 +89,7 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : AppCompatSpi
         textSize = 50f
     }
 
-    init {
+    private fun init() {
         context.theme.obtainStyledAttributes(attributeSet, R.styleable.CustomSpinner, 0, 0)
             .apply {
                 try {
@@ -81,7 +98,9 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : AppCompatSpi
                     /*spinnerHeight = getDimension(
                         R.styleable.CustomSpinner_spinnerHeight,
                         resources.getDimension(R.dimen.spinner_min_height)
-                    )*/
+                    )
+
+                     */
                 } finally {
                     recycle()
                 }
@@ -125,9 +144,9 @@ class CustomSpinner(context: Context, attributeSet: AttributeSet) : AppCompatSpi
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        //val params = layoutParams
+        val params = layoutParams
         //params.height = spinnerHeight.toInt()
-        requestLayout()
+    //    requestLayout()
     }
 
 }

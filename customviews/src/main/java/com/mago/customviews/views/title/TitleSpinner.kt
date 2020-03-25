@@ -13,11 +13,25 @@ import com.mago.customviews.views.spinner.CustomSpinner
  * @author by jmartinez
  * @since 17/01/2020.
  */
-class TitleSpinner(context: Context, attributeSet: AttributeSet) :
-    LinearLayout(context, attributeSet) {
+class TitleSpinner: LinearLayout {
+    private lateinit var attributeSet: AttributeSet
+
+    constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
+        this.attributeSet = attributeSet
+        init()
+    }
+    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attributeSet,
+        defStyleAttr
+    ) {
+        this.attributeSet = attributeSet
+        init()
+    }
+    constructor(context: Context) : super(context)
 
     private lateinit var tvTitle: TextView
-    var spinner: CustomSpinner? = null
+    var spinner: CustomSpinner = CustomSpinner(context)
         set(value) {
             field = value
             invalidate()
@@ -39,6 +53,8 @@ class TitleSpinner(context: Context, attributeSet: AttributeSet) :
             invalidate()
             requestLayout()
         }
+
+
      */
     var isMandatory: Boolean = false
         set(value) {
@@ -47,7 +63,7 @@ class TitleSpinner(context: Context, attributeSet: AttributeSet) :
             invalidate()
         }
 
-    init {
+    private fun init() {
         View.inflate(context, R.layout.title_spinner, this)
         val sets = intArrayOf(R.attr.titleHint)
         val typedArray = context.obtainStyledAttributes(attributeSet, sets)
@@ -61,7 +77,9 @@ class TitleSpinner(context: Context, attributeSet: AttributeSet) :
                     spinnerHeight = getDimension(
                         R.styleable.TitleSpinner_spinnerHeight,
                         resources.getDimension(R.dimen.spinner_min_height)
-                    )*/
+                    )
+
+                     */
                     isMandatory = getBoolean(R.styleable.TitleSpinner_isMandatory, false)
                 } finally {
                     recycle()
@@ -76,7 +94,7 @@ class TitleSpinner(context: Context, attributeSet: AttributeSet) :
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         canvas?.let {
-            spinner?.let {
+            spinner.let {
                 tvTitle.visibility = if (it.selectedItemPosition == 0)
                     View.INVISIBLE
                 else
@@ -89,8 +107,8 @@ class TitleSpinner(context: Context, attributeSet: AttributeSet) :
         tvTitle = findViewById(R.id.tv_title)
         spinner = findViewById(R.id.sp_custom)
 
-        //spinner?.spinnerHeight = spinnerHeight
-        spinner?.isMandatory = isMandatory
+        //spinner.spinnerHeight = spinnerHeight
+        spinner.isMandatory = isMandatory
     }
 
 }
