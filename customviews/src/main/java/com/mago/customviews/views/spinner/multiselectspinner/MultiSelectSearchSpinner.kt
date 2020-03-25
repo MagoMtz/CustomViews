@@ -11,11 +11,8 @@ import android.view.View
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatSpinner
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.toRectF
 import com.mago.customviews.R
-import java.lang.StringBuilder
 
 /**
  * @author by jmartinez
@@ -116,14 +113,6 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
             } else
                 ContextCompat.getDrawable(context, R.drawable.bg_spinner)
         }
-        /*gravity = Gravity.CENTER_VERTICAL
-        setTextAppearance(context, android.R.style.TextAppearance_Medium)
-        setPadding(
-            CommonUtils.intToDp(context, 5),
-            0,
-            CommonUtils.intToDp(context, 5),
-            0
-        )*/
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -183,7 +172,15 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
 
     override fun onCancelButton(items: List<ObjectData>) {}
 
-    fun initialize(items: List<Any>, title: String) {
+    fun init(items: List<Any>, title: String, limit: Int, overLimitMsg: String) {
+        initialize(items, title, limit, overLimitMsg)
+    }
+
+    fun init(items: List<Any>, title: String, limit: Int, overLimitMsg: Int) {
+        initialize(items, title, limit, context.getString(overLimitMsg))
+    }
+
+    private fun initialize(items: List<Any>, title: String, limit: Int, overLimitMsg: String) {
         val data = arrayListOf<ObjectData>()
         for (i in items.indices) {
             val o = ObjectData()
@@ -194,10 +191,12 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
             data.add(o)
         }
         multiSelectSearchDialog = MultiSelectSearchDialog.newInstance(
-            data,
-            title
+            title,
+            overLimitMsg,
+            limit
         )
         multiSelectSearchDialog.setDialogListener(this)
+        multiSelectSearchDialog.setItems(data)
         //text = title
         setAdapter(title)
     }

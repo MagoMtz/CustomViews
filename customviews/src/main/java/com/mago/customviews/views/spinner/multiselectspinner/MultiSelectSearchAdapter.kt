@@ -14,17 +14,22 @@ import kotlinx.android.synthetic.main.item_listview_multiple.view.*
  * @author by jmartinez
  * @since 21/03/2020.
  */
-class MultiSelectSearchAdapter(private var data: List<ObjectData>):
+class MultiSelectSearchAdapter(
+    private var data: List<ObjectData>,
+    private var selected: Int,
+    private var itemsSelected: ArrayList<ObjectData>
+) :
     RecyclerView.Adapter<MultiSelectSearchAdapter.ViewHolder>(), Filterable {
     private var originalValues: List<ObjectData> = data
-    private var selected = 0
-    private var limit = -1
+    private var limit = 0
+
+    //private var selected = 0
+    //private val itemsSelected = arrayListOf<ObjectData>()
 
     private lateinit var limitListener: LimitListener
     private lateinit var listener: SpinnerListener
-    private val itemsSelected = arrayListOf<ObjectData>()
 
-    class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView: View = LayoutInflater.from(parent.context)
@@ -64,10 +69,9 @@ class MultiSelectSearchAdapter(private var data: List<ObjectData>):
             item.isSelected = !item.isSelected
             notifyDataSetChanged()
 
-            if (selected == 2) {// TODO: cambiar 2 por
+            if (selected == limit) {
                 if (::listener.isInitialized) {
                     listener.onItemsSelected(itemsSelected)
-                    // TODO: cerrar dialogo
                 }
             }
         }
@@ -109,6 +113,11 @@ class MultiSelectSearchAdapter(private var data: List<ObjectData>):
 
     fun setSpinnerListener(listener: SpinnerListener) {
         this.listener = listener
+    }
+
+    fun setLimitListener(limitListener: LimitListener, limit: Int) {
+        this.limitListener = limitListener
+        this.limit = limit
     }
 
 }

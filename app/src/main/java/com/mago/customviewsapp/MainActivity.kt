@@ -42,16 +42,10 @@ class MainActivity : AppCompatActivity() {
             arrayListOf("", "Seleccion 1", "Seleccion 2", "Seleccion 3")
         )
          */
-        val multiSelectAdapter = CustomSpinnerAdapter(
-            this,
-            arrayListOf("Pick", "Seleccion 1", "Seleccion 2", "Seleccion 3"),
-            ""
-        )
 
         val array = arrayListOf("Seleccion 1", "Seleccion 2", "Seleccion 3")
 
-
-        sp_multi.spinner.initialize(array, "Pick")
+        sp_multi.spinner.init(array, "Pick", 2, "Sólo se pueden seleccionar 2 elementos")
         sp_multi.spinner.setOnItemsSelectedListener(object : ItemsSelectedListener {
             override fun onItemsSelected(list: List<Any>) {
                 list.forEach {
@@ -60,8 +54,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        sp.spinner?.adapter = multiSelectAdapter
-
+        sp.spinner.init(array, "Pick", 2, "Sólo se pueden seleccionar 2 elementos")
 
     }
 
