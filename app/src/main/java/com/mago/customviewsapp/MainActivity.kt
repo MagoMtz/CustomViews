@@ -54,7 +54,6 @@ class MainActivity : AppCompatActivity() {
         sp_multi.spinner.initialize(array, "Pick")
         sp_multi.spinner.setOnItemsSelectedListener(object : ItemsSelectedListener {
             override fun onItemsSelected(list: List<Any>) {
-                list as List<String>
                 list.forEach {
                     Log.d("TAG", "element: $it")
                 }

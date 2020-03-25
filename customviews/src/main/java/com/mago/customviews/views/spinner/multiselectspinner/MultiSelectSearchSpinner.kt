@@ -175,9 +175,9 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
         if (::itemsSelectedListener.isInitialized) {
             val arrayList = arrayListOf<Any>()
             for (i in items.indices) {
-                arrayList.add(items[i].`object`)
+                arrayList.add(items[i].item)
             }
-            itemsSelectedListener.onItemsSelected(arrayList)::class.java
+            itemsSelectedListener.onItemsSelected(arrayList)
         }
     }
 
@@ -190,7 +190,7 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
             o.id = i.toLong()
             o.name = items[i].toString()
             o.isSelected = false
-            o.`object` = items[i]
+            o.item = items[i]
             data.add(o)
         }
         multiSelectSearchDialog = MultiSelectSearchDialog.newInstance(

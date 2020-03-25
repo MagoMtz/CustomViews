@@ -8,7 +8,7 @@ data class ObjectData(
     var id: Long = 0L,
     var name: String = "",
     var isSelected: Boolean = false,
-    var `object`: Any = Any()
+    var item: Any = Any()
 ) {
     override fun toString(): String {
         return name
