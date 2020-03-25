@@ -13,11 +13,25 @@ import com.mago.customviews.views.spinner.SearchableSpinner
  * @author by jmartinez
  * @since 04/02/2020.
  */
-class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet) :
-    LinearLayout(context, attributeSet) {
+class TitleSearchableSpinner : LinearLayout {
+    private lateinit var attributeSet: AttributeSet
+
+    constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
+        this.attributeSet = attributeSet
+        init()
+    }
+    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attributeSet,
+        defStyleAttr
+    ) {
+        this.attributeSet = attributeSet
+        init()
+    }
+    constructor(context: Context) : super(context)
 
     private lateinit var tvTitleHint: TextView
-    var spinner: SearchableSpinner? = null
+    var spinner: SearchableSpinner = SearchableSpinner(context)
         set(value) {
             field = value
             requestLayout()
@@ -45,8 +59,10 @@ class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet) :
             requestLayout()
             invalidate()
         }
+
      */
-    init {
+
+    private fun init() {
         View.inflate(context, R.layout.title_searchable_spinner, this)
 
         val sets = intArrayOf(R.attr.titleHint)
@@ -59,11 +75,11 @@ class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet) :
             .apply {
                 try {
                     isMandatory = getBoolean(R.styleable.TitleSearchableSpinner_isMandatory, false)
-                    /*
-                    spinnerHeight = getDimension(
+                    /*spinnerHeight = getDimension(
                         R.styleable.TitleSearchableSpinner_spinnerHeight,
                         resources.getDimension(R.dimen.spinner_min_height)
                     )
+
                      */
                 } finally {
                     recycle()
@@ -78,7 +94,7 @@ class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet) :
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         canvas?.let {
-            spinner?.let {
+            spinner.let {
                 tvTitleHint.visibility = if (it.selectedItemPosition == -1)
                     View.INVISIBLE
                 else
@@ -91,8 +107,8 @@ class TitleSearchableSpinner(context: Context, attributeSet: AttributeSet) :
         tvTitleHint = findViewById(R.id.tv_title)
         spinner = findViewById(R.id.sp_searchable)
 
-        spinner?.isMandatory = isMandatory
-        //spinner?.spinnerHeight = spinnerHeight
+        spinner.isMandatory = isMandatory
+        //spinner.spinnerHeight = spinnerHeight
     }
 
 }

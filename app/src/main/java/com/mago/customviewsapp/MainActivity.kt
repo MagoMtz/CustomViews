@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.mago.customviews.views.adapter.CustomSpinnerAdapter
 import com.mago.customviews.views.spinner.multiselectspinner.ItemsSelectedListener
-import com.mago.customviews.views.spinner.multiselectspinner.ObjectData
 import kotlinx.android.synthetic.main.activity_main.*
 
 

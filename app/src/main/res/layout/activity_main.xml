@@ -25,7 +25,7 @@
             android:layout_weight="0.5"
             app:isMandatory="true"
             app:titleHint="Title Text"
-            app:allChars="true"
+            app:onlyNumbers="true"
             />
 
         <com.mago.customviews.views.title.TitleMultiSelectSearchSpinner
@@ -37,6 +37,7 @@
             android:layout_weight="0.5"
             app:isMandatory="true"
             app:titleHint="Title search spinner"
+            app:spinnerHeight="30dp"
             />
 
     </LinearLayout>

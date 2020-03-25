@@ -13,16 +13,27 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
 import com.mago.customviews.R
+import com.mago.customviews.util.CommonUtils
 
 /**
  * @author by jmartinez
  * @since 21/03/2020.
  */
-class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
-    : AppCompatSpinner(context, attributeSet), View.OnClickListener, View.OnTouchListener, DialogListener {
+class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListener, DialogListener {
+    private lateinit var attributeSet: AttributeSet
+
+    constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
+        this.attributeSet = attributeSet
+        init()
+    }
+    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int): super(context, attributeSet, defStyleAttr) {
+        this.attributeSet = attributeSet
+        init()
+    }
+    constructor(context: Context): super(context)
+
 
     private lateinit var multiSelectSearchDialog: MultiSelectSearchDialog
-    private lateinit var limitListener: LimitListener
     private lateinit var itemsSelectedListener: ItemsSelectedListener
     private var selectedItems: List<ObjectData> = listOf()
 
@@ -51,6 +62,7 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
             invalidate()
             requestLayout()
         }
+
      */
     var hintText: String = ""
         set(value) {
@@ -76,7 +88,7 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
         textSize = 50f
     }
 
-    init {
+    private fun init() {
         context.theme.obtainStyledAttributes(attributeSet, R.styleable.MultiSelectSearchSpinner, 0, 0)
             .apply {
                 try {
@@ -84,12 +96,13 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
                     /*spinnerHeight = getDimension(
                         R.styleable.MultiSelectSearchSpinner_spinnerHeight,
                         resources.getDimension(R.dimen.spinner_min_height)
-                    )*/
+                    )
+
+                     */
                 } finally {
                     recycle()
                 }
             }
-        //setOnClickListener(this)
         setOnTouchListener(this)
     }
 
@@ -133,7 +146,7 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        //val params = layoutParams
+        val params = layoutParams
         //params.height = spinnerHeight.toInt()
         requestLayout()
     }
@@ -197,7 +210,6 @@ class MultiSelectSearchSpinner(context: Context, attributeSet: AttributeSet)
         )
         multiSelectSearchDialog.setDialogListener(this)
         multiSelectSearchDialog.setItems(data)
-        //text = title
         setAdapter(title)
     }
 
