@@ -11,6 +11,8 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toRectF
 import com.mago.customviews.R
+import com.mago.customviews.util.RegexPattern
+import java.util.regex.Pattern
 
 class ZipCodeEditText(context: Context, attributeSet: AttributeSet):
     AppCompatEditText(context, attributeSet) {
@@ -70,10 +72,16 @@ class ZipCodeEditText(context: Context, attributeSet: AttributeSet):
         override fun afterTextChanged(s: Editable?) {
             s?.let { editable ->
                 val count = editable.length
-                if (count >= 6) {
-                    val text = s.substring(0, count - 1)
-                    setText(text)
-                    setSelection(count - 1)
+                val mPattern = Pattern.compile(RegexPattern.ONLY_NUMBERS)
+
+                if (editable.toString() != "") {
+                    val matcher = mPattern.matcher(editable[count -1].toString())
+
+                    if (!matcher.matches() || count > 5) {
+                        val text = s.subSequence(0, count - 1)
+                        setText(text)
+                        setSelection(count - 1)
+                    }
                 }
             }
         }
