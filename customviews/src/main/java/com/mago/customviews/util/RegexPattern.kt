@@ -8,6 +8,7 @@ package com.mago.customviews.util
 object RegexPattern {
     const val A_TO_Z_WITH_BLANK_SPACES = "[A-ZÁ-ß ]+"
     const val A_TO_Z = "[A-ZÁ-ß]+"
+    const val ALL_CHARS = ".+"//"[A-ZÁ-ß0-9 ]+"
     const val ONLY_NUMBERS = "[0-9]+"
     const val DATE = "[^\\d.]|\\."
     const val E_MAIL = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$"

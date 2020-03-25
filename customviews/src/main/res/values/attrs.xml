@@ -5,6 +5,7 @@
     <attr name="titleHint" format="string" />
     <attr name="onlyNumbers" format="boolean" />
     <attr name="charsWithBlankSpaces" format="boolean" />
+    <attr name="allChars" format="boolean" />
     <attr name="hintText" format="string" />
     <attr name="spinnerHeight" format="dimension" />
     <attr name="futureDate" format="boolean" />
@@ -12,12 +13,14 @@
     <declare-styleable name="CustomEditText">
         <attr name="onlyNumbers" />
         <attr name="charsWithBlankSpaces" />
+        <attr name="allChars" />
         <attr name="isMandatory" />
     </declare-styleable>
 
     <declare-styleable name="TitleEditText">
         <attr name="onlyNumbers" />
         <attr name="charsWithBlankSpaces" />
+        <attr name="allChars" />
         <attr name="isMandatory" />
         <attr name="titleHint" />
     </declare-styleable>

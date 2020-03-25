@@ -25,6 +25,7 @@
             android:layout_weight="0.5"
             app:isMandatory="true"
             app:titleHint="Title Text"
+            app:allChars="true"
             />
 
         <com.mago.customviews.views.title.TitleSearchableSpinner
