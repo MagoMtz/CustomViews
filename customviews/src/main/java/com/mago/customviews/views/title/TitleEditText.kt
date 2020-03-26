@@ -15,7 +15,6 @@ import com.mago.customviews.views.edittext.CustomEditText
 class TitleEditText : LinearLayout {
     private lateinit var attributeSet: AttributeSet
     // Attributes
-
     var onlyNumbers: Boolean = false
         set(value) {
             field = value
