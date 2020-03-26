@@ -2,16 +2,12 @@ package com.mago.customviews.views.edittext
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Paint.ANTI_ALIAS_FLAG
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.toRectF
-import androidx.core.view.marginTop
 import com.mago.customviews.R
 import com.mago.customviews.util.CommonUtils
 import com.mago.customviews.util.RegexPattern
@@ -21,21 +17,8 @@ import java.util.regex.Pattern
  * @author by jmartinez
  * @since 15/01/2020.
  */
-open class CustomEditText :
-    AppCompatEditText {
+open class CustomEditText : AppCompatEditText {
     private lateinit var attributeSet: AttributeSet
-
-    constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
-        this.attributeSet = attributeSet
-        init()
-    }
-    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int):
-            super(context, attributeSet, defStyleAttr) {
-        this.attributeSet = attributeSet
-        init()
-    }
-    constructor(context: Context): super(context)
-
     // Attributes
     var onlyNumbers: Boolean = false
         set(value) {
@@ -62,20 +45,31 @@ open class CustomEditText :
             requestLayout()
         }
 
-    // Paint objects
-    private val framePaint = Paint(ANTI_ALIAS_FLAG).apply {
-        color = ContextCompat.getColor(context, R.color.border)
-        style = Paint.Style.STROKE
-        strokeWidth = 3F
+    constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int):
+            super(context, attributeSet, defStyleAttr) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context): super(context) {
+        init()
     }
 
-    private val frameAlertPaint = Paint(ANTI_ALIAS_FLAG).apply {
-        color = ContextCompat.getColor(context, R.color.frame_invalid)
-        style = Paint.Style.STROKE
-        strokeWidth = 3F
+
+
+    private fun init() {
+        inputType = if (onlyNumbers)
+            InputType.TYPE_CLASS_NUMBER
+        else
+            InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
     }
 
-    fun init() {
+    private fun setupAttributes() {
         context.theme.obtainStyledAttributes(attributeSet, R.styleable.CustomEditText, 0, 0)
             .apply {
                 try {
@@ -90,10 +84,6 @@ open class CustomEditText :
                     recycle()
                 }
             }
-        inputType = if (onlyNumbers)
-            InputType.TYPE_CLASS_NUMBER
-        else
-            InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
     }
 
     override fun onDraw(canvas: Canvas?) {

@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
 import com.mago.customviews.R
-import com.mago.customviews.util.CommonUtils
 
 /**
  * @author by jmartinez
@@ -21,18 +20,6 @@ import com.mago.customviews.util.CommonUtils
  */
 class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListener, DialogListener {
     private lateinit var attributeSet: AttributeSet
-
-    constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
-        this.attributeSet = attributeSet
-        init()
-    }
-    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int): super(context, attributeSet, defStyleAttr) {
-        this.attributeSet = attributeSet
-        init()
-    }
-    constructor(context: Context): super(context)
-
-
     private lateinit var multiSelectSearchDialog: MultiSelectSearchDialog
     private lateinit var itemsSelectedListener: ItemsSelectedListener
     private var selectedItems: List<ObjectData> = listOf()
@@ -64,7 +51,6 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
         }
 
      */
-
     // Paint objects
     private val arrowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = ContextCompat.getColor(context, R.color.dark_gray)
@@ -77,7 +63,25 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
         strokeWidth = 5f
     }
 
+    constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int): super(context, attributeSet, defStyleAttr) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context): super(context) {
+        init()
+    }
+
     private fun init() {
+        setOnTouchListener(this)
+    }
+
+    private fun setupAttributes() {
         context.theme.obtainStyledAttributes(attributeSet, R.styleable.MultiSelectSearchSpinner, 0, 0)
             .apply {
                 try {
@@ -92,7 +96,6 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
                     recycle()
                 }
             }
-        setOnTouchListener(this)
     }
 
     override fun onDraw(canvas: Canvas?) {

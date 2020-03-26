@@ -12,11 +12,11 @@ import com.mago.customviews.views.edittext.TextArea
  * @author by jmartinez
  * @since 05/02/2020.
  */
-class TitleTextArea(context: Context, attributeSet: AttributeSet) :
-    LinearLayout(context, attributeSet) {
+class TitleTextArea : LinearLayout{
+    private lateinit var attributeSet: AttributeSet
     // Views
-    private lateinit var inputLy: TextInputLayout
-    var textArea: TextArea? = null
+    private var inputLy: TextInputLayout = TextInputLayout(context)
+    var textArea: TextArea = TextArea(context)
         set(value) {
             field = value
             invalidate()
@@ -31,15 +31,36 @@ class TitleTextArea(context: Context, attributeSet: AttributeSet) :
             requestLayout()
         }
     private var titleHint: String = ""
+        //get() = inputLy.hint.toString()
         set(value) {
+            inputLy.hint = value
             field = value
             invalidate()
             requestLayout()
         }
 
-    init {
+    constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int)
+            : super(context, attributeSet, defStyleAttr) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context) : super(context) {
+        init()
+    }
+
+    private fun init() {
         View.inflate(context, R.layout.title_text_area, this)
 
+        initComponents()
+    }
+
+    private fun setupAttributes() {
         context.theme.obtainStyledAttributes(attributeSet, R.styleable.TitleTextArea, 0, 0)
             .apply {
                 try {
@@ -49,7 +70,6 @@ class TitleTextArea(context: Context, attributeSet: AttributeSet) :
                     recycle()
                 }
             }
-        initComponents()
     }
 
     private fun initComponents() {
@@ -57,6 +77,6 @@ class TitleTextArea(context: Context, attributeSet: AttributeSet) :
         textArea = findViewById(R.id.text_area)
 
         inputLy.hint = titleHint
-        textArea?.isMandatory = isMandatory
+        textArea.isMandatory = isMandatory
     }
 }

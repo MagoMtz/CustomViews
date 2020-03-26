@@ -2,20 +2,18 @@ package com.mago.customviews.views.edittext
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Paint
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.toRectF
 import com.mago.customviews.R
 import com.mago.customviews.util.RegexPattern
 import java.util.regex.Pattern
 
-class ZipCodeEditText(context: Context, attributeSet: AttributeSet):
-    AppCompatEditText(context, attributeSet) {
+class ZipCodeEditText : AppCompatEditText{
+    private lateinit var attributeSet: AttributeSet
 
     var isMandatory: Boolean = false
         set(value) {
@@ -24,7 +22,26 @@ class ZipCodeEditText(context: Context, attributeSet: AttributeSet):
             requestLayout()
         }
 
-    init {
+    constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int):
+            super(context, attributeSet, defStyleAttr) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context): super(context) {
+        init()
+    }
+
+    private fun init() {
+        inputType = InputType.TYPE_CLASS_PHONE
+    }
+
+    private fun setupAttributes() {
         context.theme.obtainStyledAttributes(attributeSet, R.styleable.ZipCodeEditText, 0, 0)
             .apply {
                 try {
@@ -35,7 +52,6 @@ class ZipCodeEditText(context: Context, attributeSet: AttributeSet):
                     recycle()
                 }
             }
-        inputType = InputType.TYPE_CLASS_PHONE
     }
 
     override fun onDraw(canvas: Canvas?) {

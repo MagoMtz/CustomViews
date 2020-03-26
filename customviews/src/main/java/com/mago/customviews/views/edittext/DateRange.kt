@@ -10,26 +10,23 @@ import com.mago.customviews.util.CommonUtils
 import com.mago.customviews.util.RegexPattern.DATE
 import java.util.*
 
-class DateRange(context: Context, attributeSet: AttributeSet) :
-    LinearLayout(context, attributeSet) {
-
+class DateRange : LinearLayout{
+    private lateinit var attributeSet: AttributeSet
     private lateinit var initialDatePicker: DatePickerDialog
     private lateinit var finalDatePicker: DatePickerDialog
-
     // Views
-    var initDate: SingleDate? = null
+    var initDate: SingleDate = SingleDate(context)
         set(value) {
             field = value
             invalidate()
             requestLayout()
         }
-    var finalDate: SingleDate? = null
+    var finalDate: SingleDate = SingleDate(context)
         set(value) {
             field = value
             invalidate()
             requestLayout()
         }
-
     // Attributes
     var isMandatory: Boolean = false
         set(value) {
@@ -40,14 +37,14 @@ class DateRange(context: Context, attributeSet: AttributeSet) :
     var initDateTitle: String = ""
         set(value) {
             field = value
-            initDate?.titleHint = value
+            initDate.titleHint = value
             invalidate()
             requestLayout()
         }
     var finalDateTitle: String = ""
         set(value) {
             field = value
-            finalDate?.titleHint = value
+            finalDate.titleHint = value
             invalidate()
             requestLayout()
         }
@@ -64,9 +61,29 @@ class DateRange(context: Context, attributeSet: AttributeSet) :
             requestLayout()
         }
 
-    init {
+    constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int):
+            super(context, attributeSet, defStyleAttr) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context): super(context) {
+        init()
+    }
+
+    private fun init() {
         View.inflate(context, R.layout.date_range, this)
 
+        initComponents()
+        setupDateRangePicker()
+    }
+
+    private fun setupAttributes() {
         context.theme.obtainStyledAttributes(attributeSet, R.styleable.DateRange, 0, 0)
             .apply {
                 try {
@@ -83,20 +100,17 @@ class DateRange(context: Context, attributeSet: AttributeSet) :
                     recycle()
                 }
             }
-
-        initComponents()
-        setupDateRangePicker()
     }
 
     private fun initComponents() {
         initDate = findViewById(R.id.init_date)
         finalDate = findViewById(R.id.final_date)
 
-        initDate?.let {
+        initDate.let {
             it.titleHint = initDateTitle
             it.isMandatory = isMandatory
         }
-        finalDate?.let {
+        finalDate.let {
             it.titleHint = finalDateTitle
             it.isMandatory = isMandatory
         }
@@ -108,11 +122,11 @@ class DateRange(context: Context, attributeSet: AttributeSet) :
         var month = calendar.get(Calendar.MONTH)
         var year = calendar.get(Calendar.YEAR)
 
-        val initDateText = initDate?.dateEditText?.text.toString()
+        val initDateText = initDate.dateEditText?.text.toString()
         val dateIsComplete = initDateText.replace(DATE.toRegex(), "").length == 8
 
         if (initDateText.isNotEmpty() && dateIsComplete) {
-            val date = initDate?.dateEditText?.text.toString().split("/")
+            val date = initDate.dateEditText?.text.toString().split("/")
             day = date[0].toInt()
             month = date[1].toInt() - 1
             year = date[2].toInt()
@@ -123,8 +137,8 @@ class DateRange(context: Context, attributeSet: AttributeSet) :
                 val initialDate =
                     (if (dayOfMonth.toString().length < 2) "0".plus(dayOfMonth.toString()) else dayOfMonth.toString()) + "/" +
                             (if ((monthOfYear + 1).toString().length < 2) "0" + (monthOfYear + 1).toString() else (monthOfYear + 1).toString()) + "/" + mYear
-                initDate?.dateEditText?.setText(initialDate)
-                finalDate?.dateEditText?.setText(initialDate)
+                initDate.dateEditText?.setText(initialDate)
+                finalDate.dateEditText?.setText(initialDate)
                 setupFinalDatePicker()
                 finalDatePicker.show()
 
@@ -140,8 +154,8 @@ class DateRange(context: Context, attributeSet: AttributeSet) :
         var month = calendar.get(Calendar.MONTH)
         var year = calendar.get(Calendar.YEAR)
 
-        val finalDateText = finalDate?.dateEditText?.text.toString()
-        val initDateText = initDate?.dateEditText?.text.toString()
+        val finalDateText = finalDate.dateEditText?.text.toString()
+        val initDateText = initDate.dateEditText?.text.toString()
         val initDateIsComplete = initDateText.replace(DATE.toRegex(), "").length == 8
 
         if (finalDateText.isNotEmpty() && initDateIsComplete) {
@@ -156,7 +170,7 @@ class DateRange(context: Context, attributeSet: AttributeSet) :
                 val finalDate =
                     (if (dayOfMonth.toString().length < 2) "0".plus(dayOfMonth.toString()) else dayOfMonth.toString()) + "/" +
                             (if ((monthOfYear + 1).toString().length < 2) "0" + (monthOfYear + 1).toString() else (monthOfYear + 1).toString()) + "/" + mYear
-                this.finalDate?.dateEditText?.setText(finalDate)
+                this.finalDate.dateEditText?.setText(finalDate)
 
             }, year, month, day
         )
@@ -194,12 +208,12 @@ class DateRange(context: Context, attributeSet: AttributeSet) :
     }
 
     private fun setupDateRangePicker() {
-        initDate?.btnCalendar?.setOnClickListener {
+        initDate.btnCalendar.setOnClickListener {
             setupInitDatePicker()
             initialDatePicker.show()
         }
 
-        finalDate?.btnCalendar?.setOnClickListener {
+        finalDate.btnCalendar.setOnClickListener {
             setupFinalDatePicker()
             finalDatePicker.show()
         }

@@ -8,33 +8,53 @@ import com.google.android.material.textfield.TextInputLayout
 import com.mago.customviews.R
 import com.mago.customviews.views.edittext.ZipCodeEditText
 
-class TitleZipCodeEditText(context: Context, attributeSet: AttributeSet):
-    LinearLayout(context, attributeSet) {
-
-    private lateinit var inputLy: TextInputLayout
-    var editText: ZipCodeEditText = ZipCodeEditText(context, attributeSet)
+class TitleZipCodeEditText : LinearLayout {
+    private lateinit var attributeSet: AttributeSet
+    // Views
+    private var inputLy: TextInputLayout = TextInputLayout(context)
+    var titleHint: String = ""
+        //get() = inputLy.hint.toString()
+        set(value) {
+            inputLy.hint = value
+            field = value
+            invalidate()
+            requestLayout()
+        }
+    var editText: ZipCodeEditText = ZipCodeEditText(context)
         set(value) {
             field = value
             invalidate()
             requestLayout()
         }
-
-    private var titleHint: String = ""
-        set(value) {
-            field = value
-            invalidate()
-            requestLayout()
-        }
+    // Attributes
     var isMandatory: Boolean = false
         set(value) {
             field = value
             invalidate()
             requestLayout()
         }
+    constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int)
+            : super(context, attributeSet, defStyleAttr) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context) : super(context) {
+        init()
+    }
 
-    init {
+    private fun init() {
         View.inflate(context, R.layout.title_zip_code_edit_text, this)
 
+        initComponents()
+    }
+
+    private fun setupAttributes() {
         context.theme.obtainStyledAttributes(attributeSet, R.styleable.TitleZipCodeEditText, 0, 0)
             .apply {
                 try {
@@ -45,8 +65,6 @@ class TitleZipCodeEditText(context: Context, attributeSet: AttributeSet):
                     recycle()
                 }
             }
-
-        initComponents()
     }
 
     private fun initComponents() {

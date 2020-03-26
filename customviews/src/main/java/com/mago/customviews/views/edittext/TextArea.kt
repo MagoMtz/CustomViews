@@ -2,18 +2,17 @@ package com.mago.customviews.views.edittext
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Paint
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.toRectF
 import com.mago.customviews.R
 
 /**
  * @author by jmartinez
  * @since 05/02/2020.
  */
-class TextArea(context: Context, attributeSet: AttributeSet) : AppCompatEditText(context, attributeSet) {
+class TextArea : AppCompatEditText {
+    private lateinit var attributeSet: AttributeSet
     // Attributes
     var isMandatory: Boolean = false
         set(value) {
@@ -22,7 +21,28 @@ class TextArea(context: Context, attributeSet: AttributeSet) : AppCompatEditText
             requestLayout()
         }
 
-    init {
+    constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int):
+            super(context, attributeSet, defStyleAttr) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context): super(context) {
+        init()
+    }
+
+    private fun init() {
+        minLines = 1
+        setLines(3)
+        maxLines = 15
+    }
+
+    private fun setupAttributes() {
         context.theme.obtainStyledAttributes(attributeSet, R.styleable.TextArea, 0, 0)
             .apply {
                 try {
@@ -31,10 +51,6 @@ class TextArea(context: Context, attributeSet: AttributeSet) : AppCompatEditText
                     recycle()
                 }
             }
-
-        minLines = 1
-        setLines(3)
-        maxLines = 15
     }
 
     override fun onDraw(canvas: Canvas?) {

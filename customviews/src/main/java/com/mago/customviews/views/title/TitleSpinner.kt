@@ -16,21 +16,15 @@ import com.mago.customviews.views.spinner.CustomSpinner
 class TitleSpinner: LinearLayout {
     private lateinit var attributeSet: AttributeSet
 
-    constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
-        this.attributeSet = attributeSet
-        init()
-    }
-    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int) : super(
-        context,
-        attributeSet,
-        defStyleAttr
-    ) {
-        this.attributeSet = attributeSet
-        init()
-    }
-    constructor(context: Context) : super(context)
-
-    private lateinit var tvTitle: TextView
+    private var tvTitleText: TextView = TextView(context)
+    var titleText: CharSequence = ""
+        //get() = tvTitle.text
+        set(value) {
+            tvTitleText.text = value
+            field = value
+            invalidate()
+            requestLayout()
+        }
     var spinner: CustomSpinner = CustomSpinner(context)
         set(value) {
             field = value
@@ -38,13 +32,11 @@ class TitleSpinner: LinearLayout {
             requestLayout()
         }
 
-    private var titleText: CharSequence = ""
-        get() = tvTitle.text
+    var isMandatory: Boolean = false
         set(value) {
             field = value
-            tvTitle.text = value
-            invalidate()
             requestLayout()
+            invalidate()
         }
     /*
     var spinnerHeight: Float = 0F
@@ -53,23 +45,32 @@ class TitleSpinner: LinearLayout {
             invalidate()
             requestLayout()
         }
-
-
      */
-    var isMandatory: Boolean = false
-        set(value) {
-            field = value
-            requestLayout()
-            invalidate()
-        }
+
+    constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int)
+            : super(context, attributeSet, defStyleAttr
+    ) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context) : super(context) {
+        init()
+    }
 
     private fun init() {
         View.inflate(context, R.layout.title_spinner, this)
-        val sets = intArrayOf(R.attr.titleHint)
-        val typedArray = context.obtainStyledAttributes(attributeSet, sets)
-        val title = typedArray.getText(0)
-        typedArray.recycle()
 
+        initComponents()
+        setWillNotDraw(false)
+    }
+
+    private fun setupAttributes() {
         context.theme.obtainStyledAttributes(attributeSet, R.styleable.TitleSpinner, 0, 0)
             .apply {
                 try {
@@ -81,21 +82,20 @@ class TitleSpinner: LinearLayout {
 
                      */
                     isMandatory = getBoolean(R.styleable.TitleSpinner_isMandatory, false)
+                    getString(R.styleable.TitleSearchableSpinner_titleHint)?.let {
+                        titleText = it
+                    }
                 } finally {
                     recycle()
                 }
             }
-
-        initComponents()
-        titleText = title
-        setWillNotDraw(false)
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         canvas?.let {
             spinner.let {
-                tvTitle.visibility = if (it.selectedItemPosition == 0)
+                tvTitleText.visibility = if (it.selectedItemPosition == 0)
                     View.INVISIBLE
                 else
                     View.VISIBLE
@@ -104,11 +104,12 @@ class TitleSpinner: LinearLayout {
     }
 
     private fun initComponents() {
-        tvTitle = findViewById(R.id.tv_title)
+        tvTitleText = findViewById(R.id.tv_title)
         spinner = findViewById(R.id.sp_custom)
 
         //spinner.spinnerHeight = spinnerHeight
         spinner.isMandatory = isMandatory
+        tvTitleText.text = titleText
     }
 
 }

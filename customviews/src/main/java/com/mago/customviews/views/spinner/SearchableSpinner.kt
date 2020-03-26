@@ -6,7 +6,6 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.toRectF
 import com.mago.customviews.R
 
 /**
@@ -16,21 +15,6 @@ import com.mago.customviews.R
 open class SearchableSpinner :
     com.toptoche.searchablespinnerlibrary.SearchableSpinner {
     private lateinit var attributeSet: AttributeSet
-
-    constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
-        this.attributeSet = attributeSet
-        init()
-    }
-    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int) : super(
-        context,
-        attributeSet,
-        defStyleAttr
-    ) {
-        this.attributeSet = attributeSet
-        init()
-    }
-    constructor(context: Context) : super(context)
-
 
     private var xOrigin = 100f
     private var yOrigin = 120f
@@ -82,7 +66,26 @@ open class SearchableSpinner :
         strokeWidth = 5f
     }
 
+    constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int):
+            super(context, attributeSet, defStyleAttr) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context): super(context) {
+        init()
+    }
+
     private fun init() {
+
+    }
+
+    private fun setupAttributes() {
         context.theme.obtainStyledAttributes(attributeSet, R.styleable.SearchableSpinner, 0, 0)
             .apply {
                 try {
