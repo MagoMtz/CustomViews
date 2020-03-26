@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.mago.customviews.views.adapter.CustomSpinnerAdapter
 import com.mago.customviews.views.spinner.multiselectspinner.ItemsSelectedListener
+import com.mago.customviews.views.title.TitleEditText
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -54,6 +55,11 @@ class MainActivity : AppCompatActivity() {
         })
 
         sp.spinner.init(array, "Pick", 2, "Sólo se pueden seleccionar 2 elementos")
+
+
+        val titleET = TitleEditText(this)
+        titleET.titleHint = "Programmatically"
+        ly_container.addView(titleET)
 
     }
 

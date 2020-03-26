@@ -11,7 +11,7 @@ import com.mago.customviews.views.edittext.PhoneEditText
 class TitlePhoneEditText : LinearLayout {
     private lateinit var attributeSet: AttributeSet
     // Views
-    private lateinit var inputLy: TextInputLayout
+    private var inputLy: TextInputLayout = TextInputLayout(context)
     var titleHint: String = ""
         //get() = inputLy.hint.toString()
         set(value) {
