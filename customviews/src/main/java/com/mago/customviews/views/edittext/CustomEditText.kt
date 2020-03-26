@@ -90,7 +90,10 @@ open class CustomEditText :
                     recycle()
                 }
             }
-
+        inputType = if (onlyNumbers)
+            InputType.TYPE_CLASS_NUMBER
+        else
+            InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -121,10 +124,6 @@ open class CustomEditText :
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         addTextChangedListener(textWatcher())
-        inputType = if (onlyNumbers)
-            InputType.TYPE_CLASS_NUMBER
-        else
-            InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
     }
 
     override fun onDetachedFromWindow() {
