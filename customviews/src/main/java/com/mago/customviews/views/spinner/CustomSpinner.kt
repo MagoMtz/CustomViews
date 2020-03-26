@@ -49,12 +49,6 @@ class CustomSpinner : AppCompatSpinner {
             invalidate()
             requestLayout()
         }
-    var titleHint: String? = ""
-        set(value) {
-            field = value
-            invalidate()
-            requestLayout()
-        }
     var titleColor: Int = R.color.dark_text
         set(value) {
             field = value
@@ -94,7 +88,6 @@ class CustomSpinner : AppCompatSpinner {
             .apply {
                 try {
                     isMandatory = getBoolean(R.styleable.CustomSpinner_isMandatory, false)
-                    getString(R.styleable.CustomSpinner_titleHint)?.let { titleHint = it }
                     /*spinnerHeight = getDimension(
                         R.styleable.CustomSpinner_spinnerHeight,
                         resources.getDimension(R.dimen.spinner_min_height)
@@ -116,7 +109,6 @@ class CustomSpinner : AppCompatSpinner {
             canvas.drawCircle(xOrigin + rectLarge / 2, yCenter, circleRad, circlePaint)
 
             background = if (!isElementSelected) {
-                canvas.drawText(titleHint!!, 30f, yCenter + (yCenter / 3), titleTextPaint)
                 if (isMandatory)
                     ContextCompat.getDrawable(context, R.drawable.bg_spinner_invalid)
                 else
@@ -142,11 +134,13 @@ class CustomSpinner : AppCompatSpinner {
         }
     }
 
+    /*
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         val params = layoutParams
         //params.height = spinnerHeight.toInt()
     //    requestLayout()
     }
+     */
 
 }

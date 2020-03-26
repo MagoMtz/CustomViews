@@ -6,7 +6,6 @@
     <attr name="onlyNumbers" format="boolean" />
     <attr name="charsWithBlankSpaces" format="boolean" />
     <attr name="allChars" format="boolean" />
-    <attr name="hintText" format="string" />
     <attr name="spinnerHeight" format="dimension" />
     <attr name="futureDate" format="boolean" />
 
@@ -35,7 +34,6 @@
     </declare-styleable>
 
     <declare-styleable name="CustomSpinner">
-        <attr name="titleHint" />
         <attr name="isMandatory" />
         <attr name="spinnerHeight" />
     </declare-styleable>

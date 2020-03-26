@@ -95,7 +95,7 @@ class TitleSearchableSpinner : LinearLayout {
         super.onDraw(canvas)
         canvas?.let {
             spinner.let {
-                tvTitleHint.visibility = if (it.selectedItemPosition == -1)
+                tvTitleHint.visibility = if (it.selectedItemPosition == 0)
                     View.INVISIBLE
                 else
                     View.VISIBLE

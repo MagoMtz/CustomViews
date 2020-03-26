@@ -60,12 +60,15 @@ open class SearchableSpinner :
 
      */
 
+    /*
     var hintText: String = ""
         set(value) {
             field = value
             requestLayout()
             invalidate()
         }
+
+     */
 
     // Paint objects
     private val arrowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -77,11 +80,6 @@ open class SearchableSpinner :
         color = ContextCompat.getColor(context, R.color.dark_gray)
         style = Paint.Style.STROKE
         strokeWidth = 5f
-    }
-
-    private val titleTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = ContextCompat.getColor(context, R.color.dark_text)
-        textSize = 50f
     }
 
     private fun init() {
@@ -110,7 +108,6 @@ open class SearchableSpinner :
             canvas.drawCircle(xOrigin + rectLarge / 2, yCenter, circleRad, circlePaint)
 
             background = if (!isElementSelected) {
-                canvas.drawText(hintText, 30f, yCenter + (yCenter / 3), titleTextPaint)
                 if (isMandatory)
                     ContextCompat.getDrawable(context, R.drawable.bg_spinner_invalid)
                 else
@@ -137,11 +134,14 @@ open class SearchableSpinner :
         }
     }
 
+    /*
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         val params = layoutParams
         //params.height = spinnerHeight.toInt()
         //requestLayout()
     }
+
+     */
 
 }
