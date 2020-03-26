@@ -12,4 +12,5 @@ object RegexPattern {
     const val ONLY_NUMBERS = "[0-9]+"
     const val DATE = "[^\\d.]|\\."
     const val E_MAIL = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$"
+    const val VALID_ENTER_E_MAIL = "[A-Za-z\\!-@ñÑ_¿¡]+"
 }
