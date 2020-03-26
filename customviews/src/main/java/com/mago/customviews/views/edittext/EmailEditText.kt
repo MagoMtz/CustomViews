@@ -3,7 +3,9 @@ package com.mago.customviews.views.edittext
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.text.Editable
 import android.text.InputType
+import android.text.TextWatcher
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
@@ -56,6 +58,38 @@ class EmailEditText(context: Context, attributeSet: AttributeSet):
                 ContextCompat.getDrawable(context, R.drawable.bg_common)
         }
 
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        addTextChangedListener(textWatcher())
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        removeTextChangedListener(textWatcher())
+    }
+
+    private fun textWatcher(): TextWatcher = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+            s?.let { editable ->
+                val count = editable.length
+                val mPattern = Pattern.compile(RegexPattern.VALID_ENTER_E_MAIL)
+
+                if (editable.toString() != "") {
+                    val matcher = mPattern.matcher(editable[count -1].toString())
+
+                    if (!matcher.matches()) {
+                        val text = s.subSequence(0, count - 1)
+                        setText(text)
+                        setSelection(count - 1)
+                    }
+                }
+            }
+        }
+
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
     }
 
 }
