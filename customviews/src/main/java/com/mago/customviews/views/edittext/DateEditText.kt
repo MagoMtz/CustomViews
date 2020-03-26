@@ -15,13 +15,27 @@ import java.util.*
  * @author by jmartinez
  * @since 06/02/2020.
  */
-class DateEditText(context: Context, attributeSet: AttributeSet) : AppCompatEditText(context, attributeSet) {
+class DateEditText: AppCompatEditText {
+    private lateinit var attributeSet: AttributeSet
 
     private var current = ""
     private val ddmmyyyy = "DDMMYYYY"
     private val cal = Calendar.getInstance()
 
-    init {
+    constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
+        this.attributeSet = attributeSet
+        init()
+    }
+    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int):
+            super(context, attributeSet, defStyleAttr) {
+        this.attributeSet = attributeSet
+        init()
+    }
+    constructor(context: Context): super(context) {
+        init()
+    }
+
+    private fun init() {
         inputType = InputType.TYPE_CLASS_DATETIME
 
         background = null

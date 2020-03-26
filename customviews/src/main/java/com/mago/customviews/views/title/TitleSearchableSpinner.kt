@@ -15,37 +15,23 @@ import com.mago.customviews.views.spinner.SearchableSpinner
  */
 class TitleSearchableSpinner : LinearLayout {
     private lateinit var attributeSet: AttributeSet
-
-    constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
-        this.attributeSet = attributeSet
-        init()
-    }
-    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int) : super(
-        context,
-        attributeSet,
-        defStyleAttr
-    ) {
-        this.attributeSet = attributeSet
-        init()
-    }
-    constructor(context: Context) : super(context)
-
-    private lateinit var tvTitleHint: TextView
+    // Views
+    private var tvTitleText: TextView = TextView(context)
+    var titleText: CharSequence = ""
+        //get() = tvTitleText.text
+        set(value) {
+            field = value
+            tvTitleText.text = value
+            requestLayout()
+            invalidate()
+        }
     var spinner: SearchableSpinner = SearchableSpinner(context)
         set(value) {
             field = value
             requestLayout()
             invalidate()
         }
-
-    private var titleHintText: CharSequence = ""
-        get() = tvTitleHint.text
-        set(value) {
-            field = value
-            tvTitleHint.text = value
-            requestLayout()
-            invalidate()
-        }
+    // Attr
     private var isMandatory: Boolean = false
         set(value) {
             field = value
@@ -61,20 +47,36 @@ class TitleSearchableSpinner : LinearLayout {
         }
 
      */
+    constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int)
+            : super(context, attributeSet, defStyleAttr) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context) : super(context) {
+        init()
+    }
 
     private fun init() {
         View.inflate(context, R.layout.title_searchable_spinner, this)
 
-        val sets = intArrayOf(R.attr.titleHint)
-        val typedArray = context.obtainStyledAttributes(attributeSet, sets)
-        val title = typedArray.getText(0)
-        typedArray.recycle()
+        initComponents()
+        setWillNotDraw(false)
+    }
 
-
+    private fun setupAttributes() {
         context.theme.obtainStyledAttributes(attributeSet, R.styleable.TitleSearchableSpinner, 0, 0)
             .apply {
                 try {
                     isMandatory = getBoolean(R.styleable.TitleSearchableSpinner_isMandatory, false)
+                    getString(R.styleable.TitleSearchableSpinner_titleHint)?.let {
+                        titleText = it
+                    }
                     /*spinnerHeight = getDimension(
                         R.styleable.TitleSearchableSpinner_spinnerHeight,
                         resources.getDimension(R.dimen.spinner_min_height)
@@ -85,17 +87,13 @@ class TitleSearchableSpinner : LinearLayout {
                     recycle()
                 }
             }
-
-        initComponents()
-        titleHintText = title
-        setWillNotDraw(false)
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         canvas?.let {
             spinner.let {
-                tvTitleHint.visibility = if (it.selectedItemPosition == -1)
+                tvTitleText.visibility = if (it.selectedItemPosition == 0)
                     View.INVISIBLE
                 else
                     View.VISIBLE
@@ -104,10 +102,11 @@ class TitleSearchableSpinner : LinearLayout {
     }
 
     private fun initComponents() {
-        tvTitleHint = findViewById(R.id.tv_title)
+        tvTitleText = findViewById(R.id.tv_title)
         spinner = findViewById(R.id.sp_searchable)
 
         spinner.isMandatory = isMandatory
+        tvTitleText.text = titleText
         //spinner.spinnerHeight = spinnerHeight
     }
 

@@ -1,6 +1,5 @@
 package com.mago.customviews.views.edittext
 
-import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Context
 import android.graphics.Canvas
@@ -21,9 +20,8 @@ import java.util.*
  * @author by jmartinez
  * @since 07/02/2020.
  */
-class SingleDate(context: Context, attributeSet: AttributeSet) :
-    LinearLayout(context, attributeSet) {
-
+class SingleDate: LinearLayout{
+    private lateinit var attributeSet: AttributeSet
     // Views
     private var tvTitle: TextView? = null
     private lateinit var lyDate: LinearLayout
@@ -55,7 +53,6 @@ class SingleDate(context: Context, attributeSet: AttributeSet) :
             invalidate()
             requestLayout()
         }
-
     // Paint objects
     private val framePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = ContextCompat.getColor(context, R.color.border)
@@ -69,9 +66,30 @@ class SingleDate(context: Context, attributeSet: AttributeSet) :
         strokeWidth = 3F
     }
 
-    init {
+    constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int):
+            super(context, attributeSet, defStyleAttr) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context): super(context) {
+        init()
+    }
+
+    private fun init() {
         View.inflate(context, R.layout.single_date, this)
 
+        initComponents()
+        setClickListeners()
+        setWillNotDraw(false)
+    }
+
+    private fun setupAttributes() {
         context.theme.obtainStyledAttributes(attributeSet, R.styleable.SingleDate, 0, 0)
             .apply {
                 try {
@@ -84,10 +102,6 @@ class SingleDate(context: Context, attributeSet: AttributeSet) :
                     recycle()
                 }
             }
-
-        initComponents()
-        setClickListeners()
-        setWillNotDraw(false)
     }
 
     //@SuppressLint("DrawAllocation")
@@ -116,8 +130,6 @@ class SingleDate(context: Context, attributeSet: AttributeSet) :
                 drawRoundRect(cBounds, 10F, 10F, framePaint)
 
         }
-
-
     }
 
     private fun initComponents() {

@@ -6,7 +6,6 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.toRectF
 import com.mago.customviews.R
 
 /**
@@ -16,21 +15,6 @@ import com.mago.customviews.R
 open class SearchableSpinner :
     com.toptoche.searchablespinnerlibrary.SearchableSpinner {
     private lateinit var attributeSet: AttributeSet
-
-    constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
-        this.attributeSet = attributeSet
-        init()
-    }
-    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int) : super(
-        context,
-        attributeSet,
-        defStyleAttr
-    ) {
-        this.attributeSet = attributeSet
-        init()
-    }
-    constructor(context: Context) : super(context)
-
 
     private var xOrigin = 100f
     private var yOrigin = 120f
@@ -60,12 +44,15 @@ open class SearchableSpinner :
 
      */
 
+    /*
     var hintText: String = ""
         set(value) {
             field = value
             requestLayout()
             invalidate()
         }
+
+     */
 
     // Paint objects
     private val arrowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -79,12 +66,26 @@ open class SearchableSpinner :
         strokeWidth = 5f
     }
 
-    private val titleTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = ContextCompat.getColor(context, R.color.dark_text)
-        textSize = 50f
+    constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int):
+            super(context, attributeSet, defStyleAttr) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context): super(context) {
+        init()
     }
 
     private fun init() {
+
+    }
+
+    private fun setupAttributes() {
         context.theme.obtainStyledAttributes(attributeSet, R.styleable.SearchableSpinner, 0, 0)
             .apply {
                 try {
@@ -110,7 +111,6 @@ open class SearchableSpinner :
             canvas.drawCircle(xOrigin + rectLarge / 2, yCenter, circleRad, circlePaint)
 
             background = if (!isElementSelected) {
-                canvas.drawText(hintText, 30f, yCenter + (yCenter / 3), titleTextPaint)
                 if (isMandatory)
                     ContextCompat.getDrawable(context, R.drawable.bg_spinner_invalid)
                 else
@@ -137,11 +137,14 @@ open class SearchableSpinner :
         }
     }
 
+    /*
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         val params = layoutParams
         //params.height = spinnerHeight.toInt()
         //requestLayout()
     }
+
+     */
 
 }

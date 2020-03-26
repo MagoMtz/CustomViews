@@ -2,7 +2,6 @@ package com.mago.customviews.views.edittext
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Paint
 import android.text.Editable
 import android.text.InputFilter
 import android.text.InputType
@@ -10,15 +9,10 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.toRectF
-import androidx.core.text.trimmedLength
 import com.mago.customviews.R
-import com.mago.customviews.util.RegexPattern
-import org.w3c.dom.Text
-import java.util.regex.Pattern
 
-class PhoneEditText(context: Context, attributeSet: AttributeSet):
-    AppCompatEditText(context, attributeSet) {
+class PhoneEditText : AppCompatEditText {
+    private lateinit var attributeSet: AttributeSet
 
     var isMandatory: Boolean = false
         set(value) {
@@ -27,7 +21,27 @@ class PhoneEditText(context: Context, attributeSet: AttributeSet):
             requestLayout()
         }
 
-    init {
+    constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int):
+            super(context, attributeSet, defStyleAttr) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context): super(context) {
+        init()
+    }
+
+    private fun init() {
+        inputType = InputType.TYPE_CLASS_PHONE
+        filters = arrayOf(InputFilter.LengthFilter(14))
+    }
+
+    private fun setupAttributes() {
         context.theme.obtainStyledAttributes(attributeSet, R.styleable.PhoneEditText, 0, 0)
             .apply {
                 try {
@@ -38,8 +52,6 @@ class PhoneEditText(context: Context, attributeSet: AttributeSet):
                     recycle()
                 }
             }
-        inputType = InputType.TYPE_CLASS_PHONE
-        filters = arrayOf(InputFilter.LengthFilter(14))
     }
 
     override fun onDraw(canvas: Canvas?) {

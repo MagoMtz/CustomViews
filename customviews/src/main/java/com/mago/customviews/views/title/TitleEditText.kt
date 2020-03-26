@@ -14,20 +14,42 @@ import com.mago.customviews.views.edittext.CustomEditText
  */
 class TitleEditText : LinearLayout {
     private lateinit var attributeSet: AttributeSet
+    // Attributes
 
-    constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
-        this.attributeSet = attributeSet
-        init()
-    }
-    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int):
-            super(context, attributeSet, defStyleAttr) {
-        this.attributeSet = attributeSet
-        init()
-    }
-    constructor(context: Context): super(context)
-
+    var onlyNumbers: Boolean = false
+        set(value) {
+            field = value
+            invalidate()
+            requestLayout()
+        }
+    var charsWithBlankSpaces: Boolean = false
+        set(value) {
+            field = value
+            invalidate()
+            requestLayout()
+        }
+    var allChars: Boolean = false
+        set(value) {
+            field = value
+            invalidate()
+            requestLayout()
+        }
+    var isMandatory: Boolean = false
+        set(value) {
+            field = value
+            invalidate()
+            requestLayout()
+        }
     //Views
-    private lateinit var inputLy: TextInputLayout
+    private var inputLy: TextInputLayout = TextInputLayout(context)
+    var titleHint: String = ""
+        //get() = inputLy.hint.toString()
+        set(value) {
+            inputLy.hint = value
+            field = value
+            invalidate()
+            requestLayout()
+        }
     var customEditText: CustomEditText = CustomEditText(context)
         set(value) {
             field = value
@@ -35,41 +57,28 @@ class TitleEditText : LinearLayout {
             requestLayout()
         }
 
-    // Attributes
-    private var titleHint: String = ""
-        set(value) {
-            field = value
-            invalidate()
-            requestLayout()
-        }
-    private var onlyNumbers: Boolean = false
-        set(value) {
-            field = value
-            invalidate()
-            requestLayout()
-        }
-    private var charsWithBlankSpaces: Boolean = false
-        set(value) {
-            field = value
-            invalidate()
-            requestLayout()
-        }
-    private var allChars: Boolean = false
-        set(value) {
-            field = value
-            invalidate()
-            requestLayout()
-        }
-    private var isMandatory: Boolean = false
-        set(value) {
-            field = value
-            invalidate()
-            requestLayout()
-        }
+    constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int):
+            super(context, attributeSet, defStyleAttr) {
+        this.attributeSet = attributeSet
+        setupAttributes()
+        init()
+    }
+    constructor(context: Context): super(context) {
+        init()
+    }
 
-    fun init() {
+    private fun init() {
         View.inflate(context, R.layout.title_edit_text, this)
 
+        initComponents()
+    }
+
+    private fun setupAttributes() {
         context.theme.obtainStyledAttributes(attributeSet, R.styleable.TitleEditText, 0, 0)
             .apply {
                 try {
@@ -86,8 +95,6 @@ class TitleEditText : LinearLayout {
                     recycle()
                 }
             }
-
-        initComponents()
     }
 
     private fun initComponents() {
