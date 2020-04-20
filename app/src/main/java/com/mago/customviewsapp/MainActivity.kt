@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.mago.customviews.views.adapter.CustomSpinnerAdapter
 import com.mago.customviews.views.spinner.multiselectspinner.ItemsSelectedListener
+import com.mago.customviews.views.spinner.searchlistspinner.ListSelectedListener
 import com.mago.customviews.views.title.TitleEditText
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -61,6 +62,22 @@ class MainActivity : AppCompatActivity() {
         titleET.titleHint = "Programmatically"
         ly_container.addView(titleET)
 
+        val items = listOf(
+            listOf("Primera lista, valor 1", "Primera lista, valor 2","Primera lista, valor 3"),
+            listOf("Segunda lista, valor 1", "Segunda lista, valor 2","Segunda lista, valor 3"),
+            listOf("Tercera lista, valor 1", "Tercera lista, valor 2","Tercera lista, valor 3")
+        )
+
+        list_spinner.initialize(items, "Pick")
+        list_spinner.setOnListSelectedListener(object :
+            ListSelectedListener {
+            override fun onListSelected(list: List<Any>) {
+                Log.e("Main TAG", "size: ${list.size}")
+                list.forEach {
+                    Log.e("Main TAG", "element: ${it}")
+                }
+            }
+        })
     }
 
 }

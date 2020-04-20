@@ -27,7 +27,7 @@ class MultiSelectSearchAdapter(
     //private val itemsSelected = arrayListOf<ObjectData>()
 
     private lateinit var limitListener: LimitListener
-    private lateinit var listener: SpinnerListener
+    private lateinit var listener: MultiSelectSpinnerListener
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -111,7 +111,7 @@ class MultiSelectSearchAdapter(
         }
     }
 
-    fun setSpinnerListener(listener: SpinnerListener) {
+    fun setSpinnerListener(listener: MultiSelectSpinnerListener) {
         this.listener = listener
     }
 

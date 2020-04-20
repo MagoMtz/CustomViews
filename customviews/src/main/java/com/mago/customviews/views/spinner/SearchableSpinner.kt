@@ -22,6 +22,8 @@ open class SearchableSpinner :
     private val rectLarge = 26.6666666667f
     private val rectHeight = 17.7777777778f
     private val circleRad = 22.2222222222f
+    private val heightOrigin = 120F
+    private val widthOrigin = 100F
 
     private lateinit var arrowPath: Path
 
@@ -124,8 +126,8 @@ open class SearchableSpinner :
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         yCenter = h.toFloat() / 2
-        xOrigin = w - xOrigin
-        yOrigin = h - yOrigin
+        xOrigin = w - widthOrigin
+        yOrigin = h - heightOrigin
 
         arrowPath = Path().apply {
             val newOriginL = yCenter - (rectLarge / 4)

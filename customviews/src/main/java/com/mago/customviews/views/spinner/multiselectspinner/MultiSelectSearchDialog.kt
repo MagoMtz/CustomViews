@@ -24,7 +24,7 @@ class MultiSelectSearchDialog: DialogFragment() {
     private var limit: Int = 0
 
     private lateinit var multiSelectSearchAdapter: MultiSelectSearchAdapter
-    private lateinit var listener: DialogListener
+    private lateinit var listener: MultiSelectDialogListener
 
     private var selected = 0
     private var itemsSelected = arrayListOf<ObjectData>()
@@ -71,7 +71,7 @@ class MultiSelectSearchDialog: DialogFragment() {
     }
 
     private fun createView(inflater: LayoutInflater): View {
-        val view = inflater.inflate(R.layout.dialog_multi_select_search, null)
+        val view = inflater.inflate(R.layout.dialog_select_search, null)
 
         val searchView = view.findViewById<SearchView>(R.id.tv_search)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
@@ -105,7 +105,7 @@ class MultiSelectSearchDialog: DialogFragment() {
     private fun setupRecyclerView(recyclerView: RecyclerView) {
         recyclerView.layoutManager = LinearLayoutManager(context!!)
         multiSelectSearchAdapter = MultiSelectSearchAdapter(items, selected, itemsSelected)
-        multiSelectSearchAdapter.setSpinnerListener(object : SpinnerListener{
+        multiSelectSearchAdapter.setSpinnerListener(object : MultiSelectSpinnerListener{
             override fun onItemsSelected(items: List<ObjectData>) {
                 Log.d("TAG", "selectedItems:  ${items.size}")
                 listener.onItemsSelected(items)
@@ -135,7 +135,7 @@ class MultiSelectSearchDialog: DialogFragment() {
         multiSelectSearchAdapter.notifyDataSetChanged()
     }
 
-    fun setDialogListener(listener: DialogListener) {
+    fun setDialogListener(listener: MultiSelectDialogListener) {
         this.listener = listener
     }
 
