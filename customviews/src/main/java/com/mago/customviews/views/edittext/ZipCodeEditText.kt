@@ -21,6 +21,7 @@ class ZipCodeEditText : AppCompatEditText{
             invalidate()
             requestLayout()
         }
+    var isValid = false
 
     constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
         this.attributeSet = attributeSet
@@ -58,6 +59,7 @@ class ZipCodeEditText : AppCompatEditText{
         super.onDraw(canvas)
 
         val isValid = text.toString().length == 5
+        this.isValid = isValid
 
         canvas?.apply {
             val cBounds = clipBounds
@@ -90,13 +92,14 @@ class ZipCodeEditText : AppCompatEditText{
                 val count = editable.length
                 val mPattern = Pattern.compile(RegexPattern.ONLY_NUMBERS)
 
+                setSelection(count)
+
                 if (editable.toString() != "") {
                     val matcher = mPattern.matcher(editable[count -1].toString())
 
                     if (!matcher.matches() || count > 5) {
                         val text = s.subSequence(0, count - 1)
                         setText(text)
-                        setSelection(count - 1)
                     }
                 }
             }

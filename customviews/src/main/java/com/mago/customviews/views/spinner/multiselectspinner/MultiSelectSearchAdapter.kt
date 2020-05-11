@@ -78,6 +78,7 @@ class MultiSelectSearchAdapter(
 
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun publishResults(constraint: CharSequence, results: FilterResults) {

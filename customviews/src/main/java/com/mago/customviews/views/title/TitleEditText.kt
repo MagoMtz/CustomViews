@@ -1,6 +1,7 @@
 package com.mago.customviews.views.title
 
 import android.content.Context
+import android.text.Editable
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
@@ -89,7 +90,7 @@ class TitleEditText : LinearLayout {
                         getBoolean(R.styleable.TitleEditText_allChars, false)
                     isMandatory = getBoolean(R.styleable.TitleEditText_isMandatory, false)
 
-                    getString(R.styleable.TitleEditText_titleHint)?.let { titleHint = it }
+                    getString(R.styleable.TitleEditText_title)?.let { titleHint = it }
                 } finally {
                     recycle()
                 }
@@ -106,4 +107,28 @@ class TitleEditText : LinearLayout {
         customEditText.charsWithBlankSpaces = charsWithBlankSpaces
         customEditText.allChars = allChars
     }
+
+    fun isValid(): Boolean = customEditText.isValid
+
+    fun setText(resId: Int) {
+        customEditText.setText(resId)
+    }
+
+    fun setText(string: String) {
+        customEditText.setText(string)
+    }
+
+    fun getText(): Editable? = customEditText.text
+
+    fun invalidateViews() {
+        inputLy.isEnabled = false
+        customEditText.isEnabled = false
+    }
+
+    fun validateViews() {
+        inputLy.isEnabled = true
+        customEditText.isEnabled = true
+    }
+
+
 }

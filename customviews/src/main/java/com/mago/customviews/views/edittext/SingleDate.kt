@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
+import android.text.Editable
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
@@ -23,21 +24,22 @@ import java.util.*
 class SingleDate: LinearLayout{
     private lateinit var attributeSet: AttributeSet
     // Views
-    private var tvTitle: TextView? = null
+    private var tvTitle: TextView = TextView(context)
     private lateinit var lyDate: LinearLayout
     lateinit var btnCalendar: ImageView
-    var dateEditText: DateEditText? = null
+    var dateEditText: DateEditText = DateEditText(context)
         set(value) {
             field = value
             invalidate()
             requestLayout()
         }
+    var isValid = false
 
     // Attributes
     var titleHint: String = ""
         set(value) {
             field = value
-            tvTitle?.text = value
+            tvTitle.text = value
             invalidate()
             requestLayout()
         }
@@ -94,7 +96,7 @@ class SingleDate: LinearLayout{
             .apply {
                 try {
                     isMandatory = getBoolean(R.styleable.SingleDate_isMandatory, false)
-                    getString(R.styleable.SingleDate_titleHint)?.let {
+                    getString(R.styleable.SingleDate_title)?.let {
                         titleHint = it
                     }
                     futureDate = getBoolean(R.styleable.SingleDate_futureDate, false)
@@ -108,8 +110,10 @@ class SingleDate: LinearLayout{
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        val textIsEmpty =
-            dateEditText?.text.toString().let { (it.isEmpty() || it == DATE_PLACE_HOLDER) }
+        val isNotValid = dateEditText.text.toString().let {
+            (it.isEmpty() || it == DATE_PLACE_HOLDER)
+        }
+        isValid = !isNotValid
 
         //tvTitle.visibility = if (textIsEmpty) View.INVISIBLE else View.VISIBLE
 
@@ -122,7 +126,7 @@ class SingleDate: LinearLayout{
             )
 
             if (isMandatory)
-                if (textIsEmpty)
+                if (isNotValid)
                     drawRoundRect(cBounds, 10F, 10F, frameAlertPaint)
                 else
                     drawRoundRect(cBounds, 10F, 10F, framePaint)
@@ -138,8 +142,8 @@ class SingleDate: LinearLayout{
         dateEditText = findViewById(R.id.date_edit_text)
         btnCalendar = findViewById(R.id.btn_calendar)
 
-        tvTitle?.text = titleHint
-        dateEditText!!.hint = DATE_PLACE_HOLDER
+        tvTitle.text = titleHint
+        dateEditText.hint = DATE_PLACE_HOLDER
     }
 
     private fun setClickListeners() {
@@ -154,11 +158,11 @@ class SingleDate: LinearLayout{
         var month = calendar.get(Calendar.MONTH)
         var year = calendar.get(Calendar.YEAR)
 
-        val dateText = dateEditText!!.text.toString()
+        val dateText = dateEditText.text.toString()
         val dateIsComplete = dateText.replace(DATE.toRegex(), "").length == 8
 
         if (dateText.isNotEmpty() && dateIsComplete) {
-            val date = dateEditText!!.text.toString().split("/")
+            val date = dateEditText.text.toString().split("/")
             day = date[0].toInt()
             month = date[1].toInt() - 1
             year = date[2].toInt()
@@ -169,13 +173,37 @@ class SingleDate: LinearLayout{
                 val initialDate =
                     (if (dayOfMonth.toString().length < 2) "0".plus(dayOfMonth.toString()) else dayOfMonth.toString()) + "/" +
                             (if ((monthOfYear + 1).toString().length < 2) "0" + (monthOfYear + 1).toString() else (monthOfYear + 1).toString()) + "/" + mYear
-                dateEditText!!.setText(initialDate)
+                dateEditText.setText(initialDate)
             }, year, month, day
         )
         if (!futureDate)
             initialDatePicker.datePicker.maxDate = Date().time
 
         initialDatePicker.show()
+    }
+
+    fun setText(resId: Int) {
+        dateEditText.setText(resId)
+    }
+
+    fun setText(string: String) {
+        dateEditText.setText(string)
+    }
+
+    fun getText(): Editable? = dateEditText.text
+
+    fun invalidateViews() {
+        tvTitle.isEnabled = false
+        lyDate.isEnabled = false
+        dateEditText.isEnabled = false
+        btnCalendar.isEnabled = false
+    }
+
+    fun validateViews() {
+        tvTitle.isEnabled = false
+        lyDate.isEnabled = false
+        dateEditText.isEnabled = false
+        btnCalendar.isEnabled = false
     }
 
 }

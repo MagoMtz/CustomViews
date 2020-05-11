@@ -21,6 +21,7 @@ class EmailEditText : AppCompatEditText{
             invalidate()
             requestLayout()
         }
+    var isValid = false
 
     constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
         this.attributeSet = attributeSet
@@ -60,6 +61,7 @@ class EmailEditText : AppCompatEditText{
         val pattern = Pattern.compile(RegexPattern.E_MAIL, Pattern.CASE_INSENSITIVE)
         val matcher = pattern.matcher(text.toString())
         val isValid = matcher.matches()
+        this.isValid = isValid
 
         canvas?.apply {
             val cBounds = clipBounds
@@ -92,13 +94,14 @@ class EmailEditText : AppCompatEditText{
                 val count = editable.length
                 val mPattern = Pattern.compile(RegexPattern.VALID_ENTER_E_MAIL)
 
+                setSelection(count)
+
                 if (editable.toString() != "") {
                     val matcher = mPattern.matcher(editable[count -1].toString())
 
                     if (!matcher.matches()) {
                         val text = s.subSequence(0, count - 1)
                         setText(text)
-                        setSelection(count - 1)
                     }
                 }
             }

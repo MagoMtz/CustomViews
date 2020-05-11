@@ -36,6 +36,7 @@ open class SearchableSpinner :
             invalidate()
             requestLayout()
         }
+    var isValid = false
     /*
     var spinnerHeight: Float = 0F
         set(value) {
@@ -107,6 +108,7 @@ open class SearchableSpinner :
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         isElementSelected = selectedItemPosition != 0
+        isValid = isElementSelected
 
         canvas?.apply {
             canvas.drawPath(arrowPath, arrowPaint)

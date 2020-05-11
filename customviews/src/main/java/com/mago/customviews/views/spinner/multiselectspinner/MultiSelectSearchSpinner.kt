@@ -44,6 +44,7 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
             invalidate()
             requestLayout()
         }
+    var isValid = false
     /*
     var spinnerHeight: Float = 0F
         set(value) {
@@ -105,7 +106,7 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
 
 
         isElementSelected = selectedItems.size == 2
-
+        isValid = isElementSelected
 
         canvas?.apply {
             canvas.drawPath(arrowPath, arrowPaint)
@@ -181,10 +182,24 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
 
     override fun onCancelButton(items: List<ObjectData>) {}
 
+    /**
+     * Use this function to initialize the spinner.
+     * @param items the list of items to selection
+     * @param title string to show as title
+     * @param limit the maximun amount of selections
+     * @param overLimitMsg message who will be showing when there is no more selections available
+     */
     fun init(items: List<Any>, title: String, limit: Int, overLimitMsg: String) {
         initialize(items, title, limit, overLimitMsg)
     }
 
+    /**
+     * Use this function to initialize the spinner.
+     * @param items the list of items to selection
+     * @param title string to show as title
+     * @param limit the maximun amount of selections
+     * @param overLimitMsg message who will be showing when there is no more selections available
+     */
     fun init(items: List<Any>, title: String, limit: Int, overLimitMsg: Int) {
         initialize(items, title, limit, context.getString(overLimitMsg))
     }

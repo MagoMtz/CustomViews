@@ -71,7 +71,7 @@ class TitleMultiSelectSearchSpinner : LinearLayout {
             .apply {
                 try {
                     isMandatory = getBoolean(R.styleable.TitleMultiSelectSearchSpinner_isMandatory, false)
-                    getString(R.styleable.TitleSearchableSpinner_titleHint)?.let {
+                    getString(R.styleable.TitleSearchableSpinner_title)?.let {
                         titleText = it
                     }
                     /*
@@ -105,7 +105,18 @@ class TitleMultiSelectSearchSpinner : LinearLayout {
 
         spinner.isMandatory = isMandatory
         tvTitleText.text = titleText
-        //spinner.spinnerHeight = spinnerHeight - tvTitleHint.height
+    }
+
+    fun isValid(): Boolean = spinner.isValid
+
+    fun invalidateViews() {
+        tvTitleText.isEnabled = false
+        spinner.isEnabled = false
+    }
+
+    fun validateViews() {
+        tvTitleText.isEnabled = true
+        spinner.isEnabled = true
     }
 
 }

@@ -20,6 +20,7 @@ class TextArea : AppCompatEditText {
             invalidate()
             requestLayout()
         }
+    var isValid = false
 
     constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
         this.attributeSet = attributeSet
@@ -56,14 +57,15 @@ class TextArea : AppCompatEditText {
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        val textIsEmpty = text.toString().isEmpty()
+        val isNotValid = text.toString().isEmpty()
+        isValid = !isNotValid
 
         canvas?.apply {
             val cBounds = clipBounds
             cBounds.inset(0, 8)
 
             background = if (isMandatory)
-                if (textIsEmpty)
+                if (isNotValid)
                     ContextCompat.getDrawable(context, R.drawable.bg_common_invalid)
                 else
                     ContextCompat.getDrawable(context, R.drawable.bg_common)

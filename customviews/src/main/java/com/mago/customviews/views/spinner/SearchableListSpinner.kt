@@ -50,6 +50,7 @@ class SearchableListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouc
             invalidate()
             requestLayout()
         }
+    var isValid = false
     /*
     var spinnerHeight: Float = 0F
         set(value) {
@@ -109,11 +110,11 @@ class SearchableListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouc
         super.onDraw(canvas)
 
         isElementSelected = selectedItems.isNotEmpty()
+        isValid = isElementSelected
 
         canvas?.apply {
             canvas.drawPath(arrowPath, arrowPaint)
             canvas.drawCircle(xOrigin + rectLarge / 2, yCenter, circleRad, circlePaint)
-            Log.w("SearchableListSpinner", "drawCircle xOrigin: $xOrigin")
 
             background = if (!isElementSelected) {
                 if (isMandatory)

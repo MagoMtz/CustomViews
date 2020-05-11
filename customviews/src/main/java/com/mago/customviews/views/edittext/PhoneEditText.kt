@@ -20,6 +20,7 @@ class PhoneEditText : AppCompatEditText {
             invalidate()
             requestLayout()
         }
+    var isValid = false
 
     constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
         this.attributeSet = attributeSet
@@ -58,6 +59,7 @@ class PhoneEditText : AppCompatEditText {
         super.onDraw(canvas)
 
         val isValid = text.toString().length == 14
+        this.isValid = isValid
 
         canvas?.apply {
             val cBounds = clipBounds

@@ -42,6 +42,7 @@ class CustomSpinner : AppCompatSpinner {
             invalidate()
             requestLayout()
         }
+    var isValid = false
     /*
     var spinnerHeight: Float = 0F
         set(value) {
@@ -107,6 +108,7 @@ class CustomSpinner : AppCompatSpinner {
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         isElementSelected = selectedItemPosition != 0
+        isValid = isElementSelected
 
         canvas?.apply {
             canvas.drawPath(arrowPath, arrowPaint)
@@ -137,14 +139,5 @@ class CustomSpinner : AppCompatSpinner {
             close()
         }
     }
-
-    /*
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val params = layoutParams
-        //params.height = spinnerHeight.toInt()
-    //    requestLayout()
-    }
-     */
 
 }
