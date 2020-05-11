@@ -6,137 +6,76 @@
     android:layout_height="match_parent"
     tools:context="com.mago.customviewsapp.MainActivity">
 
-    <com.mago.customviews.views.spinner.SearchableListSpinner
-        android:id="@+id/list_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <LinearLayout
-        android:id="@+id/ly_l"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal"
-        android:weightSum="1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/list_spinner">
-
-        <com.mago.customviews.views.title.TitleEmailEditText
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="0.5"
-            app:isMandatory="true"
-            app:titleHint="Title Text"
-            app:onlyNumbers="true"
-            />
-
-        <com.mago.customviews.views.title.TitleMultiSelectSearchSpinner
-            android:id="@+id/sp"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_weight="0.5"
-            app:isMandatory="true"
-            app:titleHint="Title search spinner"
-            app:spinnerHeight="30dp"
-            />
-
-    </LinearLayout>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ly_l" >
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/ly_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
 
-            <com.mago.customviews.views.title.TitleEditText
-                android:id="@+id/et_title"
+            <LinearLayout
+                android:id="@+id/ly_l"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginTop="16dp"
-                app:isMandatory="true"
-                app:titleHint="Title Edit Text" />
+                android:layout_height="80dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
 
-            <com.mago.customviews.views.title.TitleSpinner
-                android:id="@+id/sp_biographic"
+                <com.mago.customviews.views.title.TitleEditText
+                    android:id="@+id/et_text"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="0.5"
+                    app:isMandatory="true"
+                    app:onlyNumbers="true"
+                    app:title="Title Text" />
+
+                <Button
+                    android:id="@+id/btn_set_text"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:text="set text" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ly_2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:hintText="Select item"
-                app:titleHint="Title spinner" />
+                android:layout_height="80dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
 
-            <com.mago.customviews.views.title.TitleSearchableSpinner
-                android:id="@+id/sp_title_search"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:isMandatory="true"
-                app:titleHint="Title search spinner" />
+                <com.mago.customviews.views.title.TitleMultiSelectSearchSpinner
+                    android:id="@+id/sp_multi"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="0.5"
+                    app:isMandatory="true"
+                    app:onlyNumbers="true"
+                    app:title="Title Text" />
 
-            <com.mago.customviews.views.title.TitleMultiSelectSearchSpinner
-                android:id="@+id/sp_multi"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:isMandatory="true"
-                app:titleHint="Title search spinner"
-                />
+                <Button
+                    android:id="@+id/btn_set_selection"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:text="set selection" />
 
-            <com.mago.customviews.views.title.TitleTextArea
-                android:id="@+id/et_textArea"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                app:isMandatory="true"
-                app:titleHint="Title Text Area" />
-
-            <com.mago.customviews.views.edittext.SingleDate
-                android:id="@+id/et_date"
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_marginBottom="16dp"
-                app:titleHint="Fecha"
-                app:futureDate="true"
-                />
-
-            <com.mago.customviews.views.edittext.DateRange
-                android:id="@+id/et_date_range"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginBottom="16dp"
-                app:isMandatory="true"
-                app:initDateTitle="Fecha inicial"
-                app:finalDateTitle="Fecha final"
-                app:daysRange="10"
-                app:futureDate="true"
-                />
-
+            </LinearLayout>
 
         </LinearLayout>
 
     </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

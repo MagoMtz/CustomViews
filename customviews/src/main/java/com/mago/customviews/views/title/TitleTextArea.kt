@@ -1,6 +1,7 @@
 package com.mago.customviews.views.title
 
 import android.content.Context
+import android.text.Editable
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
@@ -65,7 +66,7 @@ class TitleTextArea : LinearLayout{
             .apply {
                 try {
                     isMandatory = getBoolean(R.styleable.TitleTextArea_isMandatory, false)
-                    getString(R.styleable.TitleTextArea_titleHint)?.let { titleHint = it }
+                    getString(R.styleable.TitleTextArea_title)?.let { titleHint = it }
                 } finally {
                     recycle()
                 }
@@ -79,4 +80,29 @@ class TitleTextArea : LinearLayout{
         inputLy.hint = titleHint
         textArea.isMandatory = isMandatory
     }
+
+    fun isValid(): Boolean = textArea.isValid
+
+    fun setText(resId: Int) {
+        textArea.setText(resId)
+    }
+
+    fun setText(string: String) {
+        textArea.setText(string)
+    }
+
+    fun getText(): Editable? = textArea.text
+
+    fun invalidateViews() {
+        inputLy.isEnabled = false
+        textArea.isEnabled = false
+    }
+
+    fun validateViews() {
+        inputLy.isEnabled = true
+        textArea.isEnabled = true
+    }
+
+
+
 }

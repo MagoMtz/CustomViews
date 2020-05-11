@@ -2,7 +2,7 @@
 <resources>
 
     <attr name="isMandatory" format="boolean" />
-    <attr name="titleHint" format="string" />
+    <attr name="title" format="string" />
     <attr name="onlyNumbers" format="boolean" />
     <attr name="charsWithBlankSpaces" format="boolean" />
     <attr name="allChars" format="boolean" />
@@ -21,7 +21,7 @@
         <attr name="charsWithBlankSpaces" />
         <attr name="allChars" />
         <attr name="isMandatory" />
-        <attr name="titleHint" />
+        <attr name="title" />
     </declare-styleable>
 
     <declare-styleable name="TextArea">
@@ -30,49 +30,49 @@
 
     <declare-styleable name="TitleTextArea">
         <attr name="isMandatory" />
-        <attr name="titleHint" />
+        <attr name="title" />
     </declare-styleable>
 
     <declare-styleable name="CustomSpinner">
         <attr name="isMandatory" />
-        <attr name="spinnerHeight" />
     </declare-styleable>
 
     <declare-styleable name="TitleSpinner">
-        <attr name="titleHint"/>
-        <attr name="spinnerHeight" />
+        <attr name="title"/>
         <attr name="isMandatory" />
     </declare-styleable>
 
     <declare-styleable name="SearchableSpinner">
         <attr name="isMandatory" />
-        <attr name="spinnerHeight" />
     </declare-styleable>
 
     <declare-styleable name="TitleSearchableSpinner">
-        <attr name="titleHint" />
+        <attr name="title" />
         <attr name="isMandatory" />
-        <attr name="spinnerHeight" />
     </declare-styleable>
 
     <declare-styleable name="MultiSelectSearchSpinner">
         <attr name="isMandatory" />
-        <attr name="spinnerHeight" />
     </declare-styleable>
 
     <declare-styleable name="SearchableListSpinner">
         <attr name="isMandatory" />
     </declare-styleable>
 
-    <declare-styleable name="TitleMultiSelectSearchSpinner">
-        <attr name="titleHint" />
+    <declare-styleable name="TitleSearchableListSpinner">
+        <attr name="title" />
         <attr name="isMandatory" />
-        <attr name="spinnerHeight" />
+    </declare-styleable>
+
+
+    <declare-styleable name="TitleMultiSelectSearchSpinner">
+        <attr name="title" />
+        <attr name="isMandatory" />
     </declare-styleable>
 
     <declare-styleable name="SingleDate">
         <attr name="isMandatory" />
-        <attr name="titleHint" />
+        <attr name="title" />
         <attr name="futureDate" />
     </declare-styleable>
 
@@ -90,7 +90,7 @@
 
     <declare-styleable name="TitleEmailEditText">
         <attr name="isMandatory" />
-        <attr name="titleHint" />
+        <attr name="title" />
     </declare-styleable>
 
     <declare-styleable name="PhoneEditText">
@@ -99,7 +99,7 @@
 
     <declare-styleable name="TitlePhoneEditText">
         <attr name="isMandatory" />
-        <attr name="titleHint" />
+        <attr name="title" />
     </declare-styleable>
 
     <declare-styleable name="ZipCodeEditText">
@@ -108,7 +108,7 @@
 
     <declare-styleable name="TitleZipCodeEditText">
         <attr name="isMandatory" />
-        <attr name="titleHint" />
+        <attr name="title" />
     </declare-styleable>
 
 </resources>

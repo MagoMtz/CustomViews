@@ -44,22 +44,24 @@ open class CustomEditText : AppCompatEditText {
             invalidate()
             requestLayout()
         }
+    var isValid = false
 
-    constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
+    constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
         this.attributeSet = attributeSet
         setupAttributes()
         init()
     }
-    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int):
+
+    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int) :
             super(context, attributeSet, defStyleAttr) {
         this.attributeSet = attributeSet
         setupAttributes()
         init()
     }
-    constructor(context: Context): super(context) {
+
+    constructor(context: Context) : super(context) {
         init()
     }
-
 
 
     private fun init() {
@@ -89,14 +91,15 @@ open class CustomEditText : AppCompatEditText {
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        val textIsEmpty = text.toString().isEmpty()
+        val isNotValid = text.toString().isEmpty()
+        isValid = !isNotValid
 
         canvas?.apply {
             val cBounds = clipBounds
             cBounds.inset(0, 8)
 
             background = if (isMandatory)
-                if (textIsEmpty)
+                if (isNotValid)
                     ContextCompat.getDrawable(context, R.drawable.bg_common_invalid)
                 else
                     ContextCompat.getDrawable(context, R.drawable.bg_common)
@@ -107,8 +110,9 @@ open class CustomEditText : AppCompatEditText {
         setPadding(
             CommonUtils.intToDp(context, 8),
             CommonUtils.intToDp(context, 7)
-            ,0
-            ,0)
+            , 0
+            , 0
+        )
     }
 
     override fun onAttachedToWindow() {
@@ -124,7 +128,9 @@ open class CustomEditText : AppCompatEditText {
     private fun textWatcher(): TextWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
             s?.let { editable ->
+
                 val count = editable.length
+                setSelection(count)
 
                 // Pattern for only text
                 val pattern = when {
@@ -139,9 +145,8 @@ open class CustomEditText : AppCompatEditText {
                     val matcher = mPattern.matcher(editable[count - 1].toString())
 
                     if (!matcher.matches()) {
-                        val text = s.subSequence(0, count - 1)
-                        setText(text)
-                        setSelection(count - 1)
+                        val mText = s.subSequence(0, count - 1)
+                        this@CustomEditText.setText(mText)
                     }
                 }
             }
@@ -152,7 +157,8 @@ open class CustomEditText : AppCompatEditText {
             start: Int,
             count: Int,
             after: Int
-        ) {}
+        ) {
+        }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             invalidate()

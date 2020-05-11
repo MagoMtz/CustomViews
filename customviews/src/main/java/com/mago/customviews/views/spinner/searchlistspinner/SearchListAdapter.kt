@@ -43,6 +43,7 @@ class SearchListAdapter(
         setupRecyclerView(holder.itemView.rv_list, items, position)
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun publishResults(constraint: CharSequence, results: FilterResults) {

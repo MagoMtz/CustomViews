@@ -74,7 +74,7 @@ class TitleSearchableSpinner : LinearLayout {
             .apply {
                 try {
                     isMandatory = getBoolean(R.styleable.TitleSearchableSpinner_isMandatory, false)
-                    getString(R.styleable.TitleSearchableSpinner_titleHint)?.let {
+                    getString(R.styleable.TitleSearchableSpinner_title)?.let {
                         titleText = it
                     }
                     /*spinnerHeight = getDimension(
@@ -107,7 +107,18 @@ class TitleSearchableSpinner : LinearLayout {
 
         spinner.isMandatory = isMandatory
         tvTitleText.text = titleText
-        //spinner.spinnerHeight = spinnerHeight
+    }
+
+    fun isValid(): Boolean = spinner.isValid
+
+    fun invalidateViews() {
+        tvTitleText.isEnabled = false
+        spinner.isEnabled = false
+    }
+
+    fun validateViews() {
+        tvTitleText.isEnabled = true
+        spinner.isEnabled = true
     }
 
 }

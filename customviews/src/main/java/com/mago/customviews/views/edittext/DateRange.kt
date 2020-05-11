@@ -122,11 +122,11 @@ class DateRange : LinearLayout{
         var month = calendar.get(Calendar.MONTH)
         var year = calendar.get(Calendar.YEAR)
 
-        val initDateText = initDate.dateEditText?.text.toString()
+        val initDateText = initDate.dateEditText.text.toString()
         val dateIsComplete = initDateText.replace(DATE.toRegex(), "").length == 8
 
         if (initDateText.isNotEmpty() && dateIsComplete) {
-            val date = initDate.dateEditText?.text.toString().split("/")
+            val date = initDate.dateEditText.text.toString().split("/")
             day = date[0].toInt()
             month = date[1].toInt() - 1
             year = date[2].toInt()
@@ -137,8 +137,8 @@ class DateRange : LinearLayout{
                 val initialDate =
                     (if (dayOfMonth.toString().length < 2) "0".plus(dayOfMonth.toString()) else dayOfMonth.toString()) + "/" +
                             (if ((monthOfYear + 1).toString().length < 2) "0" + (monthOfYear + 1).toString() else (monthOfYear + 1).toString()) + "/" + mYear
-                initDate.dateEditText?.setText(initialDate)
-                finalDate.dateEditText?.setText(initialDate)
+                initDate.dateEditText.setText(initialDate)
+                finalDate.dateEditText.setText(initialDate)
                 setupFinalDatePicker()
                 finalDatePicker.show()
 
@@ -154,8 +154,8 @@ class DateRange : LinearLayout{
         var month = calendar.get(Calendar.MONTH)
         var year = calendar.get(Calendar.YEAR)
 
-        val finalDateText = finalDate.dateEditText?.text.toString()
-        val initDateText = initDate.dateEditText?.text.toString()
+        val finalDateText = finalDate.dateEditText.text.toString()
+        val initDateText = initDate.dateEditText.text.toString()
         val initDateIsComplete = initDateText.replace(DATE.toRegex(), "").length == 8
 
         if (finalDateText.isNotEmpty() && initDateIsComplete) {
@@ -170,7 +170,7 @@ class DateRange : LinearLayout{
                 val finalDate =
                     (if (dayOfMonth.toString().length < 2) "0".plus(dayOfMonth.toString()) else dayOfMonth.toString()) + "/" +
                             (if ((monthOfYear + 1).toString().length < 2) "0" + (monthOfYear + 1).toString() else (monthOfYear + 1).toString()) + "/" + mYear
-                this.finalDate.dateEditText?.setText(finalDate)
+                this.finalDate.dateEditText.setText(finalDate)
 
             }, year, month, day
         )
@@ -218,5 +218,17 @@ class DateRange : LinearLayout{
             finalDatePicker.show()
         }
     }
+
+    fun invalidateViews() {
+        initDate.invalidateViews()
+        finalDate.invalidateViews()
+    }
+
+    fun validateViews() {
+        initDate.validateViews()
+        finalDate.validateViews()
+    }
+
+    fun isValid(): Boolean = initDate.isValid && finalDate.isValid
 
 }

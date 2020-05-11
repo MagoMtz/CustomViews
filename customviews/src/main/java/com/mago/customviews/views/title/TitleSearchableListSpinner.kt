@@ -7,45 +7,36 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.mago.customviews.R
-import com.mago.customviews.views.spinner.CustomSpinner
+import com.mago.customviews.views.spinner.SearchableListSpinner
 
 /**
  * @author by jmartinez
- * @since 17/01/2020.
+ * @since 11/05/2020.
  */
-class TitleSpinner: LinearLayout {
+class TitleSearchableListSpinner: LinearLayout {
     private lateinit var attributeSet: AttributeSet
-
+    // Views
     private var tvTitleText: TextView = TextView(context)
     var titleText: CharSequence = ""
-        //get() = tvTitle.text
         set(value) {
+            field = value
             tvTitleText.text = value
-            field = value
-            invalidate()
             requestLayout()
-        }
-    var spinner: CustomSpinner = CustomSpinner(context)
-        set(value) {
-            field = value
             invalidate()
-            requestLayout()
         }
-
-    var isMandatory: Boolean = false
+    var spinner: SearchableListSpinner = SearchableListSpinner(context)
         set(value) {
             field = value
             requestLayout()
             invalidate()
         }
-    /*
-    var spinnerHeight: Float = 0F
+    // Attr
+    private var isMandatory: Boolean = false
         set(value) {
             field = value
-            invalidate()
             requestLayout()
+            invalidate()
         }
-     */
 
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
         this.attributeSet = attributeSet
@@ -53,8 +44,7 @@ class TitleSpinner: LinearLayout {
         init()
     }
     constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int)
-            : super(context, attributeSet, defStyleAttr
-    ) {
+            : super(context, attributeSet, defStyleAttr) {
         this.attributeSet = attributeSet
         setupAttributes()
         init()
@@ -64,25 +54,18 @@ class TitleSpinner: LinearLayout {
     }
 
     private fun init() {
-        View.inflate(context, R.layout.title_spinner, this)
+        View.inflate(context, R.layout.title_searchable_list_spinner, this)
 
         initComponents()
         setWillNotDraw(false)
     }
 
     private fun setupAttributes() {
-        context.theme.obtainStyledAttributes(attributeSet, R.styleable.TitleSpinner, 0, 0)
+        context.theme.obtainStyledAttributes(attributeSet, R.styleable.TitleSearchableListSpinner, 0, 0)
             .apply {
                 try {
-                    /*
-                    spinnerHeight = getDimension(
-                        R.styleable.TitleSpinner_spinnerHeight,
-                        resources.getDimension(R.dimen.spinner_min_height)
-                    )
-
-                     */
-                    isMandatory = getBoolean(R.styleable.TitleSpinner_isMandatory, false)
-                    getString(R.styleable.TitleSearchableSpinner_title)?.let {
+                    isMandatory = getBoolean(R.styleable.TitleSearchableListSpinner_isMandatory, false)
+                    getString(R.styleable.TitleSearchableListSpinner_title)?.let {
                         titleText = it
                     }
                 } finally {
@@ -105,9 +88,8 @@ class TitleSpinner: LinearLayout {
 
     private fun initComponents() {
         tvTitleText = findViewById(R.id.tv_title)
-        spinner = findViewById(R.id.sp_custom)
+        spinner = findViewById(R.id.sp_searchable)
 
-        //spinner.spinnerHeight = spinnerHeight
         spinner.isMandatory = isMandatory
         tvTitleText.text = titleText
     }

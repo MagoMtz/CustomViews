@@ -1,6 +1,7 @@
 package com.mago.customviews.views.title
 
 import android.content.Context
+import android.text.Editable
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
@@ -60,7 +61,7 @@ class TitleZipCodeEditText : LinearLayout {
                 try {
                     isMandatory = getBoolean(R.styleable.TitleZipCodeEditText_isMandatory, false)
 
-                    getString(R.styleable.TitleZipCodeEditText_titleHint)?.let { titleHint = it }
+                    getString(R.styleable.TitleZipCodeEditText_title)?.let { titleHint = it }
                 } finally {
                     recycle()
                 }
@@ -74,4 +75,27 @@ class TitleZipCodeEditText : LinearLayout {
         inputLy.hint = titleHint
         editText.isMandatory = isMandatory
     }
+
+    fun isValid(): Boolean = editText.isValid
+
+    fun setText(resId: Int) {
+        editText.setText(resId)
+    }
+
+    fun setText(string: String) {
+        editText.setText(string)
+    }
+
+    fun getText(): Editable? = editText.text
+
+    fun invalidateViews() {
+        inputLy.isEnabled = false
+        editText.isEnabled = false
+    }
+
+    fun validateViews() {
+        inputLy.isEnabled = true
+        editText.isEnabled = true
+    }
+
 }

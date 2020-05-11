@@ -16,6 +16,25 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val items = arrayListOf("Seleccion 0", "Seleccion 1", "Seleccion 2", "Seleccion 3")
+
+        sp_multi.spinner.init(items, "Seleccione algo", 2, "No mas 2")
+
+        btn_set_selection.setOnClickListener {
+
+        }
+
+        btn_set_text.setOnClickListener {
+            et_text.setText("asdasd")
+
+            Log.e("ASD", "isValid: ${et_text.isValid()}")
+            Log.e("ASD", "text: ${et_text.getText().toString()}")
+        }
+
+
+
+
+        /*
         val adapter = CustomSpinnerAdapter(
             this,
             arrayListOf("Mi spinner", "Seleccion 1", "Seleccion 2", "Seleccion 3"),
@@ -78,6 +97,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+
+         */
     }
 
 }
