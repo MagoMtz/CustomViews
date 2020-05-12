@@ -17,7 +17,7 @@ class TitleSearchableListSpinner: LinearLayout {
     private lateinit var attributeSet: AttributeSet
     // Views
     private var tvTitleText: TextView = TextView(context)
-    var titleText: CharSequence = ""
+    var title: CharSequence = ""
         set(value) {
             field = value
             tvTitleText.text = value
@@ -36,6 +36,7 @@ class TitleSearchableListSpinner: LinearLayout {
             field = value
             requestLayout()
             invalidate()
+            spinner.isMandatory = value
         }
 
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
@@ -66,7 +67,7 @@ class TitleSearchableListSpinner: LinearLayout {
                 try {
                     isMandatory = getBoolean(R.styleable.TitleSearchableListSpinner_isMandatory, false)
                     getString(R.styleable.TitleSearchableListSpinner_title)?.let {
-                        titleText = it
+                        title = it
                     }
                 } finally {
                     recycle()
@@ -91,7 +92,7 @@ class TitleSearchableListSpinner: LinearLayout {
         spinner = findViewById(R.id.sp_searchable)
 
         spinner.isMandatory = isMandatory
-        tvTitleText.text = titleText
+        tvTitleText.text = title
     }
 
     fun isValid(): Boolean = spinner.isValid

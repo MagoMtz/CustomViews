@@ -18,7 +18,6 @@ class TitleSpinner: LinearLayout {
 
     private var tvTitleText: TextView = TextView(context)
     var titleText: CharSequence = ""
-        //get() = tvTitle.text
         set(value) {
             tvTitleText.text = value
             field = value
@@ -37,15 +36,8 @@ class TitleSpinner: LinearLayout {
             field = value
             requestLayout()
             invalidate()
+            spinner.isMandatory = isMandatory
         }
-    /*
-    var spinnerHeight: Float = 0F
-        set(value) {
-            field = value
-            invalidate()
-            requestLayout()
-        }
-     */
 
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
         this.attributeSet = attributeSet
@@ -74,13 +66,6 @@ class TitleSpinner: LinearLayout {
         context.theme.obtainStyledAttributes(attributeSet, R.styleable.TitleSpinner, 0, 0)
             .apply {
                 try {
-                    /*
-                    spinnerHeight = getDimension(
-                        R.styleable.TitleSpinner_spinnerHeight,
-                        resources.getDimension(R.dimen.spinner_min_height)
-                    )
-
-                     */
                     isMandatory = getBoolean(R.styleable.TitleSpinner_isMandatory, false)
                     getString(R.styleable.TitleSearchableSpinner_title)?.let {
                         titleText = it
@@ -107,7 +92,6 @@ class TitleSpinner: LinearLayout {
         tvTitleText = findViewById(R.id.tv_title)
         spinner = findViewById(R.id.sp_custom)
 
-        //spinner.spinnerHeight = spinnerHeight
         spinner.isMandatory = isMandatory
         tvTitleText.text = titleText
     }

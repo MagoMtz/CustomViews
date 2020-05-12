@@ -2,6 +2,7 @@ package com.mago.customviewsapp
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.mago.customviews.views.adapter.CustomSpinnerAdapter
 import com.mago.customviews.views.spinner.multiselectspinner.ItemsSelectedListener
@@ -31,7 +32,17 @@ class MainActivity : AppCompatActivity() {
             Log.e("ASD", "text: ${et_text.getText().toString()}")
         }
 
+        val tET = TitleEditText(this)
+        val lyParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
 
+        tET.layoutParams = lyParams
+        tET.isMandatory = true
+        tET.allChars = true
+
+        ly_container.addView(tET)
 
 
         /*

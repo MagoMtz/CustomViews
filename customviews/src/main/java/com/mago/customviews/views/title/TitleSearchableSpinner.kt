@@ -17,8 +17,7 @@ class TitleSearchableSpinner : LinearLayout {
     private lateinit var attributeSet: AttributeSet
     // Views
     private var tvTitleText: TextView = TextView(context)
-    var titleText: CharSequence = ""
-        //get() = tvTitleText.text
+    var title: CharSequence = ""
         set(value) {
             field = value
             tvTitleText.text = value
@@ -37,16 +36,9 @@ class TitleSearchableSpinner : LinearLayout {
             field = value
             requestLayout()
             invalidate()
-        }
-    /*
-    var spinnerHeight: Float = 0F
-        set(value) {
-            field = value
-            requestLayout()
-            invalidate()
+            spinner.isMandatory = value
         }
 
-     */
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
         this.attributeSet = attributeSet
         setupAttributes()
@@ -75,14 +67,8 @@ class TitleSearchableSpinner : LinearLayout {
                 try {
                     isMandatory = getBoolean(R.styleable.TitleSearchableSpinner_isMandatory, false)
                     getString(R.styleable.TitleSearchableSpinner_title)?.let {
-                        titleText = it
+                        title = it
                     }
-                    /*spinnerHeight = getDimension(
-                        R.styleable.TitleSearchableSpinner_spinnerHeight,
-                        resources.getDimension(R.dimen.spinner_min_height)
-                    )
-
-                     */
                 } finally {
                     recycle()
                 }
@@ -106,7 +92,7 @@ class TitleSearchableSpinner : LinearLayout {
         spinner = findViewById(R.id.sp_searchable)
 
         spinner.isMandatory = isMandatory
-        tvTitleText.text = titleText
+        tvTitleText.text = title
     }
 
     fun isValid(): Boolean = spinner.isValid

@@ -13,7 +13,7 @@ class TitleEmailEditText: LinearLayout {
     private lateinit var attributeSet: AttributeSet
     // Views
     private var inputLy: TextInputLayout = TextInputLayout(context)
-    var titleHint: String = ""
+    var title: String = ""
         //get() = inputLy.hint.toString()
         set(value) {
             inputLy.hint = value
@@ -33,6 +33,7 @@ class TitleEmailEditText: LinearLayout {
             field = value
             invalidate()
             requestLayout()
+            editText.isMandatory
         }
 
     constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
@@ -63,7 +64,7 @@ class TitleEmailEditText: LinearLayout {
                     isMandatory = getBoolean(R.styleable.TitleEmailEditText_isMandatory, false)
 
                     getString(R.styleable.TitleEmailEditText_title)?.let {
-                        titleHint = it
+                        title = it
                     }
                 } finally {
                     recycle()
@@ -76,7 +77,7 @@ class TitleEmailEditText: LinearLayout {
         inputLy = findViewById(R.id.input_ly)
         editText = findViewById(R.id.edit_text)
 
-        inputLy.hint = titleHint
+        inputLy.hint = title
         editText.isMandatory = isMandatory
     }
 
