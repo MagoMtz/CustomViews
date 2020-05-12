@@ -21,8 +21,8 @@ class MainActivity : AppCompatActivity() {
 
         var selectedList = listOf<Int>(1,3)
 
-        sp_multi.spinner.init(items, "Seleccione algo", 3, 2, "No mas 2")
-        sp_multi.spinner.setOnItemsSelectedListener(object : ItemsSelectedListener {
+        sp_multi.init(items, "Seleccione algo", 3, 2, "No mas 2")
+        sp_multi.setOnItemsSelectedListener(object : ItemsSelectedListener {
             override fun onItemsSelected(list: List<Any>) {
                 list.forEach {
                     Log.e("MAIN", "item: $it")
@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         btn_set_selection.setOnClickListener {
+            sp_multi.setSelectedItems(listOf(1))
         }
 
         btn_set_text.setOnClickListener {

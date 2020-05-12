@@ -138,4 +138,6 @@ class MultiSelectSearchAdapter(
         this.minSelection = minSelection
     }
 
+    fun getItems(): List<ObjectData> = data
+
 }

@@ -189,4 +189,23 @@ class MultiSelectSearchDialog: DialogFragment() {
         this.items = items
     }
 
+    fun getItems(): List<ObjectData> = items
+
+    fun setSelectedItems(selectedItemPos: List<Int>) {
+        val selectedItems = arrayListOf<ObjectData>()
+
+        selectedItemPos.forEach {
+            items[it].isSelected = true
+            selectedItems.add(items[it])
+        }
+
+        if (selectedItems.size >= minSelection || selectedItems.size == maxSelection) {
+            itemsSelected = selectedItems
+            selected = itemsSelected.size
+            if (::listener.isInitialized)
+                listener.onItemsSelected(selectedItems)
+        }
+
+    }
+
 }

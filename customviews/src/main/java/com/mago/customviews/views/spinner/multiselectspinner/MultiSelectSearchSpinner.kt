@@ -213,7 +213,10 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
         )
     }
 
-    fun setupAdapter(items: List<ObjectData>) {
+    private fun setupAdapter(items: List<ObjectData>) {
+        if (items.isEmpty())
+            return
+
         val sb = StringBuilder()
         for (i in items.indices) {
             if (items[i].isSelected) {
@@ -226,6 +229,10 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
     }
 
     fun getSelectedItems(): List<ObjectData> = selectedItems
+
+    fun setSelectedItems(selectedItemPos: List<Int>) {
+        multiSelectSearchDialog.setSelectedItems(selectedItemPos)
+    }
 
     fun setOnItemsSelectedListener(listener: ItemsSelectedListener) {
         itemsSelectedListener = listener

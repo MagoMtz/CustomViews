@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.mago.customviews.R
+import com.mago.customviews.views.spinner.multiselectspinner.ItemsSelectedListener
 import com.mago.customviews.views.spinner.multiselectspinner.MultiSelectSearchSpinner
 
 class TitleMultiSelectSearchSpinner : LinearLayout {
@@ -101,6 +102,30 @@ class TitleMultiSelectSearchSpinner : LinearLayout {
     fun validateViews() {
         tvTitleText.isEnabled = true
         spinner.isEnabled = true
+    }
+
+    fun setSelectedItems(selectedItemPos: List<Int>) {
+        spinner.setSelectedItems(selectedItemPos)
+    }
+
+    fun setOnItemsSelectedListener(listener: ItemsSelectedListener) {
+        spinner.setOnItemsSelectedListener(listener)
+    }
+
+    /**
+     * Use this function to initialize the spinner.
+     * @param items the list of items to selection
+     * @param title string to show as title
+     * @param maxSelection the maximum amount of selections
+     * @param minSelection the minimum amount of selections. Default value is maxSelection
+     * @param overLimitMsg message who will be showing when there is no more selections available
+     */
+    fun init(items: List<Any>,
+             title: String,
+             maxSelection: Int,
+             minSelection: Int = maxSelection,
+             overLimitMsg: String) {
+        spinner.init(items, title, maxSelection, minSelection, overLimitMsg)
     }
 
 }
