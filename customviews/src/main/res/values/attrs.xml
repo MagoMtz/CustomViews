@@ -53,6 +53,8 @@
 
     <declare-styleable name="MultiSelectSearchSpinner">
         <attr name="isMandatory" />
+        <attr name="minSelection" format="integer" />
+        <attr name="maxSelection" format="integer" />
     </declare-styleable>
 
     <declare-styleable name="SearchableListSpinner">

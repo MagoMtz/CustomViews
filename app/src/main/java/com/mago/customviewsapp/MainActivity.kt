@@ -19,10 +19,18 @@ class MainActivity : AppCompatActivity() {
 
         val items = arrayListOf("Seleccion 0", "Seleccion 1", "Seleccion 2", "Seleccion 3")
 
-        sp_multi.spinner.init(items, "Seleccione algo", 2, "No mas 2")
+        var selectedList = listOf<Int>(1,3)
+
+        sp_multi.spinner.init(items, "Seleccione algo", 3, 2, "No mas 2")
+        sp_multi.spinner.setOnItemsSelectedListener(object : ItemsSelectedListener {
+            override fun onItemsSelected(list: List<Any>) {
+                list.forEach {
+                    Log.e("MAIN", "item: $it")
+                }
+            }
+        })
 
         btn_set_selection.setOnClickListener {
-
         }
 
         btn_set_text.setOnClickListener {
@@ -31,19 +39,6 @@ class MainActivity : AppCompatActivity() {
             Log.e("ASD", "isValid: ${et_text.isValid()}")
             Log.e("ASD", "text: ${et_text.getText().toString()}")
         }
-
-        val tET = TitleEditText(this)
-        val lyParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-
-        tET.layoutParams = lyParams
-        tET.isMandatory = true
-        tET.allChars = true
-
-        ly_container.addView(tET)
-
 
         /*
         val adapter = CustomSpinnerAdapter(

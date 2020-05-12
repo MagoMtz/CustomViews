@@ -21,7 +21,8 @@ class MultiSelectSearchAdapter(
 ) :
     RecyclerView.Adapter<MultiSelectSearchAdapter.ViewHolder>(), Filterable {
     private var originalValues: List<ObjectData> = data
-    private var limit = 0
+    private var maxSelection = 0
+    private var minSelection = 0
 
     //private var selected = 0
     //private val itemsSelected = arrayListOf<ObjectData>()
@@ -44,13 +45,22 @@ class MultiSelectSearchAdapter(
         holder.itemView.alertTextView.text = item.name
         holder.itemView.alertCheckbox.isChecked = item.isSelected
 
+        if (position == data.size -1)
+            if (selected >= minSelection) {
+                if (::listener.isInitialized)
+                    listener.onMinSelectionAvailable()
+            } else {
+                if (::listener.isInitialized)
+                    listener.onMinSelectionNotAvailable()
+            }
+
         holder.itemView.setOnClickListener {
             when {
                 item.isSelected -> {
                     selected--
                     itemsSelected.remove(item)
                 }
-                selected == limit -> {
+                selected == maxSelection -> {
                     if (::limitListener.isInitialized)
                         limitListener.onLimitListener(item)
                     return@setOnClickListener
@@ -59,8 +69,11 @@ class MultiSelectSearchAdapter(
                     selected++
                     itemsSelected.add(item)
 
+                    /*
                     if (::listener.isInitialized)
-                        listener.onItemSelected(itemsSelected)
+                        listener.onItemClicked(itemsSelected)
+
+                     */
                 }
             }
 
@@ -69,7 +82,10 @@ class MultiSelectSearchAdapter(
             item.isSelected = !item.isSelected
             notifyDataSetChanged()
 
-            if (selected == limit) {
+            if (::listener.isInitialized)
+                listener.onItemClicked(itemsSelected)
+
+            if (selected == maxSelection) {
                 if (::listener.isInitialized) {
                     listener.onItemsSelected(itemsSelected)
                 }
@@ -116,9 +132,10 @@ class MultiSelectSearchAdapter(
         this.listener = listener
     }
 
-    fun setLimitListener(limitListener: LimitListener, limit: Int) {
+    fun setLimitListener(limitListener: LimitListener, maxSelection: Int, minSelection: Int) {
         this.limitListener = limitListener
-        this.limit = limit
+        this.maxSelection = maxSelection
+        this.minSelection = minSelection
     }
 
 }
