@@ -93,16 +93,9 @@ class TitleTextArea : LinearLayout{
 
     fun getText(): Editable? = textArea.text
 
-    fun invalidateViews() {
-        inputLy.isEnabled = false
-        textArea.isEnabled = false
+    fun enableViews(isEnabled: Boolean) {
+        inputLy.isEnabled = isEnabled
+        textArea.isEnabled = isEnabled
     }
-
-    fun validateViews() {
-        inputLy.isEnabled = true
-        textArea.isEnabled = true
-    }
-
-
 
 }

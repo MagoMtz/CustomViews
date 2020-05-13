@@ -228,10 +228,20 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
         setAdapter(mText.substring(0, mText.length - 2))
     }
 
-    fun getSelectedItems(): List<ObjectData> = selectedItems
+    fun getSelectedItems(): List<Any> {
+        val arrayList = arrayListOf<Any>()
+        selectedItems.forEach {
+            arrayList.add(it.item)
+        }
+        return arrayList
+    }
 
     fun setSelectedItems(selectedItemPos: List<Int>) {
         multiSelectSearchDialog.setSelectedItems(selectedItemPos)
+    }
+
+    fun setHint(hint: String) {
+        setAdapter(hint)
     }
 
     fun setOnItemsSelectedListener(listener: ItemsSelectedListener) {

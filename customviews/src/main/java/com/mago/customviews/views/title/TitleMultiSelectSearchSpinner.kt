@@ -94,18 +94,20 @@ class TitleMultiSelectSearchSpinner : LinearLayout {
 
     fun isValid(): Boolean = spinner.isValid
 
-    fun invalidateViews() {
-        tvTitleText.isEnabled = false
-        spinner.isEnabled = false
-    }
-
-    fun validateViews() {
-        tvTitleText.isEnabled = true
-        spinner.isEnabled = true
+    fun enableViews(isEnabled: Boolean) {
+        tvTitleText.isEnabled = isEnabled
+        spinner.isEnabled = isEnabled
     }
 
     fun setSelectedItems(selectedItemPos: List<Int>) {
         spinner.setSelectedItems(selectedItemPos)
+    }
+
+
+    fun getSelectedItems() = spinner.getSelectedItems()
+
+    fun setHint(hint: String) {
+        spinner.setHint(hint)
     }
 
     fun setOnItemsSelectedListener(listener: ItemsSelectedListener) {

@@ -124,15 +124,9 @@ class TitleEditText : LinearLayout {
 
     fun getText(): Editable? = customEditText.text
 
-    fun invalidateViews() {
-        inputLy.isEnabled = false
-        customEditText.isEnabled = false
+    fun enableViews(isEnabled: Boolean) {
+        inputLy.isEnabled = isEnabled
+        customEditText.isEnabled = isEnabled
     }
-
-    fun validateViews() {
-        inputLy.isEnabled = true
-        customEditText.isEnabled = true
-    }
-
 
 }

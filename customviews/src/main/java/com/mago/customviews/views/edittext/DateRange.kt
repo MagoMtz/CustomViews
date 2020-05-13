@@ -219,14 +219,9 @@ class DateRange : LinearLayout{
         }
     }
 
-    fun invalidateViews() {
-        initDate.invalidateViews()
-        finalDate.invalidateViews()
-    }
-
-    fun validateViews() {
-        initDate.validateViews()
-        finalDate.validateViews()
+    fun enableViews(isEnabled: Boolean) {
+        initDate.enableViews(isEnabled)
+        finalDate.enableViews(isEnabled)
     }
 
     fun isValid(): Boolean = initDate.isValid && finalDate.isValid

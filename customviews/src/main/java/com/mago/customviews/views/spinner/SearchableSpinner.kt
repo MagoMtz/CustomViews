@@ -37,25 +37,6 @@ open class SearchableSpinner :
             requestLayout()
         }
     var isValid = false
-    /*
-    var spinnerHeight: Float = 0F
-        set(value) {
-            field = value
-            invalidate()
-            requestLayout()
-        }
-
-     */
-
-    /*
-    var hintText: String = ""
-        set(value) {
-            field = value
-            requestLayout()
-            invalidate()
-        }
-
-     */
 
     // Paint objects
     private val arrowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -93,12 +74,6 @@ open class SearchableSpinner :
             .apply {
                 try {
                     isMandatory = getBoolean(R.styleable.SearchableSpinner_isMandatory, false)
-                    /*spinnerHeight = getDimension(
-                        R.styleable.SearchableSpinner_spinnerHeight,
-                        resources.getDimension(R.dimen.spinner_min_height)
-                    )
-
-                     */
                 } finally {
                     recycle()
                 }
@@ -140,15 +115,5 @@ open class SearchableSpinner :
             close()
         }
     }
-
-    /*
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val params = layoutParams
-        //params.height = spinnerHeight.toInt()
-        //requestLayout()
-    }
-
-     */
 
 }

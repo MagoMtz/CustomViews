@@ -88,14 +88,9 @@ class TitleZipCodeEditText : LinearLayout {
 
     fun getText(): Editable? = editText.text
 
-    fun invalidateViews() {
-        inputLy.isEnabled = false
-        editText.isEnabled = false
-    }
-
-    fun validateViews() {
-        inputLy.isEnabled = true
-        editText.isEnabled = true
+    fun enableViews(isEnabled: Boolean) {
+        inputLy.isEnabled = isEnabled
+        editText.isEnabled = isEnabled
     }
 
 }

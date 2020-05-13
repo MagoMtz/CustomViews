@@ -2,6 +2,7 @@ package com.mago.customviewsapp
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.mago.customviews.views.adapter.CustomSpinnerAdapter
@@ -17,11 +18,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val items = arrayListOf("Seleccion 0", "Seleccion 1", "Seleccion 2", "Seleccion 3")
+        val items = arrayListOf<String>("Seleccion 0", "Seleccion 1", "Seleccion 2", "Seleccion 3")
 
         var selectedList = listOf<Int>(1,3)
 
         sp_multi.init(items, "Seleccione algo", 3, 2, "No mas 2")
+        sp_multi.setHint("Seleccione algo123")
         sp_multi.setOnItemsSelectedListener(object : ItemsSelectedListener {
             override fun onItemsSelected(list: List<Any>) {
                 list.forEach {
@@ -30,8 +32,12 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items)
+        sp_search.setAdapter(adapter)
+
+
         btn_set_selection.setOnClickListener {
-            sp_multi.setSelectedItems(listOf(1))
+            sp_multi.setHint("Seleccione algo123456")
         }
 
         btn_set_text.setOnClickListener {

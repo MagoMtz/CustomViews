@@ -43,15 +43,6 @@ class CustomSpinner : AppCompatSpinner {
             requestLayout()
         }
     var isValid = false
-    /*
-    var spinnerHeight: Float = 0F
-        set(value) {
-            field = value
-            invalidate()
-            requestLayout()
-        }
-
-     */
     // Paint objects
     private val arrowPaint = Paint(ANTI_ALIAS_FLAG).apply {
         color = ContextCompat.getColor(context, R.color.dark_gray)
@@ -93,12 +84,6 @@ class CustomSpinner : AppCompatSpinner {
             .apply {
                 try {
                     isMandatory = getBoolean(R.styleable.CustomSpinner_isMandatory, false)
-                    /*spinnerHeight = getDimension(
-                        R.styleable.CustomSpinner_spinnerHeight,
-                        resources.getDimension(R.dimen.spinner_min_height)
-                    )
-
-                     */
                 } finally {
                     recycle()
                 }

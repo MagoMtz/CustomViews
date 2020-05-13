@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.mago.customviews.R
@@ -97,14 +98,21 @@ class TitleSearchableSpinner : LinearLayout {
 
     fun isValid(): Boolean = spinner.isValid
 
-    fun invalidateViews() {
-        tvTitleText.isEnabled = false
-        spinner.isEnabled = false
+    fun enableViews(isEnabled: Boolean) {
+        tvTitleText.isEnabled = isEnabled
+        spinner.isEnabled = isEnabled
     }
 
-    fun validateViews() {
-        tvTitleText.isEnabled = true
-        spinner.isEnabled = true
+    fun setSelection(pos: Int) {
+        spinner.setSelection(pos)
     }
+
+    fun getSelectedItem() = spinner.selectedItem
+
+    fun setAdapter(adapter: ArrayAdapter<*>) {
+        spinner.adapter = adapter
+    }
+
+    fun getAdapter() = spinner.adapter
 
 }
