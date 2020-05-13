@@ -57,6 +57,20 @@
         <attr name="maxSelection" format="integer" />
     </declare-styleable>
 
+    <declare-styleable name="SearchSpinner">
+        <attr name="isMandatory" />
+    </declare-styleable>
+
+    <declare-styleable name="TitleSearchSpinner">
+        <attr name="title" />
+        <attr name="isMandatory" />
+    </declare-styleable>
+
+    <declare-styleable name="TitleMultiSelectSearchSpinner">
+        <attr name="title" />
+        <attr name="isMandatory" />
+    </declare-styleable>
+
     <declare-styleable name="SearchableListSpinner">
         <attr name="isMandatory" />
     </declare-styleable>
@@ -67,10 +81,7 @@
     </declare-styleable>
 
 
-    <declare-styleable name="TitleMultiSelectSearchSpinner">
-        <attr name="title" />
-        <attr name="isMandatory" />
-    </declare-styleable>
+
 
     <declare-styleable name="SingleDate">
         <attr name="isMandatory" />

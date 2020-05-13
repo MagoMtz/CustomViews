@@ -5,17 +5,28 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
+import android.view.MotionEvent
+import android.view.View
+import android.widget.ArrayAdapter
+import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
 import com.mago.customviews.R
+import com.mago.customviews.util.CommonUtils.scanForActivity
+import com.mago.customviews.views.spinner.searchspinner.ItemSelectedListener
+import com.mago.customviews.views.spinner.searchspinner.SearchDialog
+import com.mago.customviews.views.spinner.searchspinner.SearchSpinnerListener
 
 /**
  * @author by jmartinez
- * @since 04/02/2020.
+ * @since 13/05/2020.
  */
-@Deprecated("This Spinner is not longer recommended. You should use SearchSpinner instead", ReplaceWith("SearchSpinner"))
-open class SearchableSpinner :
-    com.toptoche.searchablespinnerlibrary.SearchableSpinner {
+class SearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListener,
+    SearchSpinnerListener {
     private lateinit var attributeSet: AttributeSet
+    private lateinit var searchDialog: SearchDialog
+    private lateinit var itemSelectedListener: ItemSelectedListener
+    private var selectedItem: Any? = null
+    private var items = listOf<Any>()
 
     private var xOrigin = 100f
     private var yOrigin = 120f
@@ -30,7 +41,6 @@ open class SearchableSpinner :
 
     //Attributes
     private var isElementSelected = false
-
     var isMandatory: Boolean = false
         set(value) {
             field = value
@@ -56,8 +66,7 @@ open class SearchableSpinner :
         setupAttributes()
         init()
     }
-    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int):
-            super(context, attributeSet, defStyleAttr) {
+    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int): super(context, attributeSet, defStyleAttr) {
         this.attributeSet = attributeSet
         setupAttributes()
         init()
@@ -67,14 +76,25 @@ open class SearchableSpinner :
     }
 
     private fun init() {
+        setOnTouchListener(this)
+    }
 
+    fun initialize(items: List<Any>, title: String) {
+        this.items = items
+        searchDialog =
+            SearchDialog.newInstance(
+                title
+            )
+        searchDialog.setSearchSpinnerListener(this)
+        searchDialog.setItems(items)
+        setAdapter(title)
     }
 
     private fun setupAttributes() {
-        context.theme.obtainStyledAttributes(attributeSet, R.styleable.SearchableSpinner, 0, 0)
+        context.theme.obtainStyledAttributes(attributeSet, R.styleable.SearchSpinner, 0, 0)
             .apply {
                 try {
-                    isMandatory = getBoolean(R.styleable.SearchableSpinner_isMandatory, false)
+                    isMandatory = getBoolean(R.styleable.SearchSpinner_isMandatory, false)
                 } finally {
                     recycle()
                 }
@@ -83,7 +103,8 @@ open class SearchableSpinner :
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        isElementSelected = selectedItemPosition != 0
+
+        isElementSelected = selectedItem != null
         isValid = isElementSelected
 
         canvas?.apply {
@@ -98,7 +119,6 @@ open class SearchableSpinner :
             } else
                 ContextCompat.getDrawable(context, R.drawable.bg_spinner)
         }
-
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -116,5 +136,55 @@ open class SearchableSpinner :
             close()
         }
     }
+
+    override fun onClick(v: View?) {
+        showDialog()
+    }
+
+    override fun onTouch(v: View, event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_UP)
+            showDialog()
+        return true
+    }
+
+    override fun onItemSelected(item: Any) {
+        selectedItem = item
+        itemSelectedListener.onItemSelected(selectedItem.toString())
+        setupAdapter(selectedItem.toString())
+    }
+
+    private fun showDialog() {
+        val fm = scanForActivity(context)!!.supportFragmentManager
+        searchDialog.show(
+            fm,
+            SearchDialog.TAG
+        )
+    }
+
+    private fun setupAdapter(item: String) {
+        setAdapter(item)
+    }
+
+    private fun setAdapter(title: String) {
+        adapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, listOf(title))
+    }
+
+    override fun getSelectedItem(): Any? = selectedItem
+
+    fun setSelectedItem(pos: Int) {
+        val item = items[pos]
+        selectedItem = item
+        itemSelectedListener.onItemSelected(selectedItem!!)
+        setAdapter(selectedItem.toString())
+    }
+
+    fun setHint(hint: String) {
+        setAdapter(hint)
+    }
+
+    fun setOnItemSelectedListener(itemSelectedListener: ItemSelectedListener) {
+        this.itemSelectedListener = itemSelectedListener
+    }
+
 
 }
