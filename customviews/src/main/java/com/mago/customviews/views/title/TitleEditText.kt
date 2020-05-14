@@ -19,30 +19,30 @@ class TitleEditText : LinearLayout {
     var onlyNumbers: Boolean = false
         set(value) {
             field = value
+            customEditText.onlyNumbers = value
             invalidate()
             requestLayout()
-            customEditText.onlyNumbers = value
         }
     var charsWithBlankSpaces: Boolean = false
         set(value) {
             field = value
+            customEditText.charsWithBlankSpaces = value
             invalidate()
             requestLayout()
-            customEditText.charsWithBlankSpaces = value
         }
     var allChars: Boolean = false
         set(value) {
             field = value
+            customEditText.allChars = value
             invalidate()
             requestLayout()
-            customEditText.allChars = value
         }
     var isMandatory: Boolean = false
         set(value) {
             field = value
+            customEditText.isMandatory = value
             invalidate()
             requestLayout()
-            customEditText.isMandatory = value
         }
     //Views
     private var inputLy: TextInputLayout = TextInputLayout(context)

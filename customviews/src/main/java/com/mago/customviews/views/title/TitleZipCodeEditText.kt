@@ -30,9 +30,9 @@ class TitleZipCodeEditText : LinearLayout {
     var isMandatory: Boolean = false
         set(value) {
             field = value
+            editText.isMandatory
             invalidate()
             requestLayout()
-            editText.isMandatory
         }
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
         this.attributeSet = attributeSet

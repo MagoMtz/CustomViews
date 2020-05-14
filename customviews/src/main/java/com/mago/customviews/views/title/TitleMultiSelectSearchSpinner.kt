@@ -32,9 +32,9 @@ class TitleMultiSelectSearchSpinner : LinearLayout {
     var isMandatory: Boolean = false
         set(value) {
             field = value
+            spinner.isMandatory = value
             requestLayout()
             invalidate()
-            spinner.isMandatory = value
         }
 
     constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {

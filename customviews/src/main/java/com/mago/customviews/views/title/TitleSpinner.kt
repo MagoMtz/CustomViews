@@ -35,9 +35,9 @@ class TitleSpinner : LinearLayout {
     var isMandatory: Boolean = false
         set(value) {
             field = value
+            spinner.isMandatory = isMandatory
             requestLayout()
             invalidate()
-            spinner.isMandatory = isMandatory
         }
 
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
