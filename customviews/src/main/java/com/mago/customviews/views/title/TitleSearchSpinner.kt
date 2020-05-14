@@ -117,6 +117,8 @@ class TitleSearchSpinner: LinearLayout {
         spinner.setSelectedItem(pos)
     }
 
+    fun getPositionOf(item: Any) = spinner.getPositionOf(item)
+
     fun setAdapter(adapter: ArrayAdapter<*>) {
         spinner.adapter = adapter
     }

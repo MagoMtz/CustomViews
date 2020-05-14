@@ -197,6 +197,8 @@ class SearchableListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouc
 
     override fun getSelectedItemPosition(): Int = selectedItemsPosition
 
+    fun getPositionOf(item: List<Any>) = items.indexOf(item)
+
     fun setSelectedItems(pos: Int) {
         val items = items[pos]
         selectedItemsPosition = pos
