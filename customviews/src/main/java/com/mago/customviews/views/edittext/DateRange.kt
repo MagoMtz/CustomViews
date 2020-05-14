@@ -224,6 +224,18 @@ class DateRange : LinearLayout{
         finalDate.enableViews(isEnabled)
     }
 
+    fun setInitialDateText(text: String?) {
+        initDate.setText(text)
+    }
+
+    fun getInitialDateText() = initDate.getText()
+
+    fun setFinalDateText(text: String?) {
+        finalDate.setText(text)
+    }
+
+    fun getFinalDateText() = finalDate.getText()
+
     fun isValid(): Boolean = initDate.isValid && finalDate.isValid
 
 }

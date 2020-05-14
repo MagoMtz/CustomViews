@@ -186,7 +186,7 @@ class SingleDate: LinearLayout{
         dateEditText.setText(resId)
     }
 
-    fun setText(string: String) {
+    fun setText(string: String?) {
         dateEditText.setText(string)
     }
 

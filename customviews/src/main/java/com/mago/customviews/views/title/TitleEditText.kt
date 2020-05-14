@@ -118,7 +118,7 @@ class TitleEditText : LinearLayout {
         customEditText.setText(resId)
     }
 
-    fun setText(string: String) {
+    fun setText(string: String?) {
         customEditText.setText(string)
     }
 
