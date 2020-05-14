@@ -2,10 +2,14 @@ package com.mago.customviewsapp
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.mago.customviews.views.adapter.CustomSpinnerAdapter
+import com.mago.customviews.views.spinner.SearchableSpinner
 import com.mago.customviews.views.spinner.multiselectspinner.ItemsSelectedListener
 import com.mago.customviews.views.spinner.searchlistspinner.ListSelectedListener
+import com.mago.customviews.views.spinner.searchspinner.ItemSelectedListener
 import com.mago.customviews.views.title.TitleEditText
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -16,12 +20,36 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val items = arrayListOf("Seleccion 0", "Seleccion 1", "Seleccion 2", "Seleccion 3")
+        val items = arrayListOf<String>("Seleccion 0", "Seleccion 1", "Seleccion 2", "Seleccion 3")
 
-        sp_multi.spinner.init(items, "Seleccione algo", 2, "No mas 2")
+        var selectedList = listOf<Int>(1,3)
+
+        SearchableSpinner(this)
+
+        sp_multi.init(items, "Seleccione algo", 3, 2, "No mas 2")
+        sp_multi.setHint("Seleccione algo123")
+        sp_multi.setOnItemsSelectedListener(object : ItemsSelectedListener {
+            override fun onItemsSelected(list: List<Any>) {
+                list.forEach {
+                    Log.e("MAIN", "item: $it")
+                }
+            }
+        })
+
+        sp_title_search.initialize(items, "Seleccione algo")
+        sp_title_search.setOnItemSelectedListener(object : ItemSelectedListener{
+            override fun onItemSelected(item: Any) {
+                Log.e("tag", "item: $item")
+            }
+        })
+        btn_set_selection_search.setOnClickListener {
+            Log.e("tag", "item: ${sp_title_search.getSelectedItem()}")
+            sp_title_search.setSelectedItem(3)
+        }
 
         btn_set_selection.setOnClickListener {
-
+            sp_multi.setHint("Seleccione algo123456")
+            sp_title_search.setHint("Seleccione algo123456")
         }
 
         btn_set_text.setOnClickListener {
@@ -30,9 +58,6 @@ class MainActivity : AppCompatActivity() {
             Log.e("ASD", "isValid: ${et_text.isValid()}")
             Log.e("ASD", "text: ${et_text.getText().toString()}")
         }
-
-
-
 
         /*
         val adapter = CustomSpinnerAdapter(

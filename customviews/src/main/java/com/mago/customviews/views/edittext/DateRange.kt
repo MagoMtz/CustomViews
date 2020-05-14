@@ -37,14 +37,14 @@ class DateRange : LinearLayout{
     var initDateTitle: String = ""
         set(value) {
             field = value
-            initDate.titleHint = value
+            initDate.title = value
             invalidate()
             requestLayout()
         }
     var finalDateTitle: String = ""
         set(value) {
             field = value
-            finalDate.titleHint = value
+            finalDate.title = value
             invalidate()
             requestLayout()
         }
@@ -107,11 +107,11 @@ class DateRange : LinearLayout{
         finalDate = findViewById(R.id.final_date)
 
         initDate.let {
-            it.titleHint = initDateTitle
+            it.title = initDateTitle
             it.isMandatory = isMandatory
         }
         finalDate.let {
-            it.titleHint = finalDateTitle
+            it.title = finalDateTitle
             it.isMandatory = isMandatory
         }
     }
@@ -219,14 +219,9 @@ class DateRange : LinearLayout{
         }
     }
 
-    fun invalidateViews() {
-        initDate.invalidateViews()
-        finalDate.invalidateViews()
-    }
-
-    fun validateViews() {
-        initDate.validateViews()
-        finalDate.validateViews()
+    fun enableViews(isEnabled: Boolean) {
+        initDate.enableViews(isEnabled)
+        finalDate.enableViews(isEnabled)
     }
 
     fun isValid(): Boolean = initDate.isValid && finalDate.isValid

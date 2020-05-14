@@ -1,7 +1,6 @@
-package com.mago.customviews.views.spinner.multiselectspinner
+package com.mago.customviews.views.spinner
 
 import android.content.Context
-import android.content.ContextWrapper
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
@@ -9,16 +8,21 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ArrayAdapter
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
 import com.mago.customviews.R
+import com.mago.customviews.util.CommonUtils.scanForActivity
+import com.mago.customviews.views.spinner.multiselectspinner.ItemsSelectedListener
+import com.mago.customviews.views.spinner.multiselectspinner.MultiSelectDialogListener
+import com.mago.customviews.views.spinner.multiselectspinner.MultiSelectSearchDialog
+import com.mago.customviews.views.spinner.multiselectspinner.ObjectData
 
 /**
  * @author by jmartinez
  * @since 21/03/2020.
  */
-class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListener, MultiSelectDialogListener {
+class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListener,
+    MultiSelectDialogListener {
     private lateinit var attributeSet: AttributeSet
     private lateinit var multiSelectSearchDialog: MultiSelectSearchDialog
     private lateinit var itemsSelectedListener: ItemsSelectedListener
@@ -44,16 +48,20 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
             invalidate()
             requestLayout()
         }
-    var isValid = false
-    /*
-    var spinnerHeight: Float = 0F
+    var maxSelection: Int = 0
         set(value) {
             field = value
             invalidate()
             requestLayout()
         }
+    var minSelection: Int = 0
+        set(value) {
+            field = value
+            invalidate()
+            requestLayout()
+        }
+    var isValid = false
 
-     */
     // Paint objects
     private val arrowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = ContextCompat.getColor(context, R.color.dark_gray)
@@ -89,12 +97,8 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
             .apply {
                 try {
                     isMandatory = getBoolean(R.styleable.MultiSelectSearchSpinner_isMandatory, false)
-                    /*spinnerHeight = getDimension(
-                        R.styleable.MultiSelectSearchSpinner_spinnerHeight,
-                        resources.getDimension(R.dimen.spinner_min_height)
-                    )
-
-                     */
+                    minSelection = getInteger(R.styleable.MultiSelectSearchSpinner_minSelection, 0)
+                    maxSelection = getInteger(R.styleable.MultiSelectSearchSpinner_maxSelection, 0)
                 } finally {
                     recycle()
                 }
@@ -104,8 +108,7 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-
-        isElementSelected = selectedItems.size == 2
+        isElementSelected = selectedItems.size >= minSelection
         isValid = isElementSelected
 
         canvas?.apply {
@@ -138,16 +141,6 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
         }
     }
 
-    /*
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val params = layoutParams
-        //params.height = spinnerHeight.toInt()
-        requestLayout()
-    }
-
-     */
-
     override fun onClick(v: View?) {
         showDialog()
     }
@@ -160,16 +153,7 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
 
     override fun onItemsSelected(items: List<ObjectData>) {
         this.selectedItems = items
-        val sb = StringBuilder()
-        for (i in items.indices) {
-            if (items[i].isSelected) {
-                sb.append(items[i].name)
-                sb.append(", ")
-            }
-        }
-        val mText = sb.toString()
-        //text = mText.substring(0, mText.length - 2)
-        setAdapter(mText.substring(0, mText.length - 2))
+        setupAdapter(items)
 
         if (::itemsSelectedListener.isInitialized) {
             val arrayList = arrayListOf<Any>()
@@ -180,45 +164,49 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
         }
     }
 
-    override fun onCancelButton(items: List<ObjectData>) {}
-
-    /**
-     * Use this function to initialize the spinner.
-     * @param items the list of items to selection
-     * @param title string to show as title
-     * @param limit the maximun amount of selections
-     * @param overLimitMsg message who will be showing when there is no more selections available
-     */
-    fun init(items: List<Any>, title: String, limit: Int, overLimitMsg: String) {
-        initialize(items, title, limit, overLimitMsg)
+    override fun onCancelButton(items: List<ObjectData>) {
+        setupAdapter(items)
     }
 
     /**
      * Use this function to initialize the spinner.
      * @param items the list of items to selection
      * @param title string to show as title
-     * @param limit the maximun amount of selections
+     * @param maxSelection the maximum amount of selections
+     * @param minSelection the minimum amount of selections. Default value is maxSelection
      * @param overLimitMsg message who will be showing when there is no more selections available
      */
-    fun init(items: List<Any>, title: String, limit: Int, overLimitMsg: Int) {
-        initialize(items, title, limit, context.getString(overLimitMsg))
+    fun init(
+        items: List<Any>,
+        title: String,
+        maxSelection: Int,
+        minSelection: Int = maxSelection,
+        overLimitMsg: String
+    ) {
+        initialize(items, title, maxSelection, minSelection, overLimitMsg)
     }
 
-    private fun initialize(items: List<Any>, title: String, limit: Int, overLimitMsg: String) {
+    private fun initialize(items: List<Any>, title: String, maxSelection: Int, minSelection: Int, overLimitMsg: String) {
+        this.minSelection = minSelection
+        this.maxSelection = maxSelection
+
         val data = arrayListOf<ObjectData>()
         for (i in items.indices) {
-            val o = ObjectData()
+            val o =
+                ObjectData()
             o.id = i.toLong()
             o.name = items[i].toString()
             o.isSelected = false
             o.item = items[i]
             data.add(o)
         }
-        multiSelectSearchDialog = MultiSelectSearchDialog.newInstance(
-            title,
-            overLimitMsg,
-            limit
-        )
+        multiSelectSearchDialog =
+            MultiSelectSearchDialog.newInstance(
+                title,
+                overLimitMsg,
+                maxSelection,
+                minSelection
+            )
         multiSelectSearchDialog.setDialogListener(this)
         multiSelectSearchDialog.setItems(data)
         setAdapter(title)
@@ -232,19 +220,39 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
         )
     }
 
-    fun getSelectedItems(): List<ObjectData> = selectedItems
+    private fun setupAdapter(items: List<ObjectData>) {
+        if (items.isEmpty())
+            return
+
+        val sb = StringBuilder()
+        for (i in items.indices) {
+            if (items[i].isSelected) {
+                sb.append(items[i].name)
+                sb.append(", ")
+            }
+        }
+        val mText = sb.toString()
+        setAdapter(mText.substring(0, mText.length - 2))
+    }
+
+    fun getSelectedItems(): List<Any> {
+        val arrayList = arrayListOf<Any>()
+        selectedItems.forEach {
+            arrayList.add(it.item)
+        }
+        return arrayList
+    }
+
+    fun setSelectedItems(selectedItemPos: List<Int>) {
+        multiSelectSearchDialog.setSelectedItems(selectedItemPos)
+    }
+
+    fun setHint(hint: String) {
+        setAdapter(hint)
+    }
 
     fun setOnItemsSelectedListener(listener: ItemsSelectedListener) {
         itemsSelectedListener = listener
-    }
-
-    private fun scanForActivity(context: Context): AppCompatActivity? {
-        if (context is AppCompatActivity)
-            return context
-        else if (context is ContextWrapper)
-            return scanForActivity((context).baseContext)
-
-        return null
     }
 
     private fun setAdapter(title: String) {

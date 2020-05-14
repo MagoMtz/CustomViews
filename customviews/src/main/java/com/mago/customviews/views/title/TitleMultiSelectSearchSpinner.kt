@@ -7,21 +7,22 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.mago.customviews.R
-import com.mago.customviews.views.spinner.multiselectspinner.MultiSelectSearchSpinner
+import com.mago.customviews.views.spinner.multiselectspinner.ItemsSelectedListener
+import com.mago.customviews.views.spinner.MultiSelectSearchSpinner
 
 class TitleMultiSelectSearchSpinner : LinearLayout {
     private lateinit var attributeSet: AttributeSet
     // Views
     private var tvTitleText: TextView = TextView(context)
-    var titleText: CharSequence = ""
-        //get() = tvTitleText.text
+    var title: CharSequence = ""
         set(value) {
             field = value
             tvTitleText.text = value
             requestLayout()
             invalidate()
         }
-    var spinner: MultiSelectSearchSpinner = MultiSelectSearchSpinner(context)
+    var spinner: MultiSelectSearchSpinner =
+        MultiSelectSearchSpinner(context)
         set(value) {
             field = value
             requestLayout()
@@ -33,16 +34,8 @@ class TitleMultiSelectSearchSpinner : LinearLayout {
             field = value
             requestLayout()
             invalidate()
+            spinner.isMandatory = value
         }
-    /*
-    var spinnerHeight: Float = 0F
-    set(value) {
-        field = value
-        requestLayout()
-        invalidate()
-    }
-
-     */
 
     constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
         this.attributeSet = attributeSet
@@ -72,15 +65,8 @@ class TitleMultiSelectSearchSpinner : LinearLayout {
                 try {
                     isMandatory = getBoolean(R.styleable.TitleMultiSelectSearchSpinner_isMandatory, false)
                     getString(R.styleable.TitleSearchableSpinner_title)?.let {
-                        titleText = it
+                        title = it
                     }
-                    /*
-                    spinnerHeight = getDimension(
-                        R.styleable.TitleMultiSelectSearchSpinner_spinnerHeight,
-                        resources.getDimension(R.dimen.spinner_min_height)
-                    )
-
-                     */
                 } finally {
                     recycle()
                 }
@@ -104,19 +90,45 @@ class TitleMultiSelectSearchSpinner : LinearLayout {
         spinner = findViewById(R.id.sp_searchable)
 
         spinner.isMandatory = isMandatory
-        tvTitleText.text = titleText
+        tvTitleText.text = title
     }
 
     fun isValid(): Boolean = spinner.isValid
 
-    fun invalidateViews() {
-        tvTitleText.isEnabled = false
-        spinner.isEnabled = false
+    fun enableViews(isEnabled: Boolean) {
+        tvTitleText.isEnabled = isEnabled
+        spinner.isEnabled = isEnabled
     }
 
-    fun validateViews() {
-        tvTitleText.isEnabled = true
-        spinner.isEnabled = true
+    fun setSelectedItems(selectedItemPos: List<Int>) {
+        spinner.setSelectedItems(selectedItemPos)
+    }
+
+
+    fun getSelectedItems() = spinner.getSelectedItems()
+
+    fun setHint(hint: String) {
+        spinner.setHint(hint)
+    }
+
+    fun setOnItemsSelectedListener(listener: ItemsSelectedListener) {
+        spinner.setOnItemsSelectedListener(listener)
+    }
+
+    /**
+     * Use this function to initialize the spinner.
+     * @param items the list of items to selection
+     * @param title string to show as title
+     * @param maxSelection the maximum amount of selections
+     * @param minSelection the minimum amount of selections. Default value is maxSelection
+     * @param overLimitMsg message who will be showing when there is no more selections available
+     */
+    fun init(items: List<Any>,
+             title: String,
+             maxSelection: Int,
+             minSelection: Int = maxSelection,
+             overLimitMsg: String) {
+        spinner.init(items, title, maxSelection, minSelection, overLimitMsg)
     }
 
 }

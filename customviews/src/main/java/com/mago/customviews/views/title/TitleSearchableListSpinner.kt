@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.mago.customviews.R
@@ -17,7 +18,7 @@ class TitleSearchableListSpinner: LinearLayout {
     private lateinit var attributeSet: AttributeSet
     // Views
     private var tvTitleText: TextView = TextView(context)
-    var titleText: CharSequence = ""
+    var title: CharSequence = ""
         set(value) {
             field = value
             tvTitleText.text = value
@@ -36,6 +37,7 @@ class TitleSearchableListSpinner: LinearLayout {
             field = value
             requestLayout()
             invalidate()
+            spinner.isMandatory = value
         }
 
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
@@ -66,7 +68,7 @@ class TitleSearchableListSpinner: LinearLayout {
                 try {
                     isMandatory = getBoolean(R.styleable.TitleSearchableListSpinner_isMandatory, false)
                     getString(R.styleable.TitleSearchableListSpinner_title)?.let {
-                        titleText = it
+                        title = it
                     }
                 } finally {
                     recycle()
@@ -91,19 +93,26 @@ class TitleSearchableListSpinner: LinearLayout {
         spinner = findViewById(R.id.sp_searchable)
 
         spinner.isMandatory = isMandatory
-        tvTitleText.text = titleText
+        tvTitleText.text = title
     }
 
     fun isValid(): Boolean = spinner.isValid
 
-    fun invalidateViews() {
-        tvTitleText.isEnabled = false
-        spinner.isEnabled = false
+    fun enableViews(isEnabled: Boolean) {
+        tvTitleText.isEnabled = isEnabled
+        spinner.isEnabled = isEnabled
     }
 
-    fun validateViews() {
-        tvTitleText.isEnabled = true
-        spinner.isEnabled = true
+    fun setSelection(pos: Int) {
+        spinner.setSelection(pos)
+    }
+
+    fun getSelectedItems() = spinner.selectedItem
+
+    fun getAdapter() = spinner.adapter
+
+    fun initialize(items: List<List<Any>>, title: String) {
+        spinner.initialize(items, title)
     }
 
 }

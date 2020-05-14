@@ -30,9 +30,9 @@ class TitleTextArea : LinearLayout{
             field = value
             invalidate()
             requestLayout()
+            textArea.isMandatory
         }
-    private var titleHint: String = ""
-        //get() = inputLy.hint.toString()
+    private var title: String = ""
         set(value) {
             inputLy.hint = value
             field = value
@@ -66,7 +66,7 @@ class TitleTextArea : LinearLayout{
             .apply {
                 try {
                     isMandatory = getBoolean(R.styleable.TitleTextArea_isMandatory, false)
-                    getString(R.styleable.TitleTextArea_title)?.let { titleHint = it }
+                    getString(R.styleable.TitleTextArea_title)?.let { title = it }
                 } finally {
                     recycle()
                 }
@@ -77,7 +77,7 @@ class TitleTextArea : LinearLayout{
         inputLy = findViewById(R.id.input_ly)
         textArea = findViewById(R.id.text_area)
 
-        inputLy.hint = titleHint
+        inputLy.hint = title
         textArea.isMandatory = isMandatory
     }
 
@@ -93,16 +93,9 @@ class TitleTextArea : LinearLayout{
 
     fun getText(): Editable? = textArea.text
 
-    fun invalidateViews() {
-        inputLy.isEnabled = false
-        textArea.isEnabled = false
+    fun enableViews(isEnabled: Boolean) {
+        inputLy.isEnabled = isEnabled
+        textArea.isEnabled = isEnabled
     }
-
-    fun validateViews() {
-        inputLy.isEnabled = true
-        textArea.isEnabled = true
-    }
-
-
 
 }

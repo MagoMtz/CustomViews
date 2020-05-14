@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
 import com.mago.customviews.R
+import com.mago.customviews.util.CommonUtils.scanForActivity
 import com.mago.customviews.views.spinner.searchlistspinner.ListSelectedListener
 import com.mago.customviews.views.spinner.searchlistspinner.SearchListDialog
 import com.mago.customviews.views.spinner.searchlistspinner.SearchListDialogListener
@@ -191,16 +192,5 @@ class SearchableListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouc
     private fun setAdapter(title: String) {
         adapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, listOf(title))
     }
-
-    private fun scanForActivity(context: Context): AppCompatActivity? {
-        if (context is AppCompatActivity)
-            return context
-        else if (context is ContextWrapper)
-            return scanForActivity((context).baseContext)
-
-        return null
-    }
-
-
 
 }

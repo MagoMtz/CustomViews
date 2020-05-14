@@ -13,8 +13,7 @@ class TitleZipCodeEditText : LinearLayout {
     private lateinit var attributeSet: AttributeSet
     // Views
     private var inputLy: TextInputLayout = TextInputLayout(context)
-    var titleHint: String = ""
-        //get() = inputLy.hint.toString()
+    var title: String = ""
         set(value) {
             inputLy.hint = value
             field = value
@@ -33,6 +32,7 @@ class TitleZipCodeEditText : LinearLayout {
             field = value
             invalidate()
             requestLayout()
+            editText.isMandatory
         }
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
         this.attributeSet = attributeSet
@@ -61,7 +61,7 @@ class TitleZipCodeEditText : LinearLayout {
                 try {
                     isMandatory = getBoolean(R.styleable.TitleZipCodeEditText_isMandatory, false)
 
-                    getString(R.styleable.TitleZipCodeEditText_title)?.let { titleHint = it }
+                    getString(R.styleable.TitleZipCodeEditText_title)?.let { title = it }
                 } finally {
                     recycle()
                 }
@@ -72,7 +72,7 @@ class TitleZipCodeEditText : LinearLayout {
         inputLy = findViewById(R.id.input_ly)
         editText = findViewById(R.id.edit_text)
 
-        inputLy.hint = titleHint
+        inputLy.hint = title
         editText.isMandatory = isMandatory
     }
 
@@ -88,14 +88,9 @@ class TitleZipCodeEditText : LinearLayout {
 
     fun getText(): Editable? = editText.text
 
-    fun invalidateViews() {
-        inputLy.isEnabled = false
-        editText.isEnabled = false
-    }
-
-    fun validateViews() {
-        inputLy.isEnabled = true
-        editText.isEnabled = true
+    fun enableViews(isEnabled: Boolean) {
+        inputLy.isEnabled = isEnabled
+        editText.isEnabled = isEnabled
     }
 
 }

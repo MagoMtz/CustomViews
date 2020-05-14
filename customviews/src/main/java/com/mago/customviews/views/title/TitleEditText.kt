@@ -21,28 +21,32 @@ class TitleEditText : LinearLayout {
             field = value
             invalidate()
             requestLayout()
+            customEditText.onlyNumbers = value
         }
     var charsWithBlankSpaces: Boolean = false
         set(value) {
             field = value
             invalidate()
             requestLayout()
+            customEditText.charsWithBlankSpaces = value
         }
     var allChars: Boolean = false
         set(value) {
             field = value
             invalidate()
             requestLayout()
+            customEditText.allChars = value
         }
     var isMandatory: Boolean = false
         set(value) {
             field = value
             invalidate()
             requestLayout()
+            customEditText.isMandatory = value
         }
     //Views
     private var inputLy: TextInputLayout = TextInputLayout(context)
-    var titleHint: String = ""
+    var title: String = ""
         //get() = inputLy.hint.toString()
         set(value) {
             inputLy.hint = value
@@ -90,7 +94,7 @@ class TitleEditText : LinearLayout {
                         getBoolean(R.styleable.TitleEditText_allChars, false)
                     isMandatory = getBoolean(R.styleable.TitleEditText_isMandatory, false)
 
-                    getString(R.styleable.TitleEditText_title)?.let { titleHint = it }
+                    getString(R.styleable.TitleEditText_title)?.let { title = it }
                 } finally {
                     recycle()
                 }
@@ -101,7 +105,7 @@ class TitleEditText : LinearLayout {
         inputLy = findViewById(R.id.input_ly)
         customEditText = findViewById(R.id.custom_edit_text)
 
-        inputLy.hint = titleHint
+        inputLy.hint = title
         customEditText.isMandatory = isMandatory
         customEditText.onlyNumbers = onlyNumbers
         customEditText.charsWithBlankSpaces = charsWithBlankSpaces
@@ -120,15 +124,9 @@ class TitleEditText : LinearLayout {
 
     fun getText(): Editable? = customEditText.text
 
-    fun invalidateViews() {
-        inputLy.isEnabled = false
-        customEditText.isEnabled = false
+    fun enableViews(isEnabled: Boolean) {
+        inputLy.isEnabled = isEnabled
+        customEditText.isEnabled = isEnabled
     }
-
-    fun validateViews() {
-        inputLy.isEnabled = true
-        customEditText.isEnabled = true
-    }
-
 
 }

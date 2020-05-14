@@ -1,6 +1,8 @@
 package com.mago.customviews.util
 
 import android.content.Context
+import android.content.ContextWrapper
+import androidx.appcompat.app.AppCompatActivity
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -28,4 +30,14 @@ object CommonUtils {
     fun intToDp(context: Context, dp: Int): Int {
         return (context.resources.displayMetrics.density * dp + 0.5F).toInt()
     }
+
+    fun scanForActivity(context: Context): AppCompatActivity? {
+        if (context is AppCompatActivity)
+            return context
+        else if (context is ContextWrapper)
+            return scanForActivity((context).baseContext)
+
+        return null
+    }
+
 }

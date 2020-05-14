@@ -36,7 +36,7 @@ class SingleDate: LinearLayout{
     var isValid = false
 
     // Attributes
-    var titleHint: String = ""
+    var title: String = ""
         set(value) {
             field = value
             tvTitle.text = value
@@ -97,7 +97,7 @@ class SingleDate: LinearLayout{
                 try {
                     isMandatory = getBoolean(R.styleable.SingleDate_isMandatory, false)
                     getString(R.styleable.SingleDate_title)?.let {
-                        titleHint = it
+                        title = it
                     }
                     futureDate = getBoolean(R.styleable.SingleDate_futureDate, false)
                 } finally {
@@ -142,7 +142,7 @@ class SingleDate: LinearLayout{
         dateEditText = findViewById(R.id.date_edit_text)
         btnCalendar = findViewById(R.id.btn_calendar)
 
-        tvTitle.text = titleHint
+        tvTitle.text = title
         dateEditText.hint = DATE_PLACE_HOLDER
     }
 
@@ -192,18 +192,11 @@ class SingleDate: LinearLayout{
 
     fun getText(): Editable? = dateEditText.text
 
-    fun invalidateViews() {
-        tvTitle.isEnabled = false
-        lyDate.isEnabled = false
-        dateEditText.isEnabled = false
-        btnCalendar.isEnabled = false
-    }
-
-    fun validateViews() {
-        tvTitle.isEnabled = false
-        lyDate.isEnabled = false
-        dateEditText.isEnabled = false
-        btnCalendar.isEnabled = false
+    fun enableViews(isEnabled: Boolean) {
+        tvTitle.isEnabled = isEnabled
+        lyDate.isEnabled = isEnabled
+        dateEditText.isEnabled = isEnabled
+        btnCalendar.isEnabled = isEnabled
     }
 
 }

@@ -8,15 +8,16 @@ import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.mago.customviews.R
-import com.mago.customviews.views.spinner.SearchableSpinner
+import com.mago.customviews.views.spinner.SearchSpinner
+import com.mago.customviews.views.spinner.searchspinner.ItemSelectedListener
 
 /**
  * @author by jmartinez
- * @since 04/02/2020.
+ * @since 14/05/2020.
  */
-@Deprecated("This Widget is not longer recommended. You should use TitleSearchSpinner instead", ReplaceWith("TitleSearchSpinner"))
-class TitleSearchableSpinner : LinearLayout {
+class TitleSearchSpinner: LinearLayout {
     private lateinit var attributeSet: AttributeSet
+
     // Views
     private var tvTitleText: TextView = TextView(context)
     var title: CharSequence = ""
@@ -26,7 +27,7 @@ class TitleSearchableSpinner : LinearLayout {
             requestLayout()
             invalidate()
         }
-    var spinner: SearchableSpinner = SearchableSpinner(context)
+    var spinner: SearchSpinner = SearchSpinner(context)
         set(value) {
             field = value
             requestLayout()
@@ -57,18 +58,18 @@ class TitleSearchableSpinner : LinearLayout {
     }
 
     private fun init() {
-        View.inflate(context, R.layout.title_searchable_spinner, this)
+        View.inflate(context, R.layout.title_search_spinner, this)
 
         initComponents()
         setWillNotDraw(false)
     }
 
     private fun setupAttributes() {
-        context.theme.obtainStyledAttributes(attributeSet, R.styleable.TitleSearchableSpinner, 0, 0)
+        context.theme.obtainStyledAttributes(attributeSet, R.styleable.TitleSearchSpinner, 0, 0)
             .apply {
                 try {
-                    isMandatory = getBoolean(R.styleable.TitleSearchableSpinner_isMandatory, false)
-                    getString(R.styleable.TitleSearchableSpinner_title)?.let {
+                    isMandatory = getBoolean(R.styleable.TitleSearchSpinner_isMandatory, false)
+                    getString(R.styleable.TitleSearchSpinner_title)?.let {
                         title = it
                     }
                 } finally {
@@ -81,7 +82,7 @@ class TitleSearchableSpinner : LinearLayout {
         super.onDraw(canvas)
         canvas?.let {
             spinner.let {
-                tvTitleText.visibility = if (it.selectedItemPosition == 0)
+                tvTitleText.visibility = if (it.selectedItem != null)
                     View.INVISIBLE
                 else
                     View.VISIBLE
@@ -91,7 +92,7 @@ class TitleSearchableSpinner : LinearLayout {
 
     private fun initComponents() {
         tvTitleText = findViewById(R.id.tv_title)
-        spinner = findViewById(R.id.sp_searchable)
+        spinner = findViewById(R.id.sp_search)
 
         spinner.isMandatory = isMandatory
         tvTitleText.text = title
@@ -110,10 +111,26 @@ class TitleSearchableSpinner : LinearLayout {
 
     fun getSelectedItem() = spinner.selectedItem
 
+    fun setSelectedItem(pos: Int) {
+        spinner.setSelectedItem(pos)
+    }
+
     fun setAdapter(adapter: ArrayAdapter<*>) {
         spinner.adapter = adapter
     }
 
     fun getAdapter() = spinner.adapter
+
+    fun setHint(hint: String) {
+        spinner.setHint(hint)
+    }
+
+    fun initialize(items: List<Any>, title: String) {
+        spinner.initialize(items, title)
+    }
+
+    fun setOnItemSelectedListener(itemSelectedListener: ItemSelectedListener) {
+        spinner.setOnItemSelectedListener(itemSelectedListener)
+    }
 
 }

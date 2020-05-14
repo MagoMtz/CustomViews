@@ -6,12 +6,18 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mago.customviews.R
+import kotlinx.android.synthetic.main.dialog_select_search.*
+import kotlinx.android.synthetic.main.dialog_select_search.view.*
 
 /**
  * @author by jmartinez
@@ -21,10 +27,14 @@ class MultiSelectSearchDialog: DialogFragment() {
     private lateinit var items: List<ObjectData>
     private lateinit var title: String
     private lateinit var overLimitMsg: String
-    private var limit: Int = 0
+    private var maxSelection: Int = 0
+    private var minSelection: Int = 0
 
     private lateinit var multiSelectSearchAdapter: MultiSelectSearchAdapter
     private lateinit var listener: MultiSelectDialogListener
+    private lateinit var btnSelect: Button
+    private lateinit var btnCancel: Button
+    private lateinit var viewAux: View
 
     private var selected = 0
     private var itemsSelected = arrayListOf<ObjectData>()
@@ -34,15 +44,17 @@ class MultiSelectSearchDialog: DialogFragment() {
 
         const val PARAM_TITLE = "param_title"
         const val PARAM_OVER_LIMIT_MSG = "param_over_limit_msg"
-        const val PARAM_LIMIT = "param_limit"
+        const val PARAM_MAX_SELECTION = "param_max_selection"
+        const val PARAM_MIN_SELECTION = "param_min_selection"
 
-        fun newInstance(title: String, overLimitMsg: String, limit: Int): MultiSelectSearchDialog {
+        fun newInstance(title: String, overLimitMsg: String, maxSelection: Int, minSelection: Int): MultiSelectSearchDialog {
             val dialog = MultiSelectSearchDialog()
             val args = Bundle()
 
             args.putString(PARAM_TITLE, title)
             args.putString(PARAM_OVER_LIMIT_MSG, overLimitMsg)
-            args.putInt(PARAM_LIMIT, limit)
+            args.putInt(PARAM_MAX_SELECTION, maxSelection)
+            args.putInt(PARAM_MIN_SELECTION, minSelection)
 
             dialog.arguments = args
             return dialog
@@ -53,7 +65,8 @@ class MultiSelectSearchDialog: DialogFragment() {
         super.onCreate(savedInstanceState)
         title = arguments!!.getString(PARAM_TITLE)!!
         overLimitMsg = arguments!!.getString(PARAM_OVER_LIMIT_MSG)!!
-        limit = arguments!!.getInt(PARAM_LIMIT)
+        maxSelection = arguments!!.getInt(PARAM_MAX_SELECTION)
+        minSelection = arguments!!.getInt(PARAM_MIN_SELECTION)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -63,9 +76,6 @@ class MultiSelectSearchDialog: DialogFragment() {
         val builder = AlertDialog.Builder(activity)
         builder.setTitle(title)
         builder.setView(view)
-        builder.setPositiveButton(android.R.string.cancel) { dialog, _ ->
-                dialog.dismiss()
-        }
 
         return builder.create()
     }
@@ -79,6 +89,23 @@ class MultiSelectSearchDialog: DialogFragment() {
         searchView.onActionViewExpanded()
         setOnQueryTextChanged(searchView)
         setupRecyclerView(recyclerView)
+
+        viewAux =  view.aux
+
+        btnCancel = view.btn_cancel
+        btnCancel.setOnClickListener {
+            if (::listener.isInitialized) {
+                listener.onCancelButton(itemsSelected)
+                dialog?.dismiss()
+            }
+        }
+        btnSelect = view.btn_select
+        btnSelect.setOnClickListener {
+            if (::listener.isInitialized) {
+                listener.onItemsSelected(itemsSelected)
+                dialog?.dismiss()
+            }
+        }
 
         return view
     }
@@ -114,7 +141,7 @@ class MultiSelectSearchDialog: DialogFragment() {
                 itemsSelected = ArrayList(items)
                 dialog?.cancel()
             }
-            override fun onItemSelected(items: List<ObjectData>) {
+            override fun onItemClicked(items: List<ObjectData>) {
                 for (i in items.indices) {
                     if (items[i].isSelected) {
                         Log.i("TAG",
@@ -122,6 +149,25 @@ class MultiSelectSearchDialog: DialogFragment() {
                         )
                     }
                 }
+                Log.d("TAG", "selectedItems:  ${items.size}")
+                selected = items.size
+                itemsSelected = ArrayList(items)
+            }
+
+            override fun onMinSelectionAvailable() {
+                val params = viewAux.layoutParams as LinearLayout.LayoutParams
+                params.weight = .5F
+                viewAux.layoutParams = params
+
+                btnSelect.visibility = VISIBLE
+            }
+
+            override fun onMinSelectionNotAvailable() {
+                btnSelect.visibility = GONE
+
+                val params = viewAux.layoutParams as LinearLayout.LayoutParams
+                params.weight = .75F
+                viewAux.layoutParams = params
             }
         })
         multiSelectSearchAdapter.setLimitListener(object : LimitListener {
@@ -129,7 +175,7 @@ class MultiSelectSearchDialog: DialogFragment() {
                 Toast.makeText(context, overLimitMsg, Toast.LENGTH_SHORT).show()
                 dialog?.cancel()
             }
-        }, limit)
+        }, maxSelection, minSelection)
 
         recyclerView.adapter = multiSelectSearchAdapter
         multiSelectSearchAdapter.notifyDataSetChanged()
@@ -141,6 +187,25 @@ class MultiSelectSearchDialog: DialogFragment() {
 
     fun setItems(items: List<ObjectData>) {
         this.items = items
+    }
+
+    fun getItems(): List<ObjectData> = items
+
+    fun setSelectedItems(selectedItemPos: List<Int>) {
+        val selectedItems = arrayListOf<ObjectData>()
+
+        selectedItemPos.forEach {
+            items[it].isSelected = true
+            selectedItems.add(items[it])
+        }
+
+        if (selectedItems.size >= minSelection || selectedItems.size == maxSelection) {
+            itemsSelected = selectedItems
+            selected = itemsSelected.size
+            if (::listener.isInitialized)
+                listener.onItemsSelected(selectedItems)
+        }
+
     }
 
 }

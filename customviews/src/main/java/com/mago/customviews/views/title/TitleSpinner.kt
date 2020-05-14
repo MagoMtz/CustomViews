@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.mago.customviews.R
@@ -13,12 +14,11 @@ import com.mago.customviews.views.spinner.CustomSpinner
  * @author by jmartinez
  * @since 17/01/2020.
  */
-class TitleSpinner: LinearLayout {
+class TitleSpinner : LinearLayout {
     private lateinit var attributeSet: AttributeSet
 
     private var tvTitleText: TextView = TextView(context)
     var titleText: CharSequence = ""
-        //get() = tvTitle.text
         set(value) {
             tvTitleText.text = value
             field = value
@@ -37,28 +37,24 @@ class TitleSpinner: LinearLayout {
             field = value
             requestLayout()
             invalidate()
+            spinner.isMandatory = isMandatory
         }
-    /*
-    var spinnerHeight: Float = 0F
-        set(value) {
-            field = value
-            invalidate()
-            requestLayout()
-        }
-     */
 
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
         this.attributeSet = attributeSet
         setupAttributes()
         init()
     }
+
     constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int)
-            : super(context, attributeSet, defStyleAttr
+            : super(
+        context, attributeSet, defStyleAttr
     ) {
         this.attributeSet = attributeSet
         setupAttributes()
         init()
     }
+
     constructor(context: Context) : super(context) {
         init()
     }
@@ -74,13 +70,6 @@ class TitleSpinner: LinearLayout {
         context.theme.obtainStyledAttributes(attributeSet, R.styleable.TitleSpinner, 0, 0)
             .apply {
                 try {
-                    /*
-                    spinnerHeight = getDimension(
-                        R.styleable.TitleSpinner_spinnerHeight,
-                        resources.getDimension(R.dimen.spinner_min_height)
-                    )
-
-                     */
                     isMandatory = getBoolean(R.styleable.TitleSpinner_isMandatory, false)
                     getString(R.styleable.TitleSearchableSpinner_title)?.let {
                         titleText = it
@@ -107,21 +96,28 @@ class TitleSpinner: LinearLayout {
         tvTitleText = findViewById(R.id.tv_title)
         spinner = findViewById(R.id.sp_custom)
 
-        //spinner.spinnerHeight = spinnerHeight
         spinner.isMandatory = isMandatory
         tvTitleText.text = titleText
     }
 
     fun isValid(): Boolean = spinner.isValid
 
-    fun invalidateViews() {
-        tvTitleText.isEnabled = false
-        spinner.isEnabled = false
+    fun enableViews(isEnabled: Boolean) {
+        tvTitleText.isEnabled = isEnabled
+        spinner.isEnabled = isEnabled
     }
 
-    fun validateViews() {
-        tvTitleText.isEnabled = true
-        spinner.isEnabled = true
+    fun setAdapter(adapter: ArrayAdapter<*>) {
+        spinner.adapter = adapter
     }
+
+    fun getAdapter() = spinner.adapter
+
+    fun setSelection(pos: Int) {
+        spinner.setSelection(pos)
+    }
+
+    fun getSelection() = spinner.selectedItem
+
 
 }

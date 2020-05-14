@@ -11,10 +11,9 @@
         style="@style/EditTextHintAppearance"
         />
 
-    <com.mago.customviews.views.spinner.MultiSelectSearchSpinner
-        android:id="@+id/sp_searchable"
+    <com.mago.customviews.views.spinner.SearchSpinner
+        android:id="@+id/sp_search"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

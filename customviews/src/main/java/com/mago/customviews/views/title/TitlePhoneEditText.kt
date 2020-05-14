@@ -13,8 +13,7 @@ class TitlePhoneEditText : LinearLayout {
     private lateinit var attributeSet: AttributeSet
     // Views
     private var inputLy: TextInputLayout = TextInputLayout(context)
-    var titleHint: String = ""
-        //get() = inputLy.hint.toString()
+    var title: String = ""
         set(value) {
             inputLy.hint = value
             field = value
@@ -33,6 +32,7 @@ class TitlePhoneEditText : LinearLayout {
             field = value
             invalidate()
             requestLayout()
+            editText.isMandatory
         }
 
     constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
@@ -62,7 +62,7 @@ class TitlePhoneEditText : LinearLayout {
                 try {
                     isMandatory = getBoolean(R.styleable.TitlePhoneEditText_isMandatory, false)
 
-                    getString(R.styleable.TitlePhoneEditText_title)?.let { titleHint = it }
+                    getString(R.styleable.TitlePhoneEditText_title)?.let { title = it }
                 } finally {
                     recycle()
                 }
@@ -73,7 +73,7 @@ class TitlePhoneEditText : LinearLayout {
         inputLy = findViewById(R.id.input_ly)
         editText = findViewById(R.id.edit_text)
 
-        inputLy.hint = titleHint
+        inputLy.hint = title
         editText.isMandatory = isMandatory
     }
 
@@ -89,13 +89,9 @@ class TitlePhoneEditText : LinearLayout {
 
     fun getText(): Editable? = editText.text
 
-    fun invalidateViews() {
-        inputLy.isEnabled = false
-        editText.isEnabled = false
+    fun enableViews(isEnabled: Boolean) {
+        inputLy.isEnabled = isEnabled
+        editText.isEnabled = isEnabled
     }
 
-    fun validateViews() {
-        inputLy.isEnabled = true
-        editText.isEnabled = true
-    }
 }
