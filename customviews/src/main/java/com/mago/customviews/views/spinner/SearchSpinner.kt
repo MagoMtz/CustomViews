@@ -83,10 +83,7 @@ class SearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListen
 
     fun initialize(items: List<Any>, title: String) {
         this.items = items
-        searchDialog =
-            SearchDialog.newInstance(
-                title
-            )
+        searchDialog = SearchDialog.newInstance(title)
         searchDialog.setSearchSpinnerListener(this)
         searchDialog.setItems(items)
         setAdapter(title)
@@ -157,6 +154,9 @@ class SearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListen
     }
 
     private fun showDialog() {
+        if (!::searchDialog.isInitialized)
+            return
+
         val fm = scanForActivity(context)!!.supportFragmentManager
         searchDialog.show(
             fm,
