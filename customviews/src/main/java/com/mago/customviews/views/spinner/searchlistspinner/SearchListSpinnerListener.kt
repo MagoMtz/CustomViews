@@ -5,5 +5,5 @@ package com.mago.customviews.views.spinner.searchlistspinner
  * @since 16/04/2020.
  */
 interface SearchListSpinnerListener {
-    fun onItemSelected(itemSelected: List<Any>)
+    fun onItemSelected(itemSelected: List<Any>, position: Int)
 }

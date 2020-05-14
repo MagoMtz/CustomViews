@@ -35,7 +35,7 @@ class SearchAdapter(
         val item = data[position]
         holder.itemView.tv_item.text = item.toString()
         holder.itemView.setOnClickListener {
-            spinnerListener.onItemSelected(item)
+            spinnerListener.onItemSelected(item, position)
         }
     }
 

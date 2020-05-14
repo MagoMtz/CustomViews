@@ -1,23 +1,20 @@
 package com.mago.customviews.views.spinner
 
 import android.content.Context
-import android.content.ContextWrapper
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ArrayAdapter
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
 import com.mago.customviews.R
 import com.mago.customviews.util.CommonUtils.scanForActivity
 import com.mago.customviews.views.spinner.searchlistspinner.ListSelectedListener
 import com.mago.customviews.views.spinner.searchlistspinner.SearchListDialog
-import com.mago.customviews.views.spinner.searchlistspinner.SearchListDialogListener
+import com.mago.customviews.views.spinner.searchlistspinner.SearchListSpinnerListener
 import java.lang.StringBuilder
 
 /**
@@ -25,11 +22,13 @@ import java.lang.StringBuilder
  * @since 15/04/2020.
  */
 class SearchableListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouchListener,
-    SearchListDialogListener {
+    SearchListSpinnerListener {
     private lateinit var attributeSet: AttributeSet
     private lateinit var searchListDialog: SearchListDialog
     private lateinit var listSelectedListener: ListSelectedListener
     private var selectedItems: List<Any> = listOf()
+    private var selectedItemsPosition = -1
+    private var items = listOf<List<Any>>()
 
     private var xOrigin = 100f
     private var yOrigin = 120f
@@ -153,8 +152,17 @@ class SearchableListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouc
         return true
     }
 
-    override fun onItemSelected(items: List<Any>) {
+    override fun onItemSelected(itemSelected: List<Any>, position: Int) {
         this.selectedItems = items
+        selectedItemsPosition = position
+        setupAdapter(selectedItems)
+
+        if (::listSelectedListener.isInitialized) {
+            listSelectedListener.onListSelected(items)
+        }
+    }
+
+    private fun setupAdapter(items: List<Any>) {
         val sb = StringBuilder()
 
         for (i in items.indices) {
@@ -164,15 +172,11 @@ class SearchableListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouc
         }
         val mText = sb.toString()
         setAdapter(mText)
-
-        if (::listSelectedListener.isInitialized) {
-            listSelectedListener.onListSelected(items)
-        }
     }
 
     fun initialize(items: List<List<Any>>, title: String) {
         searchListDialog = SearchListDialog.newInstance(title)
-        searchListDialog.setDialogListener(this)
+        searchListDialog.setListSpinnerListener(this)
         searchListDialog.setItems(items)
         setAdapter(title)
     }
@@ -185,12 +189,28 @@ class SearchableListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouc
         )
     }
 
-    fun setOnListSelectedListener(listSelectedListener: ListSelectedListener) {
-        this.listSelectedListener = listSelectedListener
-    }
-
     private fun setAdapter(title: String) {
         adapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, listOf(title))
+    }
+
+    override fun getSelectedItem(): List<Any> = selectedItems
+
+    override fun getSelectedItemPosition(): Int = selectedItemsPosition
+
+    fun setSelectedItems(pos: Int) {
+        val items = items[pos]
+        selectedItemsPosition = pos
+        selectedItems = items
+        listSelectedListener.onListSelected(selectedItems)
+        setupAdapter(selectedItems)
+    }
+
+    fun setHint(hint: String) {
+        setAdapter(hint)
+    }
+
+    fun setOnListSelectedListener(listSelectedListener: ListSelectedListener) {
+        this.listSelectedListener = listSelectedListener
     }
 
 }

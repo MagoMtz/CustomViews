@@ -5,8 +5,8 @@ package com.mago.customviews.views.spinner.multiselectspinner
  * @since 20/03/2020.
  */
 interface MultiSelectSpinnerListener {
-    fun onItemClicked(items: List<ObjectData>)
-    fun onItemsSelected(items: List<ObjectData>)
+    fun onItemClicked(items: List<ObjectData>, selectedItemPos: List<Int>)
+    fun onItemsSelected(items: List<ObjectData>, selectedItemPos: List<Int>)
 
     fun onMinSelectionAvailable()
     fun onMinSelectionNotAvailable()

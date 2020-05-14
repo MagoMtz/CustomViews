@@ -104,8 +104,9 @@ class TitleMultiSelectSearchSpinner : LinearLayout {
         spinner.setSelectedItems(selectedItemPos)
     }
 
-
     fun getSelectedItems() = spinner.getSelectedItems()
+
+    fun getSelectedItemPositions(): List<Int> = spinner.getSelectedItemPositions()
 
     fun setHint(hint: String) {
         spinner.setHint(hint)

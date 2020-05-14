@@ -21,6 +21,7 @@ class MultiSelectSearchAdapter(
 ) :
     RecyclerView.Adapter<MultiSelectSearchAdapter.ViewHolder>(), Filterable {
     private var originalValues: List<ObjectData> = data
+    private var selectedItemPosition: ArrayList<Int> = arrayListOf()
     private var maxSelection = 0
     private var minSelection = 0
 
@@ -58,6 +59,7 @@ class MultiSelectSearchAdapter(
             when {
                 item.isSelected -> {
                     selected--
+                    selectedItemPosition.remove(position)
                     itemsSelected.remove(item)
                 }
                 selected == maxSelection -> {
@@ -68,6 +70,7 @@ class MultiSelectSearchAdapter(
                 else -> {
                     selected++
                     itemsSelected.add(item)
+                    selectedItemPosition.add(position)
 
                     /*
                     if (::listener.isInitialized)
@@ -83,11 +86,11 @@ class MultiSelectSearchAdapter(
             notifyDataSetChanged()
 
             if (::listener.isInitialized)
-                listener.onItemClicked(itemsSelected)
+                listener.onItemClicked(itemsSelected, selectedItemPosition)
 
             if (selected == maxSelection) {
                 if (::listener.isInitialized) {
-                    listener.onItemsSelected(itemsSelected)
+                    listener.onItemsSelected(itemsSelected, selectedItemPosition)
                 }
             }
         }

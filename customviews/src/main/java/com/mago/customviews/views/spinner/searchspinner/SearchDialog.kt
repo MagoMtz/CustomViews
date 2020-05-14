@@ -1,5 +1,6 @@
 package com.mago.customviews.views.spinner.searchspinner
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
@@ -55,6 +56,7 @@ class SearchDialog: DialogFragment() {
         return builder.create()
     }
 
+    @SuppressLint("InflateParams")
     private fun createView(inflater: LayoutInflater): View {
         val view = inflater.inflate(R.layout.dialog_select_search, null)
 
@@ -94,8 +96,8 @@ class SearchDialog: DialogFragment() {
         recyclerView.layoutManager = LinearLayoutManager(context!!)
         searchAdapter = SearchAdapter(items)
         searchAdapter.setSpinnerListener(object : SearchSpinnerListener {
-            override fun onItemSelected(item: Any) {
-                searchSpinnerListener.onItemSelected(item)
+            override fun onItemSelected(item: Any, position: Int) {
+                searchSpinnerListener.onItemSelected(item, position)
                 dialog?.cancel()
             }
         })

@@ -25,7 +25,9 @@ class SearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListen
     private lateinit var attributeSet: AttributeSet
     private lateinit var searchDialog: SearchDialog
     private lateinit var itemSelectedListener: ItemSelectedListener
+
     private var selectedItem: Any? = null
+    private var selectedItemPosition = -1
     private var items = listOf<Any>()
 
     private var xOrigin = 100f
@@ -147,8 +149,9 @@ class SearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListen
         return true
     }
 
-    override fun onItemSelected(item: Any) {
+    override fun onItemSelected(item: Any, position: Int) {
         selectedItem = item
+        selectedItemPosition = position
         itemSelectedListener.onItemSelected(selectedItem.toString())
         setupAdapter(selectedItem.toString())
     }
@@ -171,8 +174,11 @@ class SearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListen
 
     override fun getSelectedItem(): Any? = selectedItem
 
+    override fun getSelectedItemPosition(): Int = selectedItemPosition
+
     fun setSelectedItem(pos: Int) {
         val item = items[pos]
+        selectedItemPosition = pos
         selectedItem = item
         itemSelectedListener.onItemSelected(selectedItem!!)
         setAdapter(selectedItem.toString())

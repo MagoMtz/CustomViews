@@ -6,5 +6,5 @@ package com.mago.customviews.views.spinner.multiselectspinner
  */
 interface MultiSelectDialogListener {
     fun onCancelButton(items: List<ObjectData>)
-    fun onItemsSelected(items: List<ObjectData>)
+    fun onItemsSelected(items: List<ObjectData>, selectedPos: List<Int>)
 }
