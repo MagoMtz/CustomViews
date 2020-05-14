@@ -87,7 +87,7 @@ class TitleTextArea : LinearLayout{
         textArea.setText(resId)
     }
 
-    fun setText(string: String) {
+    fun setText(string: String?) {
         textArea.setText(string)
     }
 

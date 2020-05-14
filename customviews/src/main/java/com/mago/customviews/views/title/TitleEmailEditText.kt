@@ -87,7 +87,7 @@ class TitleEmailEditText: LinearLayout {
         editText.setText(resId)
     }
 
-    fun setText(string: String) {
+    fun setText(string: String?) {
         editText.setText(string)
     }
 
