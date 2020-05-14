@@ -87,7 +87,7 @@ class TitlePhoneEditText : LinearLayout {
         editText.setText(string)
     }
 
-    fun getText(): Editable? = editText.text
+    fun getPhoneNumber() = editText.getPhoneNumber()
 
     fun enableViews(isEnabled: Boolean) {
         inputLy.isEnabled = isEnabled
