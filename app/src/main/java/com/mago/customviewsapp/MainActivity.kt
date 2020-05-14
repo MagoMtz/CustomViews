@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
         btn_set_selection_search.setOnClickListener {
+            Log.e("tag", "itemPos: ${sp_title_search.getSelectedItemPosition()}")
             Log.e("tag", "item: ${sp_title_search.getSelectedItem()}")
             sp_title_search.setSelectedItem(3)
         }

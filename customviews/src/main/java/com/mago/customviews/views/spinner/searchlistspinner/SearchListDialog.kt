@@ -1,5 +1,6 @@
 package com.mago.customviews.views.spinner.searchlistspinner
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
@@ -21,7 +22,7 @@ class SearchListDialog: DialogFragment() {
     private lateinit var title: String
 
     private lateinit var searchListAdapter: SearchListAdapter
-    private lateinit var listener: SearchListDialogListener
+    private lateinit var listener: SearchListSpinnerListener
 
     companion object {
         const val TAG = "SearchDialog"
@@ -58,6 +59,7 @@ class SearchListDialog: DialogFragment() {
         return builder.create()
     }
 
+    @SuppressLint("InflateParams")
     private fun createView(inflater: LayoutInflater): View {
         val view = inflater.inflate(R.layout.dialog_select_search, null)
 
@@ -97,9 +99,9 @@ class SearchListDialog: DialogFragment() {
             )
         searchListAdapter.setSearchSpinnerListener(object :
             SearchListSpinnerListener {
-            override fun onItemSelected(itemSelected: List<Any>) {
+            override fun onItemSelected(itemSelected: List<Any>, position: Int) {
                 Log.d("TAG", "selectedItems:  ${itemSelected.size}")
-                listener.onItemSelected(itemSelected)
+                listener.onItemSelected(itemSelected, position)
                 dismiss()
             }
         })
@@ -107,7 +109,7 @@ class SearchListDialog: DialogFragment() {
         searchListAdapter.notifyDataSetChanged()
     }
 
-    fun setDialogListener(listener: SearchListDialogListener) {
+    fun setListSpinnerListener(listener: SearchListSpinnerListener) {
         this.listener = listener
     }
 

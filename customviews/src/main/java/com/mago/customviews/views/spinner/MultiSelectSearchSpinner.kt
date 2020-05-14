@@ -27,6 +27,7 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
     private lateinit var multiSelectSearchDialog: MultiSelectSearchDialog
     private lateinit var itemsSelectedListener: ItemsSelectedListener
     private var selectedItems: List<ObjectData> = listOf()
+    private var selectedItemPositions: List<Int> = listOf()
 
     private var xOrigin = 100f
     private var yOrigin = 120f
@@ -235,6 +236,10 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
         setAdapter(mText.substring(0, mText.length - 2))
     }
 
+    private fun setAdapter(title: String) {
+        adapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, listOf(title))
+    }
+
     fun getSelectedItems(): List<Any> {
         val arrayList = arrayListOf<Any>()
         selectedItems.forEach {
@@ -245,6 +250,7 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
 
     fun setSelectedItems(selectedItemPos: List<Int>) {
         multiSelectSearchDialog.setSelectedItems(selectedItemPos)
+        selectedItemPositions = selectedItemPos
     }
 
     fun setHint(hint: String) {
@@ -253,10 +259,6 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
 
     fun setOnItemsSelectedListener(listener: ItemsSelectedListener) {
         itemsSelectedListener = listener
-    }
-
-    private fun setAdapter(title: String) {
-        adapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, listOf(title))
     }
 
 }
