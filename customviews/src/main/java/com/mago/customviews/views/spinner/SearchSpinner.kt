@@ -184,6 +184,8 @@ class SearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListen
         setAdapter(selectedItem.toString())
     }
 
+    fun getPositionOf(item: Any) = items.indexOf(item)
+
     fun setHint(hint: String) {
         setAdapter(hint)
     }
