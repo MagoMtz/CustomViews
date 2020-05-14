@@ -8,7 +8,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.mago.customviews.R
 import com.mago.customviews.views.spinner.multiselectspinner.ItemsSelectedListener
-import com.mago.customviews.views.spinner.multiselectspinner.MultiSelectSearchSpinner
+import com.mago.customviews.views.spinner.MultiSelectSearchSpinner
 
 class TitleMultiSelectSearchSpinner : LinearLayout {
     private lateinit var attributeSet: AttributeSet
@@ -21,7 +21,8 @@ class TitleMultiSelectSearchSpinner : LinearLayout {
             requestLayout()
             invalidate()
         }
-    var spinner: MultiSelectSearchSpinner = MultiSelectSearchSpinner(context)
+    var spinner: MultiSelectSearchSpinner =
+        MultiSelectSearchSpinner(context)
         set(value) {
             field = value
             requestLayout()

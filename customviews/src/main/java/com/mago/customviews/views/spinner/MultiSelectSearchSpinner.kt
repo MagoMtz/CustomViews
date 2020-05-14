@@ -1,4 +1,4 @@
-package com.mago.customviews.views.spinner.multiselectspinner
+package com.mago.customviews.views.spinner
 
 import android.content.Context
 import android.graphics.Canvas
@@ -12,12 +12,17 @@ import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
 import com.mago.customviews.R
 import com.mago.customviews.util.CommonUtils.scanForActivity
+import com.mago.customviews.views.spinner.multiselectspinner.ItemsSelectedListener
+import com.mago.customviews.views.spinner.multiselectspinner.MultiSelectDialogListener
+import com.mago.customviews.views.spinner.multiselectspinner.MultiSelectSearchDialog
+import com.mago.customviews.views.spinner.multiselectspinner.ObjectData
 
 /**
  * @author by jmartinez
  * @since 21/03/2020.
  */
-class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListener, MultiSelectDialogListener {
+class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListener,
+    MultiSelectDialogListener {
     private lateinit var attributeSet: AttributeSet
     private lateinit var multiSelectSearchDialog: MultiSelectSearchDialog
     private lateinit var itemsSelectedListener: ItemsSelectedListener
@@ -187,19 +192,21 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
 
         val data = arrayListOf<ObjectData>()
         for (i in items.indices) {
-            val o = ObjectData()
+            val o =
+                ObjectData()
             o.id = i.toLong()
             o.name = items[i].toString()
             o.isSelected = false
             o.item = items[i]
             data.add(o)
         }
-        multiSelectSearchDialog = MultiSelectSearchDialog.newInstance(
-            title,
-            overLimitMsg,
-            maxSelection,
-            minSelection
-        )
+        multiSelectSearchDialog =
+            MultiSelectSearchDialog.newInstance(
+                title,
+                overLimitMsg,
+                maxSelection,
+                minSelection
+            )
         multiSelectSearchDialog.setDialogListener(this)
         multiSelectSearchDialog.setItems(data)
         setAdapter(title)

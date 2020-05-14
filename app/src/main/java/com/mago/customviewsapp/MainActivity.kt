@@ -36,20 +36,20 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        sp_search.initialize(items, "Seleccione algo")
-        sp_search.setOnItemSelectedListener(object : ItemSelectedListener{
+        sp_title_search.initialize(items, "Seleccione algo")
+        sp_title_search.setOnItemSelectedListener(object : ItemSelectedListener{
             override fun onItemSelected(item: Any) {
                 Log.e("tag", "item: $item")
             }
         })
         btn_set_selection_search.setOnClickListener {
-            Log.e("tag", "item: ${sp_search.selectedItem}")
-            sp_search.setSelectedItem(3)
+            Log.e("tag", "item: ${sp_title_search.getSelectedItem()}")
+            sp_title_search.setSelectedItem(3)
         }
 
         btn_set_selection.setOnClickListener {
             sp_multi.setHint("Seleccione algo123456")
-            sp_search.setHint("Seleccione algo123456")
+            sp_title_search.setHint("Seleccione algo123456")
         }
 
         btn_set_text.setOnClickListener {
