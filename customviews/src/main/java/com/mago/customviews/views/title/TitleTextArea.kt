@@ -25,14 +25,14 @@ class TitleTextArea : LinearLayout{
         }
 
     // Attributes
-    private var isMandatory: Boolean = false
+    var isMandatory: Boolean = false
         set(value) {
             field = value
             invalidate()
             requestLayout()
             textArea.isMandatory
         }
-    private var title: String = ""
+    var title: String = ""
         set(value) {
             inputLy.hint = value
             field = value
