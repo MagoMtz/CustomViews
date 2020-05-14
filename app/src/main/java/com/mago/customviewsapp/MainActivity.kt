@@ -51,6 +51,10 @@ class MainActivity : AppCompatActivity() {
         btn_set_selection.setOnClickListener {
             sp_multi.setHint("Seleccione algo123456")
             sp_title_search.setHint("Seleccione algo123456")
+            Log.e("tag", "selectedItems = ${sp_multi.getSelectedItemPositions().size}")
+            sp_multi.getSelectedItemPositions().forEach {
+                Log.e("tag", "selectedItem = $it")
+            }
         }
 
         btn_set_text.setOnClickListener {

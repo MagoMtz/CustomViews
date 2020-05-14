@@ -38,6 +38,7 @@ class MultiSelectSearchDialog: DialogFragment() {
 
     private var selected = 0
     private var itemsSelected = arrayListOf<ObjectData>()
+    private var selectedItemPositions = arrayListOf<Int>()
 
     companion object {
         const val TAG = "MultiSelectSearchDialog"
@@ -102,7 +103,7 @@ class MultiSelectSearchDialog: DialogFragment() {
         btnSelect = view.btn_select
         btnSelect.setOnClickListener {
             if (::listener.isInitialized) {
-                listener.onItemsSelected(itemsSelected)
+                listener.onItemsSelected(itemsSelected, selectedItemPositions)
                 dialog?.dismiss()
             }
         }
@@ -133,15 +134,16 @@ class MultiSelectSearchDialog: DialogFragment() {
         recyclerView.layoutManager = LinearLayoutManager(context!!)
         multiSelectSearchAdapter = MultiSelectSearchAdapter(items, selected, itemsSelected)
         multiSelectSearchAdapter.setSpinnerListener(object : MultiSelectSpinnerListener{
-            override fun onItemsSelected(items: List<ObjectData>) {
+            override fun onItemsSelected(items: List<ObjectData>, selectedItemPos: List<Int>) {
                 Log.d("TAG", "selectedItems:  ${items.size}")
-                listener.onItemsSelected(items)
+                listener.onItemsSelected(items, selectedItemPos)
 
                 selected = items.size
                 itemsSelected = ArrayList(items)
+                selectedItemPositions = ArrayList(selectedItemPos)
                 dialog?.cancel()
             }
-            override fun onItemClicked(items: List<ObjectData>) {
+            override fun onItemClicked(items: List<ObjectData>, selectedItemPos: List<Int>) {
                 for (i in items.indices) {
                     if (items[i].isSelected) {
                         Log.i("TAG",
@@ -152,6 +154,7 @@ class MultiSelectSearchDialog: DialogFragment() {
                 Log.d("TAG", "selectedItems:  ${items.size}")
                 selected = items.size
                 itemsSelected = ArrayList(items)
+                selectedItemPositions = ArrayList(selectedItemPos)
             }
 
             override fun onMinSelectionAvailable() {
@@ -198,12 +201,12 @@ class MultiSelectSearchDialog: DialogFragment() {
             items[it].isSelected = true
             selectedItems.add(items[it])
         }
-
+        selectedItemPositions = ArrayList(selectedItemPos)
         if (selectedItems.size >= minSelection || selectedItems.size == maxSelection) {
             itemsSelected = selectedItems
             selected = itemsSelected.size
             if (::listener.isInitialized)
-                listener.onItemsSelected(selectedItems)
+                listener.onItemsSelected(selectedItems, selectedItemPos)
         }
 
     }

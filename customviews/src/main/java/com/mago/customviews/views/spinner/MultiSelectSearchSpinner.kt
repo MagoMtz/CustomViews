@@ -152,8 +152,9 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
         return true
     }
 
-    override fun onItemsSelected(items: List<ObjectData>) {
+    override fun onItemsSelected(items: List<ObjectData>, selectedPos: List<Int>) {
         this.selectedItems = items
+        this.selectedItemPositions = selectedPos
         setupAdapter(items)
 
         if (::itemsSelectedListener.isInitialized) {
@@ -247,6 +248,8 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
         }
         return arrayList
     }
+
+    fun getSelectedItemPositions(): List<Int> = selectedItemPositions
 
     fun setSelectedItems(selectedItemPos: List<Int>) {
         multiSelectSearchDialog.setSelectedItems(selectedItemPos)
