@@ -152,7 +152,7 @@ class SearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListen
     override fun onItemSelected(item: Any, position: Int) {
         selectedItem = item
         selectedItemPosition = position
-        itemSelectedListener.onItemSelected(selectedItem.toString())
+        itemSelectedListener.onItemSelected(item)
         setupAdapter(selectedItem.toString())
     }
 
