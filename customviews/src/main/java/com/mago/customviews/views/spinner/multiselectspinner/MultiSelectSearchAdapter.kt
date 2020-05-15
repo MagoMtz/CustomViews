@@ -46,15 +46,6 @@ class MultiSelectSearchAdapter(
         holder.itemView.alertTextView.text = item.name
         holder.itemView.alertCheckbox.isChecked = item.isSelected
 
-        if (position == data.size -1)
-            if (selected >= minSelection) {
-                if (::listener.isInitialized)
-                    listener.onMinSelectionAvailable()
-            } else {
-                if (::listener.isInitialized)
-                    listener.onMinSelectionNotAvailable()
-            }
-
         holder.itemView.setOnClickListener {
             when {
                 item.isSelected -> {
@@ -142,5 +133,11 @@ class MultiSelectSearchAdapter(
     }
 
     fun getItems(): List<ObjectData> = data
+
+    fun cleanSelection() {
+        itemsSelected = arrayListOf()
+        selectedItemPosition = arrayListOf()
+        data.forEach { it.isSelected = false }
+    }
 
 }

@@ -3,11 +3,14 @@ package com.mago.customviews.views.spinner.searchspinner
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.SearchView
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,10 +29,16 @@ class SearchDialog: DialogFragment() {
     private lateinit var searchAdapter: SearchAdapter
     private lateinit var searchSpinnerListener: SearchSpinnerListener
 
+    private lateinit var creator: AlertDialog
+    private lateinit var btnClean: Button
+    private lateinit var btnCancel: Button
+
     companion object {
         const val TAG = "SearchDialog"
 
         const val PARAM_TITLE = "param_title"
+
+        var someItemSelected = false
 
         fun newInstance(title: String): SearchDialog {
             val dialog = SearchDialog()
@@ -54,9 +63,17 @@ class SearchDialog: DialogFragment() {
         val builder = AlertDialog.Builder(activity)
         builder.setTitle(title)
         builder.setView(view)
-
+        builder.setNegativeButton(android.R.string.cancel) { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.setPositiveButton(R.string.btn_clean_selection) { dialog, _ ->
+            someItemSelected = false
+            searchSpinnerListener.onCleanSelection()
+            dialog.dismiss()
+        }
 
         dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+
         return builder.create()
     }
 
@@ -71,10 +88,6 @@ class SearchDialog: DialogFragment() {
         setOnQueryTextChanged(searchView)
         setupRecyclerView(recyclerView)
 
-        view.btn_cancel.setOnClickListener {
-            dialog?.dismiss()
-        }
-
         dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
 
         return view
@@ -87,6 +100,16 @@ class SearchDialog: DialogFragment() {
     ): View? {
         dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        creator = dialog as AlertDialog
+        btnCancel = creator.getButton(AlertDialog.BUTTON_NEGATIVE)
+        btnClean = creator.getButton(AlertDialog.BUTTON_POSITIVE)
+
+        if (!someItemSelected)
+            btnClean.visibility = GONE
     }
 
     private fun setOnQueryTextChanged(searchView: SearchView) {
@@ -112,9 +135,13 @@ class SearchDialog: DialogFragment() {
         searchAdapter = SearchAdapter(items)
         searchAdapter.setSpinnerListener(object : SearchSpinnerListener {
             override fun onItemSelected(item: Any, position: Int) {
+                someItemSelected = true
                 searchSpinnerListener.onItemSelected(item, position)
+                btnClean.visibility = View.VISIBLE
                 dialog?.cancel()
             }
+
+            override fun onCleanSelection() {}
         })
         recyclerView.adapter = searchAdapter
         searchAdapter.notifyDataSetChanged()

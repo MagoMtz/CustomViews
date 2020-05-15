@@ -26,8 +26,11 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
     private lateinit var attributeSet: AttributeSet
     private lateinit var multiSelectSearchDialog: MultiSelectSearchDialog
     private lateinit var itemsSelectedListener: ItemsSelectedListener
+
     private var selectedItems: List<ObjectData> = listOf()
     private var selectedItemPositions: List<Int> = listOf()
+    private var items = listOf<ObjectData>()
+    private lateinit var title: String
 
     private var xOrigin = 100f
     private var yOrigin = 120f
@@ -170,6 +173,15 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
         setupAdapter(items)
     }
 
+    override fun onCleanSelection() {
+        selectedItems = listOf()
+        selectedItemPositions = listOf()
+        setAdapter(title)
+        if (::itemsSelectedListener.isInitialized) {
+            itemsSelectedListener.onCleanSelection()
+        }
+    }
+
     /**
      * Use this function to initialize the spinner.
      * @param items the list of items to selection
@@ -191,6 +203,7 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
     private fun initialize(items: List<Any>, title: String, maxSelection: Int, minSelection: Int, overLimitMsg: String) {
         this.minSelection = minSelection
         this.maxSelection = maxSelection
+        this.title = title
 
         val data = arrayListOf<ObjectData>()
         for (i in items.indices) {
@@ -212,6 +225,8 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
         multiSelectSearchDialog.setDialogListener(this)
         multiSelectSearchDialog.setItems(data)
         setAdapter(title)
+
+        this.items = ArrayList(data)
     }
 
     private fun showDialog() {
@@ -252,8 +267,21 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
     fun getSelectedItemPositions(): List<Int> = selectedItemPositions
 
     fun setSelectedItems(selectedItemPos: List<Int>) {
-        multiSelectSearchDialog.setSelectedItems(selectedItemPos)
-        selectedItemPositions = selectedItemPos
+        val mItems = arrayListOf<ObjectData>()
+        val mPos = arrayListOf<Int>()
+
+        selectedItemPos.forEach {
+            mItems.add(items[it])
+            mPos.add(it)
+        }
+
+        onItemsSelected(mItems, mPos)
+        //multiSelectSearchDialog.setSelectedItems(selectedItemPos)
+        //selectedItemPositions = selectedItemPos
+    }
+
+    fun cleanSelection() {
+        onCleanSelection()
     }
 
     fun setHint(hint: String) {

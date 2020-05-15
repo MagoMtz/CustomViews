@@ -9,11 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.SearchView
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mago.customviews.R
+import com.mago.customviews.views.spinner.searchspinner.SearchDialog
 
 /**
  * @author by jmartinez
@@ -26,9 +28,15 @@ class SearchListDialog: DialogFragment() {
     private lateinit var searchListAdapter: SearchListAdapter
     private lateinit var listener: SearchListSpinnerListener
 
+    private lateinit var creator: AlertDialog
+    private lateinit var btnClean: Button
+    private lateinit var btnCancel: Button
+
     companion object {
         const val TAG = "SearchDialog"
         const val PARAM_TITLE = "param_title"
+
+        var someItemSelected = false
 
         fun newInstance(title: String): SearchListDialog {
             val d =
@@ -63,7 +71,12 @@ class SearchListDialog: DialogFragment() {
         val builder = AlertDialog.Builder(activity)
         builder.setTitle(title)
         builder.setView(view)
-        builder.setPositiveButton(android.R.string.cancel) {dialog, _ ->
+        builder.setNegativeButton(android.R.string.cancel) {dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.setPositiveButton(R.string.btn_clean_selection) { dialog, which ->
+            someItemSelected = false
+            listener.onCleanSelection()
             dialog.dismiss()
         }
 
@@ -84,6 +97,16 @@ class SearchListDialog: DialogFragment() {
         setupRecyclerView(recyclerView)
 
         return view
+    }
+
+    override fun onStart() {
+        super.onStart()
+        creator = dialog as AlertDialog
+        btnCancel = creator.getButton(AlertDialog.BUTTON_NEGATIVE)
+        btnClean = creator.getButton(AlertDialog.BUTTON_POSITIVE)
+
+        if (!SearchDialog.someItemSelected)
+            btnClean.visibility = View.GONE
     }
 
     private fun setOnQueryTextChanged(searchView: SearchView) {
@@ -113,10 +136,13 @@ class SearchListDialog: DialogFragment() {
         searchListAdapter.setSearchSpinnerListener(object :
             SearchListSpinnerListener {
             override fun onItemSelected(itemSelected: List<Any>, position: Int) {
-                Log.d("TAG", "selectedItems:  ${itemSelected.size}")
+                someItemSelected = true
                 listener.onItemSelected(itemSelected, position)
+                btnCancel.visibility = View.VISIBLE
                 dismiss()
             }
+
+            override fun onCleanSelection() {}
         })
         recyclerView.adapter = searchListAdapter
         searchListAdapter.notifyDataSetChanged()

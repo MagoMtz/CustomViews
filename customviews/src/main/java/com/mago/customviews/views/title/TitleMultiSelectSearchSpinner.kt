@@ -104,6 +104,10 @@ class TitleMultiSelectSearchSpinner : LinearLayout {
         spinner.setSelectedItems(selectedItemPos)
     }
 
+    fun cleanSelection() {
+        spinner.cleanSelection()
+    }
+
     fun getSelectedItems() = spinner.getSelectedItems()
 
     fun getSelectedItemPositions(): List<Int> = spinner.getSelectedItemPositions()
