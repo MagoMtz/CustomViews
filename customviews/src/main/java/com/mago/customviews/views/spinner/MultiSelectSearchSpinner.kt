@@ -271,6 +271,7 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
         val mPos = arrayListOf<Int>()
 
         selectedItemPos.forEach {
+            items[it].isSelected = true
             mItems.add(items[it])
             mPos.add(it)
         }
