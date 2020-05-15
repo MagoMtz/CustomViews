@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.SearchView
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,6 +47,15 @@ class SearchListDialog: DialogFragment() {
         title = arguments!!.getString(PARAM_TITLE)!!
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = activity!!.layoutInflater
         val view = createView(inflater)
@@ -55,6 +66,8 @@ class SearchListDialog: DialogFragment() {
         builder.setPositiveButton(android.R.string.cancel) {dialog, _ ->
             dialog.dismiss()
         }
+
+        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
 
         return builder.create()
     }
