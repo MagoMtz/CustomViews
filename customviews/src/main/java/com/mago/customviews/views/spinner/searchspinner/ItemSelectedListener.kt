@@ -6,4 +6,5 @@ package com.mago.customviews.views.spinner.searchspinner
  */
 interface ItemSelectedListener {
     fun onItemSelected(item: Any)
+    fun onCleanSelection()
 }

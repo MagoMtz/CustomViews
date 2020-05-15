@@ -109,6 +109,10 @@ class TitleSearchSpinner: LinearLayout {
         spinner.setSelectedItem(pos)
     }
 
+    fun cleanSelection() {
+        spinner.cleanSelection()
+    }
+
     fun getSelectedItemPosition() = spinner.selectedItemPosition
 
     fun getSelectedItem() = spinner.selectedItem

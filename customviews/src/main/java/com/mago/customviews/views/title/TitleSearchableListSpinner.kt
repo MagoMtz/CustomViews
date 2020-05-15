@@ -107,6 +107,10 @@ class TitleSearchableListSpinner: LinearLayout {
         spinner.setSelectedItems(pos)
     }
 
+    fun cleanSelection() {
+        spinner.cleanSelection()
+    }
+
     fun getPositionOf(items: List<Any>) = spinner.getPositionOf(items)
 
     fun getSelectedItems() = spinner.selectedItem

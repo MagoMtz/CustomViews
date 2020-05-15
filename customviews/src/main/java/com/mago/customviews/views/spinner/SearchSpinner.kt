@@ -29,6 +29,7 @@ class SearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListen
     private var selectedItem: Any? = null
     private var selectedItemPosition = -1
     private var items = listOf<Any>()
+    private lateinit var title: String
 
     private var xOrigin = 100f
     private var yOrigin = 120f
@@ -82,6 +83,7 @@ class SearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListen
     }
 
     fun initialize(items: List<Any>, title: String) {
+        this.title = title
         this.items = items
         searchDialog = SearchDialog.newInstance(title)
         searchDialog.setSearchSpinnerListener(this)
@@ -149,8 +151,17 @@ class SearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListen
     override fun onItemSelected(item: Any, position: Int) {
         selectedItem = item
         selectedItemPosition = position
-        itemSelectedListener.onItemSelected(item)
+        if (::itemSelectedListener.isInitialized)
+            itemSelectedListener.onItemSelected(item)
         setupAdapter(selectedItem.toString())
+    }
+
+    override fun onCleanSelection() {
+        selectedItem = null
+        selectedItemPosition = -1
+        if (::itemSelectedListener.isInitialized)
+            itemSelectedListener.onCleanSelection()
+        setupAdapter(title)
     }
 
     private fun showDialog() {
@@ -176,15 +187,17 @@ class SearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListen
 
     override fun getSelectedItemPosition(): Int = selectedItemPosition
 
+    fun getPositionOf(item: Any) = items.indexOf(item)
+
     fun setSelectedItem(pos: Int) {
         val item = items[pos]
-        selectedItemPosition = pos
-        selectedItem = item
-        itemSelectedListener.onItemSelected(selectedItem!!)
-        setAdapter(selectedItem.toString())
+        onItemSelected(item, pos)
     }
 
-    fun getPositionOf(item: Any) = items.indexOf(item)
+    fun cleanSelection() {
+        onCleanSelection()
+        SearchDialog.someItemSelected = false
+    }
 
     fun setHint(hint: String) {
         setAdapter(hint)

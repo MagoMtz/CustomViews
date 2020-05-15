@@ -39,6 +39,10 @@ class MainActivity : AppCompatActivity() {
                     Log.e("MAIN", "item: $it")
                 }
             }
+
+            override fun onCleanSelection() {
+                Log.e("MAIN", "onCleanSelection: items size = ${sp_multi.getSelectedItems()}")
+            }
         })
 
         sp_title_search.initialize(items, "Seleccione algo")
@@ -46,11 +50,16 @@ class MainActivity : AppCompatActivity() {
             override fun onItemSelected(item: Any) {
                 Log.e("tag", "item: $item")
             }
+
+            override fun onCleanSelection() {
+                Log.e("tag", "onCleanSelection pos = ${sp_title_search.getSelectedItemPosition()} item = ${sp_title_search.getSelectedItem()}")
+            }
         })
         btn_set_selection_search.setOnClickListener {
+            sp_title_search.cleanSelection()
             Log.e("tag", "itemPos: ${sp_title_search.getSelectedItemPosition()}")
             Log.e("tag", "item: ${sp_title_search.getSelectedItem()}")
-            sp_title_search.setSelection(3)
+            //sp_title_search.setSelection(3)
         }
 
         btn_set_selection.setOnClickListener {
@@ -67,6 +76,10 @@ class MainActivity : AppCompatActivity() {
 
             Log.e("ASD", "isValid: ${et_text.isValid()}")
             Log.e("ASD", "text: ${et_text.getText().toString()}")
+
+            sp_multi.cleanSelection()
+
+            Log.e("Multi", "selected size = ${sp_multi.getSelectedItems()}")
         }
 
         /*

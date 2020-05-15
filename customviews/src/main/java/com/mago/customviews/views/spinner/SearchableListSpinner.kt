@@ -26,9 +26,11 @@ class SearchableListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouc
     private lateinit var attributeSet: AttributeSet
     private lateinit var searchListDialog: SearchListDialog
     private lateinit var listSelectedListener: ListSelectedListener
+
     private var selectedItems: List<Any> = listOf()
     private var selectedItemsPosition = -1
     private var items = listOf<List<Any>>()
+    private lateinit var title: String
 
     private var xOrigin = 100f
     private var yOrigin = 120f
@@ -162,6 +164,14 @@ class SearchableListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouc
         }
     }
 
+    override fun onCleanSelection() {
+        selectedItems = listOf()
+        selectedItemsPosition = -1
+        if (::listSelectedListener.isInitialized)
+            listSelectedListener.onCleanSelection()
+        setupAdapter(listOf(title))
+    }
+
     private fun setupAdapter(items: List<Any>) {
         val sb = StringBuilder()
 
@@ -175,6 +185,7 @@ class SearchableListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouc
     }
 
     fun initialize(items: List<List<Any>>, title: String) {
+        this.title = title
         searchListDialog = SearchListDialog.newInstance(title)
         searchListDialog.setListSpinnerListener(this)
         searchListDialog.setItems(items)
@@ -201,10 +212,12 @@ class SearchableListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouc
 
     fun setSelectedItems(pos: Int) {
         val items = items[pos]
-        selectedItemsPosition = pos
-        selectedItems = items
-        listSelectedListener.onListSelected(selectedItems)
-        setupAdapter(selectedItems)
+        onItemSelected(items, pos)
+    }
+
+    fun cleanSelection() {
+        onCleanSelection()
+        SearchListDialog.someItemSelected = false
     }
 
     fun setHint(hint: String) {

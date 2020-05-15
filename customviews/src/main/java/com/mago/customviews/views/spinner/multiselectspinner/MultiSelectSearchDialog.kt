@@ -1,5 +1,6 @@
 package com.mago.customviews.views.spinner.multiselectspinner
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mago.customviews.R
 import kotlinx.android.synthetic.main.dialog_select_search.*
 import kotlinx.android.synthetic.main.dialog_select_search.view.*
+import kotlin.math.min
 
 /**
  * @author by jmartinez
@@ -34,9 +36,11 @@ class MultiSelectSearchDialog: DialogFragment() {
 
     private lateinit var multiSelectSearchAdapter: MultiSelectSearchAdapter
     private lateinit var listener: MultiSelectDialogListener
-    private lateinit var btnSelect: Button
+
+    private lateinit var creator: AlertDialog
     private lateinit var btnCancel: Button
-    private lateinit var viewAux: View
+    private lateinit var btnClean: Button
+    private lateinit var btnSelect: Button
 
     private var selected = 0
     private var itemsSelected = arrayListOf<ObjectData>()
@@ -88,12 +92,34 @@ class MultiSelectSearchDialog: DialogFragment() {
         val builder = AlertDialog.Builder(activity)
         builder.setTitle(title)
         builder.setView(view)
+        builder.setNegativeButton(android.R.string.cancel) { dialog, _ ->
+            if (::listener.isInitialized) {
+                listener.onCancelButton(itemsSelected)
+            }
+                dialog.dismiss()
+        }
+        builder.setNeutralButton(R.string.btn_clean_selection) { dialog, _ ->
+            selected = 0
+            itemsSelected = arrayListOf()
+            multiSelectSearchAdapter.cleanSelection()
+            if (::listener.isInitialized) {
+                listener.onCleanSelection()
+            }
+                dialog.dismiss()
+        }
+        builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
+            if (::listener.isInitialized) {
+                listener.onItemsSelected(itemsSelected, selectedItemPositions)
+            }
+                dialog.dismiss()
+        }
 
         dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
 
         return builder.create()
     }
 
+    @SuppressLint("InflateParams")
     private fun createView(inflater: LayoutInflater): View {
         val view = inflater.inflate(R.layout.dialog_select_search, null)
 
@@ -104,26 +130,24 @@ class MultiSelectSearchDialog: DialogFragment() {
         setOnQueryTextChanged(searchView)
         setupRecyclerView(recyclerView)
 
-        viewAux =  view.aux
-
-        btnCancel = view.btn_cancel
-        btnCancel.setOnClickListener {
-            if (::listener.isInitialized) {
-                listener.onCancelButton(itemsSelected)
-                dialog?.dismiss()
-            }
-        }
-        btnSelect = view.btn_select
-        btnSelect.setOnClickListener {
-            if (::listener.isInitialized) {
-                listener.onItemsSelected(itemsSelected, selectedItemPositions)
-                dialog?.dismiss()
-            }
-        }
-
         dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
 
         return view
+    }
+
+    override fun onStart() {
+        super.onStart()
+        creator = dialog as AlertDialog
+        btnCancel = creator.getButton(AlertDialog.BUTTON_NEGATIVE)
+        btnClean = creator.getButton(AlertDialog.BUTTON_NEUTRAL)
+        btnSelect = creator.getButton(AlertDialog.BUTTON_POSITIVE)
+
+        if (itemsSelected.size == 0) {
+            btnClean.visibility = GONE
+        }
+        if (itemsSelected.size < minSelection) {
+            btnSelect.visibility = GONE
+        }
     }
 
 
@@ -150,7 +174,6 @@ class MultiSelectSearchDialog: DialogFragment() {
         multiSelectSearchAdapter = MultiSelectSearchAdapter(items, selected, itemsSelected)
         multiSelectSearchAdapter.setSpinnerListener(object : MultiSelectSpinnerListener{
             override fun onItemsSelected(items: List<ObjectData>, selectedItemPos: List<Int>) {
-                Log.d("TAG", "selectedItems:  ${items.size}")
                 listener.onItemsSelected(items, selectedItemPos)
 
                 selected = items.size
@@ -159,34 +182,23 @@ class MultiSelectSearchDialog: DialogFragment() {
                 dialog?.cancel()
             }
             override fun onItemClicked(items: List<ObjectData>, selectedItemPos: List<Int>) {
-                for (i in items.indices) {
-                    if (items[i].isSelected) {
-                        Log.i("TAG",
-                            i.toString() + " : " + items[i].name + " : " + items[i].isSelected
-                        )
-                    }
-                }
-                Log.d("TAG", "selectedItems:  ${items.size}")
                 selected = items.size
                 itemsSelected = ArrayList(items)
                 selectedItemPositions = ArrayList(selectedItemPos)
+
+                if (itemsSelected.size > 0)
+                    btnClean.visibility = VISIBLE
+                else
+                    btnClean.visibility = GONE
+
+                if (itemsSelected.size >= minSelection) {
+                    btnSelect.visibility = VISIBLE
+                } else {
+                    btnSelect.visibility = GONE
+                }
             }
 
-            override fun onMinSelectionAvailable() {
-                val params = viewAux.layoutParams as LinearLayout.LayoutParams
-                params.weight = .5F
-                viewAux.layoutParams = params
-
-                btnSelect.visibility = VISIBLE
-            }
-
-            override fun onMinSelectionNotAvailable() {
-                btnSelect.visibility = GONE
-
-                val params = viewAux.layoutParams as LinearLayout.LayoutParams
-                params.weight = .75F
-                viewAux.layoutParams = params
-            }
+            override fun onCleanSelection() {}
         })
         multiSelectSearchAdapter.setLimitListener(object : LimitListener {
             override fun onLimitListener(data: ObjectData) {

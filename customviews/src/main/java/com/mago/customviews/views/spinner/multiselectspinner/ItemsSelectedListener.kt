@@ -6,4 +6,5 @@ package com.mago.customviews.views.spinner.multiselectspinner
  */
 interface ItemsSelectedListener {
     fun onItemsSelected(list: List<Any>)
+    fun onCleanSelection()
 }
