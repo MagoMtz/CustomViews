@@ -20,7 +20,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val items = arrayListOf<String>("Seleccion 0", "Seleccion 1", "Seleccion 2", "Seleccion 3")
+        val items = arrayListOf<String>("Seleccion 0 asdasdadasdadasdas", "Seleccion 1 asdadasdasdasdsadsa", "Seleccion 2 asdasdasdasdasdasd", "Seleccion 3 asdasdasdasdadsasdsa",
+            "Seleccion 0", "Seleccion 1", "Seleccion 2", "Seleccion 3",
+            "Seleccion 0", "Seleccion 1", "Seleccion 2", "Seleccion 3",
+            "Seleccion 0", "Seleccion 1", "Seleccion 2", "Seleccion 3",
+            "Seleccion 0", "Seleccion 1", "Seleccion 2", "Seleccion 3","Seleccion 0", "Seleccion 1", "Seleccion 2", "Seleccion 3"
+        ,"Seleccion 0", "Seleccion 1", "Seleccion 2", "Seleccion 3","Seleccion 0", "Seleccion 1", "Seleccion 2", "Seleccion 3")
 
         var selectedList = listOf<Int>(1,3)
 

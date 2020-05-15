@@ -6,6 +6,8 @@ import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.SearchView
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -53,6 +55,8 @@ class SearchDialog: DialogFragment() {
         builder.setTitle(title)
         builder.setView(view)
 
+
+        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         return builder.create()
     }
 
@@ -71,7 +75,18 @@ class SearchDialog: DialogFragment() {
             dialog?.dismiss()
         }
 
+        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+
         return view
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     private fun setOnQueryTextChanged(searchView: SearchView) {
