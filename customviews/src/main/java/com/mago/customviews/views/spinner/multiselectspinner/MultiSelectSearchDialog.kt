@@ -76,15 +76,6 @@ class MultiSelectSearchDialog: DialogFragment() {
         minSelection = arguments!!.getInt(PARAM_MIN_SELECTION)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = activity!!.layoutInflater
         val view = createView(inflater)
@@ -96,25 +87,22 @@ class MultiSelectSearchDialog: DialogFragment() {
             if (::listener.isInitialized) {
                 listener.onCancelButton(itemsSelected)
             }
-                dialog.dismiss()
+            dialog.dismiss()
         }
-        builder.setNeutralButton(R.string.btn_clean_selection) { dialog, _ ->
+        builder.setNeutralButton(R.string.btn_clean_selection) { _ , _ ->
             selected = 0
             itemsSelected = arrayListOf()
             multiSelectSearchAdapter.cleanSelection()
             if (::listener.isInitialized) {
                 listener.onCleanSelection()
             }
-                dialog.dismiss()
         }
         builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
             if (::listener.isInitialized) {
                 listener.onItemsSelected(itemsSelected, selectedItemPositions)
             }
-                dialog.dismiss()
+            dialog.dismiss()
         }
-
-        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
 
         return builder.create()
     }
@@ -126,11 +114,9 @@ class MultiSelectSearchDialog: DialogFragment() {
         val searchView = view.findViewById<SearchView>(R.id.tv_search)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
 
-        searchView.onActionViewExpanded()
+        //searchView.onActionViewExpanded()
         setOnQueryTextChanged(searchView)
         setupRecyclerView(recyclerView)
-
-        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
 
         return view
     }
@@ -148,6 +134,7 @@ class MultiSelectSearchDialog: DialogFragment() {
         if (itemsSelected.size < minSelection) {
             btnSelect.visibility = GONE
         }
+
     }
 
 
@@ -203,7 +190,6 @@ class MultiSelectSearchDialog: DialogFragment() {
         multiSelectSearchAdapter.setLimitListener(object : LimitListener {
             override fun onLimitListener(data: ObjectData) {
                 Toast.makeText(context, overLimitMsg, Toast.LENGTH_SHORT).show()
-                dialog?.cancel()
             }
         }, maxSelection, minSelection)
 
