@@ -4,17 +4,16 @@ import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.mago.customviews.R
-import com.mago.customviews.views.spinner.SearchableListSpinner
+import com.mago.customviews.views.spinner.SearchListSpinner
 
 /**
  * @author by jmartinez
  * @since 11/05/2020.
  */
-class TitleSearchableListSpinner: LinearLayout {
+class TitleSearchListSpinner: LinearLayout {
     private lateinit var attributeSet: AttributeSet
     // Views
     private var tvTitleText: TextView = TextView(context)
@@ -25,7 +24,7 @@ class TitleSearchableListSpinner: LinearLayout {
             requestLayout()
             invalidate()
         }
-    var spinner: SearchableListSpinner = SearchableListSpinner(context)
+    var spinner: SearchListSpinner = SearchListSpinner(context)
         set(value) {
             field = value
             requestLayout()
@@ -63,11 +62,11 @@ class TitleSearchableListSpinner: LinearLayout {
     }
 
     private fun setupAttributes() {
-        context.theme.obtainStyledAttributes(attributeSet, R.styleable.TitleSearchableListSpinner, 0, 0)
+        context.theme.obtainStyledAttributes(attributeSet, R.styleable.TitleSearchListSpinner, 0, 0)
             .apply {
                 try {
-                    isMandatory = getBoolean(R.styleable.TitleSearchableListSpinner_isMandatory, false)
-                    getString(R.styleable.TitleSearchableListSpinner_title)?.let {
+                    isMandatory = getBoolean(R.styleable.TitleSearchListSpinner_isMandatory, false)
+                    getString(R.styleable.TitleSearchListSpinner_title)?.let {
                         title = it
                     }
                 } finally {
@@ -80,7 +79,7 @@ class TitleSearchableListSpinner: LinearLayout {
         super.onDraw(canvas)
         canvas?.let {
             spinner.let {
-                tvTitleText.visibility = if (it.selectedItemPosition == 0)
+                tvTitleText.visibility = if (it.getSelectedItems().isEmpty())
                     View.INVISIBLE
                 else
                     View.VISIBLE
@@ -113,9 +112,7 @@ class TitleSearchableListSpinner: LinearLayout {
 
     fun getPositionOf(items: List<Any>) = spinner.getPositionOf(items)
 
-    fun getSelectedItems() = spinner.selectedItem
-
-    fun getAdapter() = spinner.adapter
+    fun getSelectedItems() = spinner.getSelectedItems()
 
     fun initialize(items: List<List<Any>>, title: String) {
         spinner.initialize(items, title)

@@ -71,11 +71,11 @@
         <attr name="isMandatory" />
     </declare-styleable>
 
-    <declare-styleable name="SearchableListSpinner">
+    <declare-styleable name="SearchListSpinner">
         <attr name="isMandatory" />
     </declare-styleable>
 
-    <declare-styleable name="TitleSearchableListSpinner">
+    <declare-styleable name="TitleSearchListSpinner">
         <attr name="title" />
         <attr name="isMandatory" />
     </declare-styleable>

@@ -43,7 +43,7 @@ class SearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListen
     private lateinit var arrowPath: Path
 
     //Attributes
-    private var isElementSelected = false
+    private var isItemSelected = false
     var isMandatory: Boolean = false
         set(value) {
             field = value
@@ -105,14 +105,14 @@ class SearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListen
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        isElementSelected = selectedItem != null
-        isValid = isElementSelected
+        isItemSelected = selectedItem != null
+        isValid = isItemSelected
 
         canvas?.apply {
             canvas.drawPath(arrowPath, arrowPaint)
             canvas.drawCircle(xOrigin + rectLarge / 2, yCenter, circleRad, circlePaint)
 
-            background = if (!isElementSelected) {
+            background = if (!isItemSelected) {
                 if (isMandatory)
                     ContextCompat.getDrawable(context, R.drawable.bg_spinner_invalid)
                 else
@@ -171,7 +171,8 @@ class SearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListen
         val fm = scanForActivity(context)!!.supportFragmentManager
         searchDialog.show(
             fm,
-            SearchDialog.TAG
+            SearchDialog.TAG,
+            isItemSelected
         )
     }
 
@@ -196,7 +197,6 @@ class SearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListen
 
     fun cleanSelection() {
         onCleanSelection()
-        SearchDialog.someItemSelected = false
     }
 
     fun setHint(hint: String) {
