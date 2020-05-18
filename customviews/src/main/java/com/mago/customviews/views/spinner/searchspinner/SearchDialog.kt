@@ -77,8 +77,6 @@ class SearchDialog: DialogFragment() {
             dialog.dismiss()
         }
 
-        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-
         return builder.create()
     }
 
@@ -89,22 +87,11 @@ class SearchDialog: DialogFragment() {
         val searchView = view.findViewById<SearchView>(R.id.tv_search)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
 
-        searchView.onActionViewExpanded()
+        //searchView.onActionViewExpanded()
         setOnQueryTextChanged(searchView)
         setupRecyclerView(recyclerView)
 
-        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-
         return view
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onStart() {
