@@ -21,7 +21,7 @@ import java.lang.StringBuilder
  * @author by jmartinez
  * @since 15/04/2020.
  */
-class SearchableListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouchListener,
+class SearchListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouchListener,
     SearchListSpinnerListener {
     private lateinit var attributeSet: AttributeSet
     private lateinit var searchListDialog: SearchListDialog
@@ -44,7 +44,7 @@ class SearchableListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouc
     private lateinit var arrowPath: Path
 
     //Attributes
-    private var isElementSelected = false
+    private var areItemsSelected = false
 
     var isMandatory: Boolean = false
         set(value) {
@@ -111,14 +111,14 @@ class SearchableListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouc
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        isElementSelected = selectedItems.isNotEmpty()
-        isValid = isElementSelected
+        areItemsSelected = selectedItems.isNotEmpty()
+        isValid = areItemsSelected
 
         canvas?.apply {
             canvas.drawPath(arrowPath, arrowPaint)
             canvas.drawCircle(xOrigin + rectLarge / 2, yCenter, circleRad, circlePaint)
 
-            background = if (!isElementSelected) {
+            background = if (!areItemsSelected) {
                 if (isMandatory)
                     ContextCompat.getDrawable(context, R.drawable.bg_spinner_invalid)
                 else
@@ -196,7 +196,8 @@ class SearchableListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouc
         val fm = scanForActivity(context)!!.supportFragmentManager
         searchListDialog.show(
             fm,
-            SearchListDialog.TAG
+            SearchListDialog.TAG,
+            areItemsSelected
         )
     }
 
@@ -204,9 +205,9 @@ class SearchableListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouc
         adapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, listOf(title))
     }
 
-    override fun getSelectedItem(): List<Any> = selectedItems
+    fun getSelectedItems(): List<Any> = selectedItems
 
-    override fun getSelectedItemPosition(): Int = selectedItemsPosition
+    fun getSelectedItemsPosition(): Int = selectedItemsPosition
 
     fun getPositionOf(item: List<Any>) = items.indexOf(item)
 
@@ -217,7 +218,6 @@ class SearchableListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouc
 
     fun cleanSelection() {
         onCleanSelection()
-        SearchListDialog.someItemSelected = false
     }
 
     fun setHint(hint: String) {

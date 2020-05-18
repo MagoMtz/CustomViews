@@ -12,6 +12,7 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.SearchView
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mago.customviews.R
@@ -31,12 +32,11 @@ class SearchListDialog: DialogFragment() {
     private lateinit var creator: AlertDialog
     private lateinit var btnClean: Button
     private lateinit var btnCancel: Button
+    private var isItemSelected = false
 
     companion object {
         const val TAG = "SearchDialog"
         const val PARAM_TITLE = "param_title"
-
-        var someItemSelected = false
 
         fun newInstance(title: String): SearchListDialog {
             val d =
@@ -48,6 +48,11 @@ class SearchListDialog: DialogFragment() {
             d.arguments = args
             return d
         }
+    }
+
+    fun show(manager: FragmentManager, tag: String?, isItemSelected: Boolean) {
+        super.show(manager, tag)
+        this.isItemSelected = isItemSelected
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,8 +79,8 @@ class SearchListDialog: DialogFragment() {
         builder.setNegativeButton(android.R.string.cancel) {dialog, _ ->
             dialog.dismiss()
         }
-        builder.setPositiveButton(R.string.btn_clean_selection) { dialog, which ->
-            someItemSelected = false
+        builder.setPositiveButton(R.string.btn_clean_selection) { dialog, _ ->
+            //someItemSelected = false
             listener.onCleanSelection()
             dialog.dismiss()
         }
@@ -105,7 +110,7 @@ class SearchListDialog: DialogFragment() {
         btnCancel = creator.getButton(AlertDialog.BUTTON_NEGATIVE)
         btnClean = creator.getButton(AlertDialog.BUTTON_POSITIVE)
 
-        if (!SearchDialog.someItemSelected)
+        if (!isItemSelected)
             btnClean.visibility = View.GONE
     }
 
@@ -136,7 +141,7 @@ class SearchListDialog: DialogFragment() {
         searchListAdapter.setSearchSpinnerListener(object :
             SearchListSpinnerListener {
             override fun onItemSelected(itemSelected: List<Any>, position: Int) {
-                someItemSelected = true
+                //someItemSelected = true
                 listener.onItemSelected(itemSelected, position)
                 btnCancel.visibility = View.VISIBLE
                 dismiss()

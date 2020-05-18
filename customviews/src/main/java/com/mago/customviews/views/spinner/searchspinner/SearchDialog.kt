@@ -13,6 +13,7 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.SearchView
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mago.customviews.R
@@ -32,13 +33,12 @@ class SearchDialog: DialogFragment() {
     private lateinit var creator: AlertDialog
     private lateinit var btnClean: Button
     private lateinit var btnCancel: Button
+    private var isItemSelected = false
 
     companion object {
         const val TAG = "SearchDialog"
 
         const val PARAM_TITLE = "param_title"
-
-        var someItemSelected = false
 
         fun newInstance(title: String): SearchDialog {
             val dialog = SearchDialog()
@@ -49,6 +49,11 @@ class SearchDialog: DialogFragment() {
             dialog.arguments = args
             return dialog
         }
+    }
+
+    fun show(manager: FragmentManager, tag: String?, isItemSelected: Boolean) {
+        super.show(manager, tag)
+        this.isItemSelected = isItemSelected
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,7 +72,7 @@ class SearchDialog: DialogFragment() {
             dialog.dismiss()
         }
         builder.setPositiveButton(R.string.btn_clean_selection) { dialog, _ ->
-            someItemSelected = false
+            //someItemSelected = false
             searchSpinnerListener.onCleanSelection()
             dialog.dismiss()
         }
@@ -108,7 +113,7 @@ class SearchDialog: DialogFragment() {
         btnCancel = creator.getButton(AlertDialog.BUTTON_NEGATIVE)
         btnClean = creator.getButton(AlertDialog.BUTTON_POSITIVE)
 
-        if (!someItemSelected)
+        if (!isItemSelected)
             btnClean.visibility = GONE
     }
 
@@ -135,7 +140,7 @@ class SearchDialog: DialogFragment() {
         searchAdapter = SearchAdapter(items)
         searchAdapter.setSpinnerListener(object : SearchSpinnerListener {
             override fun onItemSelected(item: Any, position: Int) {
-                someItemSelected = true
+                //someItemSelected = true
                 searchSpinnerListener.onItemSelected(item, position)
                 btnClean.visibility = View.VISIBLE
                 dialog?.cancel()

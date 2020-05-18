@@ -29,8 +29,6 @@ class MainActivity : AppCompatActivity() {
 
         var selectedList = listOf<Int>(1,3)
 
-        SearchableSpinner(this)
-
         sp_multi.init(items, "Seleccione algo", 3, 2, "No mas 2")
         sp_multi.setHint("Seleccione algo123")
         sp_multi.setOnItemsSelectedListener(object : ItemsSelectedListener {
