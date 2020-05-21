@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">CustomViews</string>
+    <string name="m_app_name">CustomViews</string>
     <string name="btn_clean_selection">Clean</string>
 </resources>

@@ -1,2 +1,2 @@
-include ':app', ':customviews', ':searchablespinnerlibrary'
+include ':app', ':customviews'
 rootProject.name='Custom views'

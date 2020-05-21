@@ -2,15 +2,9 @@ package com.mago.customviewsapp
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.ArrayAdapter
-import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.mago.customviews.views.adapter.CustomSpinnerAdapter
-import com.mago.customviews.views.spinner.SearchableSpinner
 import com.mago.customviews.views.spinner.multiselectspinner.ItemsSelectedListener
-import com.mago.customviews.views.spinner.searchlistspinner.ListSelectedListener
 import com.mago.customviews.views.spinner.searchspinner.ItemSelectedListener
-import com.mago.customviews.views.title.TitleEditText
 import kotlinx.android.synthetic.main.activity_main.*
 
 
