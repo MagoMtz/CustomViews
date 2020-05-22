@@ -4,6 +4,7 @@ import android.content.Context
 import android.text.Editable
 import android.util.AttributeSet
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import com.google.android.material.textfield.TextInputLayout
 import com.mago.customviews.R
@@ -92,6 +93,17 @@ class TitleTextArea : LinearLayout{
     }
 
     fun getText(): Editable? = textArea.text
+
+    fun setAdapter(data: List<String>, threshold: Int) {
+        val adapter = ArrayAdapter<String>(
+            context,
+            android.R.layout.simple_dropdown_item_1line,
+            data
+        )
+        textArea.setAdapter(adapter)
+        textArea.threshold = threshold
+        adapter.notifyDataSetChanged()
+    }
 
     fun enableViews(isEnabled: Boolean) {
         inputLy.isEnabled = isEnabled
