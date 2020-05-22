@@ -101,6 +101,32 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/ly_4"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:orientation="horizontal"
+                android:layout_margin="16dp"
+                android:weightSum="1">
+
+                <com.mago.customviews.views.title.TitleTextArea
+                    android:id="@+id/et_text_area"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    />
+
+                <Button
+                    android:id="@+id/btn_change_adapter"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:text="change adapter" />
+
+            </LinearLayout>
+
+
+
         </LinearLayout>
 
     </ScrollView>

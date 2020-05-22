@@ -3,7 +3,7 @@ package com.mago.customviews.views.edittext
 import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
-import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView
 import androidx.core.content.ContextCompat
 import com.mago.customviews.R
 
@@ -11,7 +11,7 @@ import com.mago.customviews.R
  * @author by jmartinez
  * @since 05/02/2020.
  */
-class TextArea : AppCompatEditText {
+class TextArea : AppCompatAutoCompleteTextView {
     private lateinit var attributeSet: AttributeSet
     // Attributes
     var isMandatory: Boolean = false

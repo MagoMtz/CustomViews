@@ -74,6 +74,13 @@ class MainActivity : AppCompatActivity() {
             Log.e("Multi", "selected size = ${sp_multi.getSelectedItems()}")
         }
 
+        val names = listOf("Jorge", "Margarito", "Martinez")
+        et_text_area.setAdapter(names, 3)
+
+        btn_change_adapter.setOnClickListener {
+            et_text_area.setAdapter(items, 3)
+        }
+
         /*
         val adapter = CustomSpinnerAdapter(
             this,
