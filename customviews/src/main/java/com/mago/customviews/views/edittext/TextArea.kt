@@ -2,8 +2,12 @@ package com.mago.customviews.views.edittext
 
 import android.content.Context
 import android.graphics.Canvas
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextUtils
 import android.util.AttributeSet
-import androidx.appcompat.widget.AppCompatAutoCompleteTextView
+import android.widget.ArrayAdapter
+import androidx.appcompat.widget.AppCompatMultiAutoCompleteTextView
 import androidx.core.content.ContextCompat
 import com.mago.customviews.R
 
@@ -11,7 +15,7 @@ import com.mago.customviews.R
  * @author by jmartinez
  * @since 05/02/2020.
  */
-class TextArea : AppCompatAutoCompleteTextView {
+class TextArea : AppCompatMultiAutoCompleteTextView {
     private lateinit var attributeSet: AttributeSet
     // Attributes
     var isMandatory: Boolean = false
@@ -74,4 +78,68 @@ class TextArea : AppCompatAutoCompleteTextView {
 
         }
     }
+
+    fun setAdapter(data: List<String>) {
+        val adapter = ArrayAdapter<String>(
+            context,
+            android.R.layout.simple_dropdown_item_1line,
+            data
+        )
+
+        val tokenizer = object : Tokenizer {
+            override fun findTokenStart(text: CharSequence, cursor: Int): Int {
+                var i = cursor
+
+                while (i > 0 && text[i -1] != ' ') {
+                    i--
+                }
+                while (i < cursor && text[i] == ' ') {
+                    i++
+                }
+
+                return i
+            }
+
+            override fun findTokenEnd(text: CharSequence, cursor: Int): Int {
+                var i = cursor
+                val len = text.length
+
+                while (i < len) {
+                    if (text[i] == ' '){
+                        return  i
+                    } else {
+                        i++
+                    }
+                }
+
+                return len
+            }
+
+
+            override fun terminateToken(text: CharSequence): CharSequence {
+                var i = text.length
+
+                while (i > 0 && text[i-1] == ' ') {
+                    i--
+                }
+
+                return if (i > 0 && text[i-1] == ' ') {
+                    text
+                } else {
+                    if (text is Spanned) {
+                        val sp = SpannableString("$text ")
+                        TextUtils.copySpansFrom(text, 0, text.length, Any::class.java, sp, 0)
+                        sp
+                    } else {
+                        "$text "
+                    }
+                }
+            }
+        }
+
+        setAdapter(adapter)
+        setTokenizer(tokenizer)
+        adapter.notifyDataSetChanged()
+    }
+
 }

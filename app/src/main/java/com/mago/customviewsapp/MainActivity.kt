@@ -75,10 +75,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         val names = listOf("Jorge", "Margarito", "Martinez")
-        et_text_area.setAdapter(names, 3)
+        et_text_area.setAdapter(names)
 
         btn_change_adapter.setOnClickListener {
-            et_text_area.setAdapter(items, 3)
+            et_text_area.setAdapter(items)
         }
 
         /*
