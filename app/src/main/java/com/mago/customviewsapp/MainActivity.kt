@@ -2,9 +2,11 @@ package com.mago.customviewsapp
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.mago.customviews.views.spinner.multiselectspinner.ItemsSelectedListener
 import com.mago.customviews.views.spinner.searchspinner.ItemSelectedListener
+import com.mago.customviews.views.title.TitleZipCodeEditText
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -80,6 +82,21 @@ class MainActivity : AppCompatActivity() {
         btn_change_adapter.setOnClickListener {
             et_text_area.setAdapter(items)
         }
+
+        /*
+        val params = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.MATCH_PARENT
+        )
+        params.marginStart = 32
+        params.marginEnd = 32
+
+        val zipCodeEditText = TitleZipCodeEditText(this)
+        zipCodeEditText.layoutParams = params
+        zipCodeEditText.isMandatory = true
+        zipCodeEditText.title = "ZipCode"
+        ly_container.addView(zipCodeEditText)
+        */
 
         /*
         val adapter = CustomSpinnerAdapter(
