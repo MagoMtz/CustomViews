@@ -11,6 +11,7 @@ import android.widget.MultiAutoCompleteTextView
 import androidx.appcompat.widget.AppCompatMultiAutoCompleteTextView
 import androidx.core.content.ContextCompat
 import com.mago.customviews.R
+import kotlinx.android.synthetic.main.title_text_area.view.*
 
 /**
  * @author by jmartinez
@@ -98,6 +99,20 @@ class TextArea : AppCompatMultiAutoCompleteTextView {
 
     override fun performFiltering(text: CharSequence, keyCode: Int) {
         if (enoughToFilter()) {
+            replaceOpenCount = text.toString().toCharArray().filter { it == '<' }.count()
+            replaceCloseCount = text.toString().toCharArray().filter { it == '>' }.count()
+
+            val aux = text.toString().replace("<", "")
+            val mText = aux.replace(">", "")
+
+            val end = selectionEnd - (replaceCloseCount+replaceOpenCount)
+            val start = mTokenizer.findTokenStart(mText, end)
+
+            super.performFiltering(mText, start, end, keyCode)
+
+    }
+        /*
+        if (enoughToFilter()) {
             var end = selectionEnd
             var start = mTokenizer.findTokenStart(text, end)
             val mText: CharSequence
@@ -106,15 +121,27 @@ class TextArea : AppCompatMultiAutoCompleteTextView {
             replaceCloseCount = text.toString().toCharArray().filter { it == '>' }.count()
 
             mText = if (text[start] == '<') {
-                end -= replaceOpenCount
-                start -= replaceCloseCount
-                text.toString().replace("<", "")
+                if (text[0] == '<' && start == 0) {
+                    start = 0
+                    //end --
+                    end -= (replaceCloseCount+replaceOpenCount)
+                } else {
+                    //end -= replaceCloseCount
+                    //start -= replaceOpenCount
+                    end -= (replaceCloseCount+replaceOpenCount)
+                    start -= (replaceCloseCount+replaceOpenCount)
+                }
+                //end -= replaceCloseCount
+                //start -= replaceOpenCount
+                val aux = text.toString().replace("<", "")
+                aux.replace(">", "")
             } else {
                 text
             }
 
             super.performFiltering(mText, start, end, keyCode)
         }
+         */
     }
 
     private var replaceOpenCount = 0
@@ -172,7 +199,7 @@ class TextArea : AppCompatMultiAutoCompleteTextView {
         }
 
         private fun closeDiamondText(text: CharSequence): CharSequence {
-            if (tokenStart -1 < 0)
+            if (tokenStart < 0)
                 return text
 
             //return if (textArea.text[tokenStart - 1] == '<')
