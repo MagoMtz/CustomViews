@@ -100,6 +100,10 @@ class TitleTextArea : LinearLayout{
         textArea.setAdapter(data)
     }
 
+    fun setTokenizer(tokenizer: MultiAutoCompleteTextView.Tokenizer) {
+        textArea.setTokenizer(tokenizer)
+    }
+
     fun enableViews(isEnabled: Boolean) {
         inputLy.isEnabled = isEnabled
         textArea.isEnabled = isEnabled

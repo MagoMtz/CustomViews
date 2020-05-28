@@ -7,11 +7,9 @@ import android.text.Spanned
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.widget.ArrayAdapter
-import android.widget.MultiAutoCompleteTextView
 import androidx.appcompat.widget.AppCompatMultiAutoCompleteTextView
 import androidx.core.content.ContextCompat
 import com.mago.customviews.R
-import kotlinx.android.synthetic.main.title_text_area.view.*
 
 /**
  * @author by jmartinez
@@ -20,6 +18,11 @@ import kotlinx.android.synthetic.main.title_text_area.view.*
 class TextArea : AppCompatMultiAutoCompleteTextView {
     private lateinit var attributeSet: AttributeSet
     private lateinit var mTokenizer: CustomTokenizer
+
+    private var replaceOpenCount = 0
+    private var replaceCloseCount = 0
+    private var openCharWrapper: Char = '<'
+    private var closeCharWrapper: Char = '>'
 
     // Attributes
     var isMandatory: Boolean = false
@@ -83,14 +86,17 @@ class TextArea : AppCompatMultiAutoCompleteTextView {
         }
     }
 
-    fun setAdapter(data: List<String>) {
+    fun setAdapter(data: List<String>, openCharWrapper: Char = '<', closeCharWrapper: Char = '>') {
         val adapter = ArrayAdapter<String>(
             context,
             android.R.layout.simple_dropdown_item_1line,
             data
         )
 
-        mTokenizer = CustomTokenizer(this)
+        this.openCharWrapper = openCharWrapper
+        this.closeCharWrapper = closeCharWrapper
+
+        mTokenizer = CustomTokenizer(this, openCharWrapper, closeCharWrapper)
 
         setAdapter(adapter)
         setTokenizer(mTokenizer)
@@ -99,11 +105,15 @@ class TextArea : AppCompatMultiAutoCompleteTextView {
 
     override fun performFiltering(text: CharSequence, keyCode: Int) {
         if (enoughToFilter()) {
-            replaceOpenCount = text.toString().toCharArray().filter { it == '<' }.count()
-            replaceCloseCount = text.toString().toCharArray().filter { it == '>' }.count()
+            //replaceOpenCount = text.toString().toCharArray().filter { it == '<' }.count()
+            replaceOpenCount = text.toString().toCharArray().filter { it == openCharWrapper }.count()
+            //replaceCloseCount = text.toString().toCharArray().filter { it == '>' }.count()
+            replaceCloseCount = text.toString().toCharArray().filter { it == closeCharWrapper }.count()
 
-            val aux = text.toString().replace("<", "")
-            val mText = aux.replace(">", "")
+            //val aux = text.toString().replace("<", "")
+            val aux = text.toString().replace(openCharWrapper.toString(), "")
+            //val mText = aux.replace(">", "")
+            val mText = aux.replace(closeCharWrapper.toString(), "")
 
             val end = selectionEnd - (replaceCloseCount+replaceOpenCount)
             val start = mTokenizer.findTokenStart(mText, end)
@@ -144,10 +154,11 @@ class TextArea : AppCompatMultiAutoCompleteTextView {
          */
     }
 
-    private var replaceOpenCount = 0
-    private var replaceCloseCount = 0
-
-    private class CustomTokenizer(private val textArea: TextArea): Tokenizer {
+    private class CustomTokenizer(
+        private val textArea: TextArea,
+        private val openCharWrapper: Char,
+        private val closeCharWrapper: Char
+    ): Tokenizer {
         private var tokenStart: Int = 0
         private var tokenEnd: Int = 0
 
@@ -183,7 +194,7 @@ class TextArea : AppCompatMultiAutoCompleteTextView {
                 i--
             }
             return if (i > 0 && text[i - 1] == ' ') {
-                closeDiamondText(text)//text
+                wrapWord(text)//text
             } else {
                 if (text is Spanned) {
                     val sp = SpannableString("$text, ")
@@ -191,20 +202,21 @@ class TextArea : AppCompatMultiAutoCompleteTextView {
                         text, 0, text.length,
                         Any::class.java, sp, 0
                     )
-                    closeDiamondText(sp)//sp
+                    wrapWord(sp)//sp
                 } else {
-                    "${closeDiamondText(text)} "//"$text, "
+                    "${wrapWord(text)} "//"$text, "
                 }
             }
         }
 
-        private fun closeDiamondText(text: CharSequence): CharSequence {
+        private fun wrapWord(text: CharSequence): CharSequence {
             if (tokenStart < 0)
                 return text
 
-            //return if (textArea.text[tokenStart - 1] == '<')
-            return if (textArea.text[tokenStart] == '<')
-                "<$text>"
+            //return if (textArea.text[tokenStart] == '<')
+            return if (textArea.text[tokenStart] == openCharWrapper)
+                //"<$text>"
+                "$openCharWrapper$text$closeCharWrapper"
             else
                 text
         }
