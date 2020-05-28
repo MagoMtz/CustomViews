@@ -13,13 +13,6 @@ class TitleZipCodeEditText : LinearLayout {
     private lateinit var attributeSet: AttributeSet
     // Views
     private var inputLy: TextInputLayout = TextInputLayout(context)
-    var title: String = ""
-        set(value) {
-            inputLy.hint = value
-            field = value
-            invalidate()
-            requestLayout()
-        }
     var editText: ZipCodeEditText = ZipCodeEditText(context)
         set(value) {
             field = value
@@ -30,10 +23,18 @@ class TitleZipCodeEditText : LinearLayout {
     var isMandatory: Boolean = false
         set(value) {
             field = value
-            editText.isMandatory
+            editText.isMandatory = value
             invalidate()
             requestLayout()
         }
+    var title: String = ""
+        set(value) {
+            inputLy.hint = value
+            field = value
+            invalidate()
+            requestLayout()
+        }
+
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
         this.attributeSet = attributeSet
         setupAttributes()
