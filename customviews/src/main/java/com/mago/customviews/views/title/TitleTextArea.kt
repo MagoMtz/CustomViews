@@ -100,8 +100,6 @@ class TitleTextArea : LinearLayout{
         textArea.setAdapter(data)
     }
 
-
-
     fun enableViews(isEnabled: Boolean) {
         inputLy.isEnabled = isEnabled
         textArea.isEnabled = isEnabled
