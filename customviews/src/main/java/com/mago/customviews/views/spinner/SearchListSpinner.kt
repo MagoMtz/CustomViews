@@ -53,15 +53,6 @@ class SearchListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouchLis
             requestLayout()
         }
     var isValid = false
-    /*
-    var spinnerHeight: Float = 0F
-        set(value) {
-            field = value
-            invalidate()
-            requestLayout()
-        }
-
-     */
     // Paint objects
     private val arrowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = ContextCompat.getColor(context, R.color.dark_gray)
@@ -97,11 +88,6 @@ class SearchListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouchLis
             .apply {
                 try {
                     isMandatory = getBoolean(R.styleable.MultiSelectSearchSpinner_isMandatory, false)
-                    /*spinnerHeight = getDimension(
-                        R.styleable.MultiSelectSearchSpinner_spinnerHeight,
-                        resources.getDimension(R.dimen.spinner_min_height)
-                    )
-                     */
                 } finally {
                     recycle()
                 }
@@ -193,6 +179,9 @@ class SearchListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouchLis
     }
 
     private fun showDialog() {
+        if (!::searchListDialog.isInitialized)
+            return
+
         val fm = scanForActivity(context)!!.supportFragmentManager
         searchListDialog.show(
             fm,
