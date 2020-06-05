@@ -71,7 +71,6 @@ class SearchListDialog: DialogFragment() {
             dialog.dismiss()
         }
         builder.setPositiveButton(R.string.btn_clean_selection) { dialog, _ ->
-            //someItemSelected = false
             listener.onCleanSelection()
             dialog.dismiss()
         }
@@ -86,7 +85,6 @@ class SearchListDialog: DialogFragment() {
         val searchView:SearchView = view.findViewById(R.id.tv_search)
         val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
 
-        searchView.onActionViewExpanded()
         setOnQueryTextChanged(searchView)
         setupRecyclerView(recyclerView)
 
