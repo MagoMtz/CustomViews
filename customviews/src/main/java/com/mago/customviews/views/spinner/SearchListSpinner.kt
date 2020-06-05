@@ -141,12 +141,12 @@ class SearchListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouchLis
     }
 
     override fun onItemSelected(itemSelected: List<Any>, position: Int) {
-        this.selectedItems = items
+        this.selectedItems = itemSelected
         selectedItemsPosition = position
         setupAdapter(selectedItems)
 
         if (::listSelectedListener.isInitialized) {
-            listSelectedListener.onListSelected(items)
+            listSelectedListener.onListSelected(selectedItems)
         }
     }
 
@@ -175,6 +175,7 @@ class SearchListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouchLis
         searchListDialog = SearchListDialog.newInstance(title)
         searchListDialog.setListSpinnerListener(this)
         searchListDialog.setItems(items)
+        this.items = items
         setAdapter(title)
     }
 
