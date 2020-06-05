@@ -83,7 +83,6 @@ class SearchListAdapter(
 
     override fun onListSelected(position: Int) {
         dialogListener.onItemSelected(data[position], position)
-        Log.e("sdasdasd", "asasdasd")
     }
 
     fun setSearchSpinnerListener(listener: SearchListSpinnerListener) {

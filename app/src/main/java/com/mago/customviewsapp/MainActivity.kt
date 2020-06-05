@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.mago.customviews.views.spinner.multiselectspinner.ItemsSelectedListener
+import com.mago.customviews.views.spinner.searchlistspinner.ListSelectedListener
 import com.mago.customviews.views.spinner.searchspinner.ItemSelectedListener
 import com.mago.customviews.views.title.TitleZipCodeEditText
 import kotlinx.android.synthetic.main.activity_main.*
@@ -82,6 +83,26 @@ class MainActivity : AppCompatActivity() {
         btn_change_adapter.setOnClickListener {
             et_text_area.setAdapter(items)
         }
+
+        val listItems = listOf(
+            listOf("Primera lista, valor 1", "Primera lista, valor 2","Primera lista, valor 3"),
+            listOf("Segunda lista, valor 1", "Segunda lista, valor 2","Segunda lista, valor 3"),
+            listOf("Tercera lista, valor 1", "Tercera lista, valor 2","Tercera lista, valor 3")
+        )
+
+        sp_list.initialize(
+            listItems,
+            "Titulo"
+        )
+        sp_list.setOnListSelectedListener(object : ListSelectedListener {
+            override fun onListSelected(list: List<Any>) {
+                Log.e("tsg", "sasd")
+            }
+
+            override fun onCleanSelection() {
+                Log.e("tsg", "sasd")
+            }
+        })
 
         /*
         val params = LinearLayout.LayoutParams(

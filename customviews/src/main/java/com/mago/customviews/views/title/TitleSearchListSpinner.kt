@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.mago.customviews.R
 import com.mago.customviews.views.spinner.SearchListSpinner
+import com.mago.customviews.views.spinner.searchlistspinner.ListSelectedListener
 
 /**
  * @author by jmartinez
@@ -116,6 +117,10 @@ class TitleSearchListSpinner: LinearLayout {
 
     fun initialize(items: List<List<Any>>, title: String) {
         spinner.initialize(items, title)
+    }
+
+    fun setOnListSelectedListener(listSelectedListener: ListSelectedListener) {
+        spinner.setOnListSelectedListener(listSelectedListener)
     }
 
 }
