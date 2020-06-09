@@ -44,7 +44,6 @@ open class CustomEditText : AppCompatEditText {
             invalidate()
             requestLayout()
         }
-    var isValid = false
 
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
         this.attributeSet = attributeSet
@@ -92,7 +91,6 @@ open class CustomEditText : AppCompatEditText {
         super.onDraw(canvas)
 
         val isNotValid = text.toString().isEmpty()
-        isValid = !isNotValid
 
         canvas?.apply {
             val cBounds = clipBounds
@@ -164,5 +162,7 @@ open class CustomEditText : AppCompatEditText {
             invalidate()
         }
     }
+
+    fun isValid(): Boolean = text.toString().isNotEmpty()
 
 }

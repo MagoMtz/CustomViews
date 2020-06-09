@@ -33,7 +33,6 @@ class SingleDate: LinearLayout{
             invalidate()
             requestLayout()
         }
-    var isValid = false
 
     // Attributes
     var title: String = ""
@@ -113,7 +112,6 @@ class SingleDate: LinearLayout{
         val isNotValid = dateEditText.text.toString().let {
             (it.isEmpty() || it == DATE_PLACE_HOLDER)
         }
-        isValid = !isNotValid
 
         //tvTitle.visibility = if (textIsEmpty) View.INVISIBLE else View.VISIBLE
 
@@ -198,5 +196,10 @@ class SingleDate: LinearLayout{
         dateEditText.isEnabled = isEnabled
         btnCalendar.isEnabled = isEnabled
     }
+
+    fun isValid(): Boolean = dateEditText.text.toString().let {
+        (it.isNotEmpty() || it != DATE_PLACE_HOLDER)
+    }
+
 
 }

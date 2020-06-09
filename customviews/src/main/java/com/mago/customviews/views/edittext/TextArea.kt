@@ -31,7 +31,6 @@ class TextArea : AppCompatMultiAutoCompleteTextView {
             invalidate()
             requestLayout()
         }
-    var isValid = false
 
     constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
         this.attributeSet = attributeSet
@@ -69,7 +68,6 @@ class TextArea : AppCompatMultiAutoCompleteTextView {
         super.onDraw(canvas)
 
         val isNotValid = text.toString().isEmpty()
-        isValid = !isNotValid
 
         canvas?.apply {
             val cBounds = clipBounds
@@ -221,5 +219,7 @@ class TextArea : AppCompatMultiAutoCompleteTextView {
                 text
         }
     }
+
+    fun isValid(): Boolean = text.toString().isNotEmpty()
 
 }

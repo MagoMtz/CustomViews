@@ -21,7 +21,6 @@ class EmailEditText : AppCompatEditText{
             invalidate()
             requestLayout()
         }
-    var isValid = false
 
     constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
         this.attributeSet = attributeSet
@@ -58,10 +57,7 @@ class EmailEditText : AppCompatEditText{
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        val pattern = Pattern.compile(RegexPattern.E_MAIL, Pattern.CASE_INSENSITIVE)
-        val matcher = pattern.matcher(text.toString())
-        val isValid = matcher.matches()
-        this.isValid = isValid
+        val isValid = textMatch()
 
         canvas?.apply {
             val cBounds = clipBounds
@@ -110,5 +106,13 @@ class EmailEditText : AppCompatEditText{
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
         override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
     }
+
+    private fun textMatch(): Boolean {
+        val pattern = Pattern.compile(RegexPattern.E_MAIL, Pattern.CASE_INSENSITIVE)
+        val matcher = pattern.matcher(text.toString())
+        return matcher.matches()
+    }
+
+    fun isValid(): Boolean = textMatch()
 
 }

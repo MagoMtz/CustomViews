@@ -20,7 +20,6 @@ class PhoneEditText : AppCompatEditText {
             invalidate()
             requestLayout()
         }
-    var isValid = false
 
     constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
         this.attributeSet = attributeSet
@@ -58,15 +57,12 @@ class PhoneEditText : AppCompatEditText {
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        val isValid = text.toString().length == 14
-        this.isValid = isValid
-
         canvas?.apply {
             val cBounds = clipBounds
             cBounds.inset(0, 8)
 
             background = if (isMandatory)
-                if (!isValid)
+                if (!isValid())
                     ContextCompat.getDrawable(context, R.drawable.bg_common_invalid)
                 else
                     ContextCompat.getDrawable(context, R.drawable.bg_common)
@@ -125,5 +121,7 @@ class PhoneEditText : AppCompatEditText {
     fun getPhoneNumber(): String {
         return text!!.replace("[^\\d]".toRegex(), "")
     }
+
+    fun isValid(): Boolean = text.toString().length == 14
 
 }

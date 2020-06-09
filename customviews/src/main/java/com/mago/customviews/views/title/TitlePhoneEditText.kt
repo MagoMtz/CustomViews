@@ -77,7 +77,7 @@ class TitlePhoneEditText : LinearLayout {
         editText.isMandatory = isMandatory
     }
 
-    fun isValid(): Boolean = editText.isValid
+    fun isValid(): Boolean = editText.isValid()
 
     fun setText(resId: Int) {
         editText.setText(resId)

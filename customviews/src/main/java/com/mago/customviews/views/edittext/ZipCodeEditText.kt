@@ -21,7 +21,6 @@ class ZipCodeEditText : AppCompatEditText{
             invalidate()
             requestLayout()
         }
-    var isValid = false
 
     constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
         this.attributeSet = attributeSet
@@ -58,15 +57,12 @@ class ZipCodeEditText : AppCompatEditText{
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        val isValid = text.toString().length == 5
-        this.isValid = isValid
-
         canvas?.apply {
             val cBounds = clipBounds
             cBounds.inset(0, 8)
 
             background = if (isMandatory)
-                if (!isValid)
+                if (!isValid())
                     ContextCompat.getDrawable(context, R.drawable.bg_common_invalid)
                 else
                     ContextCompat.getDrawable(context, R.drawable.bg_common)
@@ -108,5 +104,7 @@ class ZipCodeEditText : AppCompatEditText{
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
         override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
     }
+
+    fun isValid(): Boolean = text.toString().length == 5
 
 }

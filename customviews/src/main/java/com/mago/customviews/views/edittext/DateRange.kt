@@ -236,6 +236,6 @@ class DateRange : LinearLayout{
 
     fun getFinalDateText() = finalDate.getText()
 
-    fun isValid(): Boolean = initDate.isValid && finalDate.isValid
+    fun isValid(): Boolean = initDate.isValid() && finalDate.isValid()
 
 }
