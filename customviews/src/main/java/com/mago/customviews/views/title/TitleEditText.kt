@@ -112,7 +112,7 @@ class TitleEditText : LinearLayout {
         customEditText.allChars = allChars
     }
 
-    fun isValid(): Boolean = customEditText.isValid
+    fun isValid(): Boolean = customEditText.isValid()
 
     fun setText(resId: Int) {
         customEditText.setText(resId)

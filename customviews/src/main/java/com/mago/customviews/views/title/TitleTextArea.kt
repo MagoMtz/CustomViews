@@ -84,7 +84,7 @@ class TitleTextArea : LinearLayout{
         textArea.isMandatory = isMandatory
     }
 
-    fun isValid(): Boolean = textArea.isValid
+    fun isValid(): Boolean = textArea.isValid()
 
     fun setText(resId: Int) {
         textArea.setText(resId)
