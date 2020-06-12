@@ -9,4 +9,8 @@ object Constants {
     const val DATE_PLACE_HOLDER = "DD/MM/YYYY"
     const val DATE_FORMAT = "%02d%02d%02d"
     const val REPLACE_DATE_FORMAT = "%s/%s/%s"
+
+    const val TIME_PLACE_HOLDER = "HH:MM"
+    const val TIME_FORMAT = "%02d%02d"
+    const val REPLACE_TIME_FORMAT = "%s:%s"
 }

@@ -80,8 +80,17 @@
         <attr name="isMandatory" />
     </declare-styleable>
 
+    <declare-styleable name="SingleTime">
+        <attr name="isMandatory" />
+        <attr name="title" />
+    </declare-styleable>
 
-
+    <declare-styleable name="TimeRange">
+        <attr name="isMandatory" />
+        <attr name="futureDate" />
+        <attr name="initTimeTitle" format="string" />
+        <attr name="finalTimeTitle" format="string" />
+    </declare-styleable>
 
     <declare-styleable name="SingleDate">
         <attr name="isMandatory" />

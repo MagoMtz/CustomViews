@@ -6,21 +6,21 @@ import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
-import com.mago.customviews.util.Constants.DATE_FORMAT
-import com.mago.customviews.util.Constants.REPLACE_DATE_FORMAT
+import com.mago.customviews.util.Constants
+import com.mago.customviews.util.Constants.REPLACE_TIME_FORMAT
+import com.mago.customviews.util.Constants.TIME_FORMAT
+import com.mago.customviews.util.RegexPattern
 import com.mago.customviews.util.RegexPattern.DATE_TIME_PLACEHOLDER
-import java.util.*
 
 /**
  * @author by jmartinez
- * @since 06/02/2020.
+ * @since 11/06/2020.
  */
-class DateEditText: AppCompatEditText {
+class TimeEditText: AppCompatEditText {
     private lateinit var attributeSet: AttributeSet
 
     private var current = ""
-    private val ddmmyyyy = "DDMMYYYY"
-    private val cal = Calendar.getInstance()
+    private var hhmm = "HHMM"
 
     constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
         this.attributeSet = attributeSet
@@ -36,7 +36,7 @@ class DateEditText: AppCompatEditText {
     }
 
     private fun init() {
-        inputType = InputType.TYPE_CLASS_DATETIME
+        inputType = InputType.TYPE_CLASS_NUMBER
 
         background = null
     }
@@ -54,59 +54,58 @@ class DateEditText: AppCompatEditText {
     private fun textWatcher(): TextWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
             val data = s.toString()
+
             if (data != current) {
-                if (data.replace(DATE_TIME_PLACEHOLDER.toRegex(), "").length == 8) {
+                if (data.replace(DATE_TIME_PLACEHOLDER.toRegex(), "").length == 4) {
                     requestFocus()
                     setSelection(0)
                 }
 
                 var clean = data.replace(DATE_TIME_PLACEHOLDER.toRegex(), "")
-                val cleanC = current.replace(DATE_TIME_PLACEHOLDER.toRegex(), "")
+                var cleanC = current.replace(DATE_TIME_PLACEHOLDER.toRegex(), "")
 
                 val cl = clean.length
                 var sel = cl
 
                 var index = 2
 
-                while (index <= cl && index < 6) {
+                while (index <= cl && index < 4) {
                     index += 2
                     sel++
                 }
 
                 if (clean == cleanC) sel--
 
-                if (clean.length < 8) {
-                    clean += ddmmyyyy.substring(clean.length)
+                if (clean.length < 4) {
+                    clean += hhmm.substring(clean.length)
                 } else {
-                    var day = Integer.parseInt(clean.substring(0, 2))
-                    var mon = Integer.parseInt(clean.substring(2, 4))
-                    var year = Integer.parseInt(clean.substring(4, 8))
+                    var hours = Integer.parseInt(clean.substring(0, 2))
+                    var minutes = Integer.parseInt(clean.substring(2, 4))
 
-                    val calendar = Calendar.getInstance()
-                    val minYear = calendar.get(Calendar.YEAR) - 100
-                    val maxYear = calendar.get(Calendar.YEAR)
+                    hours = when {
+                        hours < 0 -> 0
+                        hours > 24 -> 24
+                        else -> hours
+                    }
+                    minutes = when {
+                        minutes < 0 -> 0
+                        minutes > 60 -> 60
+                        else -> minutes
+                    }
 
-                    mon = if (mon < 1) 1 else if (mon > 12) 12 else mon
-                    cal.set(Calendar.MONTH, mon - 1)
-                    year =
-                        if (year < minYear) minYear else if (year > maxYear) maxYear else year
-                    cal.set(Calendar.YEAR, year)
-
-                    day =
-                        if (day > cal.getActualMaximum(Calendar.DATE)) cal.getActualMaximum(
-                            Calendar.DATE
-                        ) else day
-                    clean = String.format(DATE_FORMAT, day, mon, year)
+                    clean = String.format(TIME_FORMAT, hours,minutes)
                 }
 
                 clean = String.format(
-                    REPLACE_DATE_FORMAT, clean.substring(0, 2),
-                    clean.substring(2, 4),
-                    clean.substring(4, 8)
+                    REPLACE_TIME_FORMAT,
+                    clean.substring(0, 2),
+                    clean.substring(2, 4)
                 )
 
                 sel = if (sel < 0) 0 else sel
+
                 current = clean
+
                 setText(current)
                 setSelection(if (sel < current.length) sel else current.length)
                 requestLayout()
@@ -117,5 +116,6 @@ class DateEditText: AppCompatEditText {
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
     }
+
 
 }
