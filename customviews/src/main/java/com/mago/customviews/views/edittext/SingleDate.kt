@@ -1,5 +1,6 @@
 package com.mago.customviews.views.edittext
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Context
 import android.graphics.Canvas
@@ -14,7 +15,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.mago.customviews.R
 import com.mago.customviews.util.Constants.DATE_PLACE_HOLDER
-import com.mago.customviews.util.RegexPattern.DATE
+import com.mago.customviews.util.RegexPattern.DATE_TIME_PLACEHOLDER
 import java.util.*
 
 /**
@@ -105,7 +106,7 @@ class SingleDate: LinearLayout{
             }
     }
 
-    //@SuppressLint("DrawAllocation")
+    @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
@@ -113,7 +114,10 @@ class SingleDate: LinearLayout{
             (it.isEmpty() || it == DATE_PLACE_HOLDER)
         }
 
-        //tvTitle.visibility = if (textIsEmpty) View.INVISIBLE else View.VISIBLE
+        tvTitle.visibility = if(isValid())
+            View.VISIBLE
+        else
+            View.INVISIBLE
 
         canvas?.apply {
             val cBounds = RectF(
@@ -157,7 +161,7 @@ class SingleDate: LinearLayout{
         var year = calendar.get(Calendar.YEAR)
 
         val dateText = dateEditText.text.toString()
-        val dateIsComplete = dateText.replace(DATE.toRegex(), "").length == 8
+        val dateIsComplete = dateText.replace(DATE_TIME_PLACEHOLDER.toRegex(), "").length == 8
 
         if (dateText.isNotEmpty() && dateIsComplete) {
             val date = dateEditText.text.toString().split("/")
@@ -197,8 +201,12 @@ class SingleDate: LinearLayout{
         btnCalendar.isEnabled = isEnabled
     }
 
-    fun isValid(): Boolean = dateEditText.text.toString().let {
-        (it.isNotEmpty() || it != DATE_PLACE_HOLDER)
+    fun isValid(): Boolean {
+        val text = dateEditText.text.toString()
+        return if (text.isNotEmpty())
+            text != DATE_PLACE_HOLDER
+        else
+            text.isNotEmpty()
     }
 
 

@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.LinearLayout
 import com.mago.customviews.R
 import com.mago.customviews.util.CommonUtils
-import com.mago.customviews.util.RegexPattern.DATE
+import com.mago.customviews.util.RegexPattern.DATE_TIME_PLACEHOLDER
 import java.util.*
 
 class DateRange : LinearLayout{
@@ -123,7 +123,7 @@ class DateRange : LinearLayout{
         var year = calendar.get(Calendar.YEAR)
 
         val initDateText = initDate.dateEditText.text.toString()
-        val dateIsComplete = initDateText.replace(DATE.toRegex(), "").length == 8
+        val dateIsComplete = initDateText.replace(DATE_TIME_PLACEHOLDER.toRegex(), "").length == 8
 
         if (initDateText.isNotEmpty() && dateIsComplete) {
             val date = initDate.dateEditText.text.toString().split("/")
@@ -156,7 +156,7 @@ class DateRange : LinearLayout{
 
         val finalDateText = finalDate.dateEditText.text.toString()
         val initDateText = initDate.dateEditText.text.toString()
-        val initDateIsComplete = initDateText.replace(DATE.toRegex(), "").length == 8
+        val initDateIsComplete = initDateText.replace(DATE_TIME_PLACEHOLDER.toRegex(), "").length == 8
 
         if (finalDateText.isNotEmpty() && initDateIsComplete) {
             val date = initDateText.split("/")

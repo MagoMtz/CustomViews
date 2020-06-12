@@ -125,12 +125,30 @@
 
             </LinearLayout>
 
-        <com.mago.customviews.views.title.TitleSearchListSpinner
-            android:id="@+id/sp_list"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            app:isMandatory="true"
-            app:title="Spinner"/>
+            <com.mago.customviews.views.title.TitleSearchListSpinner
+                android:id="@+id/sp_list"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                app:isMandatory="true"
+                app:title="Spinner"/>
+
+            <com.mago.customviews.views.edittext.SingleTime
+                android:id="@+id/et_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:isMandatory="true"
+                />
+
+            <com.mago.customviews.views.edittext.TimeRange
+                android:id="@+id/et_time_range"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:isMandatory="true"
+                app:initTimeTitle="Hora inicial"
+                app:finalTimeTitle="hora Final"
+                />
 
         </LinearLayout>
 
