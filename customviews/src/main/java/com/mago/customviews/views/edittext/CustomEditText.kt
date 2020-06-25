@@ -163,6 +163,11 @@ open class CustomEditText : AppCompatEditText {
         }
     }
 
-    fun isValid(): Boolean = text.toString().isNotEmpty()
+    fun isValid(): Boolean {
+        if (text == null)
+            return false
+
+        return text.toString().isNotEmpty()
+    }
 
 }
