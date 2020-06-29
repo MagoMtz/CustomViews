@@ -3,6 +3,7 @@ package com.mago.customviews.views.edittext
 import android.content.Context
 import android.graphics.Canvas
 import android.text.Editable
+import android.text.InputFilter
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
@@ -11,6 +12,7 @@ import androidx.core.content.ContextCompat
 import com.mago.customviews.R
 import com.mago.customviews.util.CommonUtils
 import com.mago.customviews.util.RegexPattern
+import java.util.*
 import java.util.regex.Pattern
 
 /**
@@ -37,6 +39,19 @@ open class CustomEditText : AppCompatEditText {
             field = value
             invalidate()
             requestLayout()
+        }
+    var onlyUpperCase: Boolean = false
+        set(value) {
+            field = value
+            if (value) {
+                inputType = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
+                filters = arrayOf(InputFilter.AllCaps())
+            } else {
+                inputType = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
+                filters = arrayOf(InputFilter.AllCaps())
+            }
+            invalidate()
+            requestFocus()
         }
     var isMandatory: Boolean = false
         set(value) {
@@ -80,6 +95,8 @@ open class CustomEditText : AppCompatEditText {
                         getBoolean(R.styleable.CustomEditText_charsWithBlankSpaces, false)
                     allChars =
                         getBoolean(R.styleable.CustomEditText_allChars, false)
+                    onlyUpperCase =
+                        getBoolean(R.styleable.CustomEditText_onlyUpperCase, false)
                     isMandatory = getBoolean(R.styleable.CustomEditText_isMandatory, false)
                 } finally {
                     recycle()
@@ -126,7 +143,6 @@ open class CustomEditText : AppCompatEditText {
     private fun textWatcher(): TextWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
             s?.let { editable ->
-
                 val count = editable.length
                 setSelection(count)
 
@@ -143,7 +159,7 @@ open class CustomEditText : AppCompatEditText {
                     val matcher = mPattern.matcher(editable[count - 1].toString())
 
                     if (!matcher.matches()) {
-                        val mText = s.subSequence(0, count - 1)
+                        val mText = editable.subSequence(0, count - 1)
                         this@CustomEditText.setText(mText)
                     }
                 }
@@ -155,8 +171,7 @@ open class CustomEditText : AppCompatEditText {
             start: Int,
             count: Int,
             after: Int
-        ) {
-        }
+        ) {}
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             invalidate()
