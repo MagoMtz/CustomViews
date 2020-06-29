@@ -6,6 +6,7 @@
     <attr name="onlyNumbers" format="boolean" />
     <attr name="charsWithBlankSpaces" format="boolean" />
     <attr name="allChars" format="boolean" />
+    <attr name="onlyUpperCase" format="boolean" />
     <attr name="spinnerHeight" format="dimension" />
     <attr name="futureDate" format="boolean" />
 
@@ -13,6 +14,7 @@
         <attr name="onlyNumbers" />
         <attr name="charsWithBlankSpaces" />
         <attr name="allChars" />
+        <attr name="onlyUpperCase" />
         <attr name="isMandatory" />
     </declare-styleable>
 
@@ -20,6 +22,7 @@
         <attr name="onlyNumbers" />
         <attr name="charsWithBlankSpaces" />
         <attr name="allChars" />
+        <attr name="onlyUpperCase" />
         <attr name="isMandatory" />
         <attr name="title" />
     </declare-styleable>

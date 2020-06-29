@@ -37,6 +37,13 @@ class TitleEditText : LinearLayout {
             invalidate()
             requestLayout()
         }
+    var onlyUpperCase: Boolean = false
+        set(value) {
+            field = value
+            customEditText.onlyUpperCase = value
+            invalidate()
+            requestFocus()
+        }
     var isMandatory: Boolean = false
         set(value) {
             field = value
@@ -92,6 +99,7 @@ class TitleEditText : LinearLayout {
                         getBoolean(R.styleable.TitleEditText_charsWithBlankSpaces, false)
                     allChars =
                         getBoolean(R.styleable.TitleEditText_allChars, false)
+                    onlyUpperCase = getBoolean(R.styleable.TitleEditText_onlyUpperCase, false)
                     isMandatory = getBoolean(R.styleable.TitleEditText_isMandatory, false)
 
                     getString(R.styleable.TitleEditText_title)?.let { title = it }
@@ -110,6 +118,7 @@ class TitleEditText : LinearLayout {
         customEditText.onlyNumbers = onlyNumbers
         customEditText.charsWithBlankSpaces = charsWithBlankSpaces
         customEditText.allChars = allChars
+        customEditText.onlyUpperCase = onlyUpperCase
     }
 
     fun isValid(): Boolean = customEditText.isValid()
