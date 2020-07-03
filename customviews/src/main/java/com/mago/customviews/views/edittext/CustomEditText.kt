@@ -25,6 +25,7 @@ open class CustomEditText : AppCompatEditText {
     var onlyNumbers: Boolean = false
         set(value) {
             field = value
+            setupInputType()
             invalidate()
             requestLayout()
         }
@@ -43,6 +44,7 @@ open class CustomEditText : AppCompatEditText {
     var onlyUpperCase: Boolean = false
         set(value) {
             field = value
+            setupInputType()
             invalidate()
             requestFocus()
         }
@@ -72,18 +74,7 @@ open class CustomEditText : AppCompatEditText {
 
 
     private fun init() {
-        inputType = if (onlyNumbers)
-            InputType.TYPE_CLASS_NUMBER
-        else
-            InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
-
-        if (onlyUpperCase) {
-            inputType = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
-            filters = arrayOf(InputFilter.AllCaps())
-        } else {
-            inputType = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
-            filters = arrayOf(InputFilter.AllCaps())
-        }
+        setupInputType()
     }
 
     private fun setupAttributes() {
@@ -103,6 +94,14 @@ open class CustomEditText : AppCompatEditText {
                     recycle()
                 }
             }
+    }
+
+    private fun setupInputType() {
+        inputType = when {
+            onlyNumbers -> InputType.TYPE_CLASS_NUMBER
+            onlyUpperCase -> InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
+            else -> InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+        }
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -151,6 +150,7 @@ open class CustomEditText : AppCompatEditText {
                 val pattern = when {
                     onlyNumbers -> RegexPattern.ONLY_NUMBERS
                     charsWithBlankSpaces -> RegexPattern.A_TO_Z_WITH_BLANK_SPACES
+                    onlyUpperCase -> RegexPattern.A_TO_Z_UPPER_CASE_WITH_BLANK_SPACES
                     allChars -> RegexPattern.ALL_CHARS
                     else -> RegexPattern.A_TO_Z
                 }
