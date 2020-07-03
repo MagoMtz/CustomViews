@@ -40,12 +40,6 @@ open class CustomEditText : AppCompatEditText {
             invalidate()
             requestLayout()
         }
-    var onlyUpperCase: Boolean = false
-        set(value) {
-            field = value
-            invalidate()
-            requestFocus()
-        }
     var isMandatory: Boolean = false
         set(value) {
             field = value
@@ -85,8 +79,6 @@ open class CustomEditText : AppCompatEditText {
                         getBoolean(R.styleable.CustomEditText_charsWithBlankSpaces, false)
                     allChars =
                         getBoolean(R.styleable.CustomEditText_allChars, false)
-                    onlyUpperCase =
-                        getBoolean(R.styleable.CustomEditText_onlyUpperCase, false)
                     isMandatory = getBoolean(R.styleable.CustomEditText_isMandatory, false)
                 } finally {
                     recycle()
@@ -97,7 +89,6 @@ open class CustomEditText : AppCompatEditText {
     private fun setupInputType() {
         inputType = when {
             onlyNumbers -> InputType.TYPE_CLASS_NUMBER
-            onlyUpperCase -> InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
             else -> InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
         }
     }
@@ -148,7 +139,6 @@ open class CustomEditText : AppCompatEditText {
                 val pattern = when {
                     onlyNumbers -> RegexPattern.ONLY_NUMBERS
                     charsWithBlankSpaces -> RegexPattern.A_TO_Z_WITH_BLANK_SPACES
-                    onlyUpperCase -> RegexPattern.A_TO_Z_UPPER_CASE_WITH_BLANK_SPACES
                     allChars -> RegexPattern.ALL_CHARS
                     else -> RegexPattern.A_TO_Z
                 }
@@ -178,9 +168,6 @@ open class CustomEditText : AppCompatEditText {
     }
 
     fun isValid(): Boolean {
-        if (text == null)
-            return false
-
         return text.toString().isNotEmpty()
     }
 
