@@ -17,8 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        et_text.onlyUpperCase = true
-
         val items = arrayListOf<String>("Seleccion 0 asdasdadasdadasdas", "Seleccion 1 asdadasdasdasdsadsa", "Seleccion 2 asdasdasdasdasdasd", "Seleccion 3 asdasdasdasdadsasdsa",
             "Seleccion 0", "Seleccion 1", "Seleccion 2", "Seleccion 3",
             "Seleccion 0", "Seleccion 1", "Seleccion 2", "Seleccion 3",

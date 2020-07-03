@@ -171,4 +171,14 @@ open class CustomEditText : AppCompatEditText {
         return text.toString().isNotEmpty()
     }
 
+    fun onlyUpperCase(upperCase: Boolean) {
+        if (upperCase) {
+            inputType = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
+            filters = arrayOf(InputFilter.AllCaps())
+        } else {
+            inputType = InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+            filters = arrayOf()
+        }
+    }
+
 }
