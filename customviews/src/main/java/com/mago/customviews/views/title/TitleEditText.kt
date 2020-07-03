@@ -129,4 +129,8 @@ class TitleEditText : LinearLayout {
         customEditText.isEnabled = isEnabled
     }
 
+    fun onlyUpperCase(upperCase: Boolean) {
+        customEditText.onlyUpperCase(upperCase)
+    }
+
 }
