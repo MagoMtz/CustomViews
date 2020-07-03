@@ -43,13 +43,6 @@ open class CustomEditText : AppCompatEditText {
     var onlyUpperCase: Boolean = false
         set(value) {
             field = value
-            if (value) {
-                inputType = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
-                filters = arrayOf(InputFilter.AllCaps())
-            } else {
-                inputType = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
-                filters = arrayOf(InputFilter.AllCaps())
-            }
             invalidate()
             requestFocus()
         }
@@ -83,6 +76,14 @@ open class CustomEditText : AppCompatEditText {
             InputType.TYPE_CLASS_NUMBER
         else
             InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+
+        if (onlyUpperCase) {
+            inputType = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
+            filters = arrayOf(InputFilter.AllCaps())
+        } else {
+            inputType = InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
+            filters = arrayOf(InputFilter.AllCaps())
+        }
     }
 
     private fun setupAttributes() {
