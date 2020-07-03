@@ -36,7 +36,6 @@
                     android:layout_weight="0.5"
                     app:isMandatory="true"
                     app:allChars="true"
-                    app:onlyUpperCase="true"
                     app:title="Title Text" />
 
                 <Button
