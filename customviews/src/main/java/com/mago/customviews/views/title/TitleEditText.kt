@@ -37,12 +37,6 @@ class TitleEditText : LinearLayout {
             invalidate()
             requestLayout()
         }
-    var onlyUpperCase: Boolean = false
-        set(value) {
-            field = value
-            invalidate()
-            requestFocus()
-        }
     var isMandatory: Boolean = false
         set(value) {
             field = value
