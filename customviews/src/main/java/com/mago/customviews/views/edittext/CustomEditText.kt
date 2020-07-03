@@ -25,7 +25,6 @@ open class CustomEditText : AppCompatEditText {
     var onlyNumbers: Boolean = false
         set(value) {
             field = value
-            setupInputType()
             invalidate()
             requestLayout()
         }
@@ -44,7 +43,6 @@ open class CustomEditText : AppCompatEditText {
     var onlyUpperCase: Boolean = false
         set(value) {
             field = value
-            setupInputType()
             invalidate()
             requestFocus()
         }
