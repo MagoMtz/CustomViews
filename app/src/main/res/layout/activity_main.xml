@@ -35,7 +35,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_weight="0.5"
                     app:isMandatory="true"
-                    app:allChars="true"
+                    app:onlyNumbers="true"
                     app:title="Title Text" />
 
                 <Button

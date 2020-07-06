@@ -25,18 +25,21 @@ open class CustomEditText : AppCompatEditText {
     var onlyNumbers: Boolean = false
         set(value) {
             field = value
+            setupInputType()
             invalidate()
             requestLayout()
         }
     var charsWithBlankSpaces: Boolean = false
         set(value) {
             field = value
+            setupInputType()
             invalidate()
             requestLayout()
         }
     var allChars: Boolean = false
         set(value) {
             field = value
+            setupInputType()
             invalidate()
             requestLayout()
         }

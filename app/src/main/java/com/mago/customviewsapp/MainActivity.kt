@@ -1,6 +1,7 @@
 package com.mago.customviewsapp
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.util.Log
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        et_text.customEditText.filters = arrayOf(InputFilter.LengthFilter(4))
 
         val items = arrayListOf<String>("Seleccion 0 asdasdadasdadasdas", "Seleccion 1 asdadasdasdasdsadsa", "Seleccion 2 asdasdasdasdasdasd", "Seleccion 3 asdasdasdasdadsasdsa",
             "Seleccion 0", "Seleccion 1", "Seleccion 2", "Seleccion 3",
