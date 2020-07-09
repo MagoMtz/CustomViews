@@ -31,9 +31,16 @@ class TitleTextArea : LinearLayout{
     var isMandatory: Boolean = false
         set(value) {
             field = value
+            textArea.isMandatory = value
             invalidate()
             requestLayout()
-            textArea.isMandatory
+        }
+    var noBackground: Boolean = false
+        set(value) {
+            field = value
+            textArea.noBackground = value
+            invalidate()
+            requestLayout()
         }
     var title: String = ""
         set(value) {
@@ -82,6 +89,7 @@ class TitleTextArea : LinearLayout{
 
         inputLy.hint = title
         textArea.isMandatory = isMandatory
+        textArea.noBackground = noBackground
     }
 
     fun isValid(): Boolean = textArea.isValid()

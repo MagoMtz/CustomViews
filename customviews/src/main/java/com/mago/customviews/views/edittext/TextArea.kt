@@ -31,6 +31,12 @@ class TextArea : AppCompatMultiAutoCompleteTextView {
             invalidate()
             requestLayout()
         }
+    var noBackground: Boolean = false
+        set(value) {
+            field = value
+            invalidate()
+            requestLayout()
+        }
 
     constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
         this.attributeSet = attributeSet
@@ -58,6 +64,7 @@ class TextArea : AppCompatMultiAutoCompleteTextView {
             .apply {
                 try {
                     isMandatory = getBoolean(R.styleable.TextArea_isMandatory, false)
+                    noBackground = getBoolean(R.styleable.TextArea_noBackground, false)
                 } finally {
                     recycle()
                 }
@@ -72,6 +79,11 @@ class TextArea : AppCompatMultiAutoCompleteTextView {
         canvas?.apply {
             val cBounds = clipBounds
             cBounds.inset(0, 8)
+
+            if (noBackground) {
+                background = null
+                return@apply
+            }
 
             background = if (isMandatory)
                 if (isNotValid)

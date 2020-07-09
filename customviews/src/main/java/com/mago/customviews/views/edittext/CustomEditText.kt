@@ -43,6 +43,12 @@ open class CustomEditText : AppCompatEditText {
             invalidate()
             requestLayout()
         }
+    var noBackground: Boolean = false
+        set(value) {
+            field = value
+            invalidate()
+            requestLayout()
+        }
     var isMandatory: Boolean = false
         set(value) {
             field = value
@@ -83,6 +89,7 @@ open class CustomEditText : AppCompatEditText {
                     allChars =
                         getBoolean(R.styleable.CustomEditText_allChars, false)
                     isMandatory = getBoolean(R.styleable.CustomEditText_isMandatory, false)
+                    noBackground = getBoolean(R.styleable.CustomEditText_noBackground, false)
                 } finally {
                     recycle()
                 }
@@ -104,6 +111,11 @@ open class CustomEditText : AppCompatEditText {
         canvas?.apply {
             val cBounds = clipBounds
             cBounds.inset(0, 8)
+
+            if (noBackground) {
+                background = null
+                return@apply
+            }
 
             background = if (isMandatory)
                 if (isNotValid)
