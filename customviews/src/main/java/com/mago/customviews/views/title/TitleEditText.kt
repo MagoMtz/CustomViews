@@ -37,6 +37,13 @@ class TitleEditText : LinearLayout {
             invalidate()
             requestLayout()
         }
+    var noBackground: Boolean = false
+        set(value) {
+            field = value
+            customEditText.noBackground = value
+            invalidate()
+            requestLayout()
+        }
     var isMandatory: Boolean = false
         set(value) {
             field = value
@@ -93,6 +100,7 @@ class TitleEditText : LinearLayout {
                     allChars =
                         getBoolean(R.styleable.TitleEditText_allChars, false)
                     isMandatory = getBoolean(R.styleable.TitleEditText_isMandatory, false)
+                    noBackground = getBoolean(R.styleable.TitleEditText_noBackground, false)
 
                     getString(R.styleable.TitleEditText_title)?.let { title = it }
                 } finally {
@@ -107,6 +115,7 @@ class TitleEditText : LinearLayout {
 
         inputLy.hint = title
         customEditText.isMandatory = isMandatory
+        customEditText.noBackground = noBackground
         customEditText.onlyNumbers = onlyNumbers
         customEditText.charsWithBlankSpaces = charsWithBlankSpaces
         customEditText.allChars = allChars
