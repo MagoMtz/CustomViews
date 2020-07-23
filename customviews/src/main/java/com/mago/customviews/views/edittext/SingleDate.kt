@@ -114,11 +114,6 @@ class SingleDate: LinearLayout{
             (it.isEmpty() || it == DATE_PLACE_HOLDER)
         }
 
-        tvTitle.visibility = if(isValid())
-            View.VISIBLE
-        else
-            View.INVISIBLE
-
         canvas?.apply {
             val cBounds = RectF(
                 lyDate.left.toFloat(),
