@@ -17,138 +17,19 @@
             android:id="@+id/ly_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_margin="16dp"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/ly_l"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <com.mago.customviews.views.title.TitleEditText
-                    android:id="@+id/et_text"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="0.5"
-                    app:isMandatory="true"
-                    app:onlyNumbers="true"
-                    app:title="Title Text" />
-
-                <Button
-                    android:id="@+id/btn_set_text"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.5"
-                    android:text="set text" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ly_2"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <com.mago.customviews.views.title.TitleMultiSelectSearchSpinner
-                    android:id="@+id/sp_multi"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="0.5"
-                    app:isMandatory="true"
-                    app:onlyNumbers="true"
-                    app:title="Title Text" />
-
-                <Button
-                    android:id="@+id/btn_set_selection"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.5"
-                    android:text="set selection" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ly_3"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <com.mago.customviews.views.title.TitleSearchSpinner
-                    android:id="@+id/sp_title_search"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="0.5"
-                    app:isMandatory="true"
-                    app:title="Titulo del spinner"
-                    />
-
-                <Button
-                    android:id="@+id/btn_set_selection_search"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.5"
-                    android:text="set selection Search" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ly_4"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:orientation="horizontal"
-                android:layout_margin="16dp"
-                android:weightSum="1">
-
-                <com.mago.customviews.views.edittext.TextArea
-                    android:id="@+id/et_text_area"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.8"
-                    app:noBackground="true"
-                    />
-
-                <Button
-                    android:id="@+id/btn_change_adapter"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.2"
-                    android:text="change adapter" />
-
-            </LinearLayout>
-
-            <com.mago.customviews.views.title.TitleSearchListSpinner
-                android:id="@+id/sp_list"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                app:isMandatory="true"
-                app:title="Spinner"/>
-
-            <com.mago.customviews.views.edittext.SingleTime
-                android:id="@+id/et_time"
+            <com.mago.customviews.views.edittext.TextArea
+                android:id="@+id/et_text_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:isMandatory="true"
                 />
 
-            <com.mago.customviews.views.edittext.TimeRange
-                android:id="@+id/et_time_range"
+            <com.mago.customviews.views.title.TitleMultiSelectSearchSpinner
+                android:id="@+id/spinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:isMandatory="true"
-                app:initTimeTitle="Hora inicial"
-                app:finalTimeTitle="hora Final"
+                android:layout_height="80dp"
                 />
 
         </LinearLayout>

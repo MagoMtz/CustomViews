@@ -64,6 +64,12 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
             invalidate()
             requestLayout()
         }
+    var paintArrow: Boolean = true
+        set(value) {
+            field = value
+            invalidate()
+            requestLayout()
+        }
     var isValid = false
 
     // Paint objects
@@ -103,6 +109,7 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
                     isMandatory = getBoolean(R.styleable.MultiSelectSearchSpinner_isMandatory, false)
                     minSelection = getInteger(R.styleable.MultiSelectSearchSpinner_minSelection, 0)
                     maxSelection = getInteger(R.styleable.MultiSelectSearchSpinner_maxSelection, 0)
+                    paintArrow = getBoolean(R.styleable.MultiSelectSearchSpinner_paintArrow, true)
                 } finally {
                     recycle()
                 }
@@ -116,8 +123,10 @@ class MultiSelectSearchSpinner : AppCompatSpinner, View.OnClickListener, View.On
         isValid = isElementSelected
 
         canvas?.apply {
-            canvas.drawPath(arrowPath, arrowPaint)
-            canvas.drawCircle(xOrigin + rectLarge / 2, yCenter, circleRad, circlePaint)
+            if (paintArrow) {
+                canvas.drawPath(arrowPath, arrowPaint)
+                canvas.drawCircle(xOrigin + rectLarge / 2, yCenter, circleRad, circlePaint)
+            }
 
             background = if (!isElementSelected) {
                 if (isMandatory)

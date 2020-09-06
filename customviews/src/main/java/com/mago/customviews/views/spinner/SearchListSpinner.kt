@@ -52,6 +52,12 @@ class SearchListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouchLis
             invalidate()
             requestLayout()
         }
+    var paintArrow: Boolean = true
+        set(value) {
+            field = value
+            invalidate()
+            requestLayout()
+        }
     var isValid = false
     // Paint objects
     private val arrowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -84,10 +90,11 @@ class SearchListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouchLis
     }
 
     private fun setupAttributes() {
-        context.theme.obtainStyledAttributes(attributeSet, R.styleable.MultiSelectSearchSpinner, 0, 0)
+        context.theme.obtainStyledAttributes(attributeSet, R.styleable.SearchListSpinner, 0, 0)
             .apply {
                 try {
-                    isMandatory = getBoolean(R.styleable.MultiSelectSearchSpinner_isMandatory, false)
+                    isMandatory = getBoolean(R.styleable.SearchListSpinner_isMandatory, false)
+                    paintArrow = getBoolean(R.styleable.SearchListSpinner_paintArrow, true)
                 } finally {
                     recycle()
                 }
@@ -101,8 +108,10 @@ class SearchListSpinner: AppCompatSpinner, View.OnClickListener, View.OnTouchLis
         isValid = areItemsSelected
 
         canvas?.apply {
-            canvas.drawPath(arrowPath, arrowPaint)
-            canvas.drawCircle(xOrigin + rectLarge / 2, yCenter, circleRad, circlePaint)
+            if (paintArrow) {
+                canvas.drawPath(arrowPath, arrowPaint)
+                canvas.drawCircle(xOrigin + rectLarge / 2, yCenter, circleRad, circlePaint)
+            }
 
             background = if (!areItemsSelected) {
                 if (isMandatory)

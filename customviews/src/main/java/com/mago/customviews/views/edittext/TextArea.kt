@@ -38,18 +38,20 @@ class TextArea : AppCompatMultiAutoCompleteTextView {
             requestLayout()
         }
 
-    constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet) {
+    constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
         this.attributeSet = attributeSet
         setupAttributes()
         init()
     }
-    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int):
+
+    constructor(context: Context, attributeSet: AttributeSet, defStyleAttr: Int) :
             super(context, attributeSet, defStyleAttr) {
         this.attributeSet = attributeSet
         setupAttributes()
         init()
     }
-    constructor(context: Context): super(context) {
+
+    constructor(context: Context) : super(context) {
         init()
     }
 
@@ -116,21 +118,22 @@ class TextArea : AppCompatMultiAutoCompleteTextView {
     override fun performFiltering(text: CharSequence, keyCode: Int) {
         if (enoughToFilter()) {
             //replaceOpenCount = text.toString().toCharArray().filter { it == '<' }.count()
-            replaceOpenCount = text.toString().toCharArray().filter { it == openCharWrapper }.count()
+            //replaceOpenCount = text.toString().toCharArray().filter { it == openCharWrapper }.count()
             //replaceCloseCount = text.toString().toCharArray().filter { it == '>' }.count()
-            replaceCloseCount = text.toString().toCharArray().filter { it == closeCharWrapper }.count()
+            //replaceCloseCount = text.toString().toCharArray().filter { it == closeCharWrapper }.count()
 
             //val aux = text.toString().replace("<", "")
-            val aux = text.toString().replace(openCharWrapper.toString(), "")
+            //val aux = text.toString().replace(openCharWrapper.toString(), "")
             //val mText = aux.replace(">", "")
-            val mText = aux.replace(closeCharWrapper.toString(), "")
+            //val mText = aux.replace(closeCharWrapper.toString(), "")
 
-            val end = selectionEnd - (replaceCloseCount+replaceOpenCount)
-            val start = mTokenizer.findTokenStart(mText, end)
+            val end = selectionEnd //- (replaceCloseCount+replaceOpenCount)
+            val start = mTokenizer.findTokenStart(text, end)
+            //val start = mTokenizer.findTokenStart(mText, end)
 
-            super.performFiltering(mText, start, end, keyCode)
+            super.performFiltering(text, start, end, keyCode)
 
-    }
+        }
         /*
         if (enoughToFilter()) {
             var end = selectionEnd
@@ -168,7 +171,7 @@ class TextArea : AppCompatMultiAutoCompleteTextView {
         private val textArea: TextArea,
         private val openCharWrapper: Char,
         private val closeCharWrapper: Char
-    ): Tokenizer {
+    ) : Tokenizer {
         private var tokenStart: Int = 0
         private var tokenEnd: Int = 0
 
@@ -212,9 +215,9 @@ class TextArea : AppCompatMultiAutoCompleteTextView {
                         text, 0, text.length,
                         Any::class.java, sp, 0
                     )
-                    wrapWord(sp)//sp
+                    sp//wrapWord(sp)
                 } else {
-                    "${wrapWord(text)} "//"$text, "
+                    "${wrapWord(text)} "//"$text "//"${wrapWord(text)} "
                 }
             }
         }
@@ -225,7 +228,7 @@ class TextArea : AppCompatMultiAutoCompleteTextView {
 
             //return if (textArea.text[tokenStart] == '<')
             return if (textArea.text[tokenStart] == openCharWrapper)
-                //"<$text>"
+            //"<$text>"
                 "$openCharWrapper$text$closeCharWrapper"
             else
                 text
