@@ -41,6 +41,13 @@ class TitleSearchSpinner: LinearLayout {
             requestLayout()
             invalidate()
         }
+    var paintArrow: Boolean = true
+        set(value) {
+            field = value
+            spinner.paintArrow = value
+            requestLayout()
+            invalidate()
+        }
 
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
         this.attributeSet = attributeSet
@@ -69,6 +76,7 @@ class TitleSearchSpinner: LinearLayout {
             .apply {
                 try {
                     isMandatory = getBoolean(R.styleable.TitleSearchSpinner_isMandatory, false)
+                    paintArrow = getBoolean(R.styleable.TitleSearchSpinner_paintArrow, true)
                     getString(R.styleable.TitleSearchSpinner_title)?.let {
                         title = it
                     }
@@ -95,6 +103,7 @@ class TitleSearchSpinner: LinearLayout {
         spinner = findViewById(R.id.sp_search)
 
         spinner.isMandatory = isMandatory
+        spinner.paintArrow = paintArrow
         tvTitleText.text = title
     }
 

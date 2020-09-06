@@ -9,6 +9,7 @@
     <attr name="allChars" format="boolean" />
     <attr name="spinnerHeight" format="dimension" />
     <attr name="futureDate" format="boolean" />
+    <attr name="paintArrow" format="boolean"/>
 
     <declare-styleable name="CustomEditText">
         <attr name="onlyNumbers" />
@@ -40,49 +41,59 @@
 
     <declare-styleable name="CustomSpinner">
         <attr name="isMandatory" />
+        <attr name="paintArrow" />
     </declare-styleable>
 
     <declare-styleable name="TitleSpinner">
         <attr name="title"/>
         <attr name="isMandatory" />
+        <attr name="paintArrow" />
     </declare-styleable>
 
     <declare-styleable name="SearchableSpinner">
         <attr name="isMandatory" />
+        <attr name="paintArrow" />
     </declare-styleable>
 
     <declare-styleable name="TitleSearchableSpinner">
         <attr name="title" />
         <attr name="isMandatory" />
+        <attr name="paintArrow" />
     </declare-styleable>
 
     <declare-styleable name="MultiSelectSearchSpinner">
         <attr name="isMandatory" />
         <attr name="minSelection" format="integer" />
         <attr name="maxSelection" format="integer" />
+        <attr name="paintArrow" />
     </declare-styleable>
 
     <declare-styleable name="SearchSpinner">
         <attr name="isMandatory" />
+        <attr name="paintArrow" />
     </declare-styleable>
 
     <declare-styleable name="TitleSearchSpinner">
         <attr name="title" />
         <attr name="isMandatory" />
+        <attr name="paintArrow" />
     </declare-styleable>
 
     <declare-styleable name="TitleMultiSelectSearchSpinner">
         <attr name="title" />
         <attr name="isMandatory" />
+        <attr name="paintArrow" />
     </declare-styleable>
 
     <declare-styleable name="SearchListSpinner">
         <attr name="isMandatory" />
+        <attr name="paintArrow" />
     </declare-styleable>
 
     <declare-styleable name="TitleSearchListSpinner">
         <attr name="title" />
         <attr name="isMandatory" />
+        <attr name="paintArrow" />
     </declare-styleable>
 
     <declare-styleable name="SingleTime">

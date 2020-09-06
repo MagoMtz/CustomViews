@@ -50,6 +50,12 @@ class SearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListen
             invalidate()
             requestLayout()
         }
+    var paintArrow: Boolean = true
+        set(value) {
+            field = value
+            invalidate()
+            requestLayout()
+        }
     var isValid = false
 
     // Paint objects
@@ -96,6 +102,7 @@ class SearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListen
             .apply {
                 try {
                     isMandatory = getBoolean(R.styleable.SearchSpinner_isMandatory, false)
+                    paintArrow = getBoolean(R.styleable.SearchListSpinner_paintArrow, true)
                 } finally {
                     recycle()
                 }
@@ -109,8 +116,10 @@ class SearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListen
         isValid = isItemSelected
 
         canvas?.apply {
-            canvas.drawPath(arrowPath, arrowPaint)
-            canvas.drawCircle(xOrigin + rectLarge / 2, yCenter, circleRad, circlePaint)
+            if (paintArrow) {
+                canvas.drawPath(arrowPath, arrowPaint)
+                canvas.drawCircle(xOrigin + rectLarge / 2, yCenter, circleRad, circlePaint)
+            }
 
             background = if (!isItemSelected) {
                 if (isMandatory)

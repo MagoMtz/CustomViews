@@ -32,10 +32,17 @@ class TitleSearchListSpinner: LinearLayout {
             invalidate()
         }
     // Attr
-    private var isMandatory: Boolean = false
+    var isMandatory: Boolean = false
         set(value) {
             field = value
             spinner.isMandatory = value
+            requestLayout()
+            invalidate()
+        }
+    var paintArrow: Boolean = true
+        set(value) {
+            field = value
+            spinner.paintArrow = value
             requestLayout()
             invalidate()
         }
@@ -67,6 +74,7 @@ class TitleSearchListSpinner: LinearLayout {
             .apply {
                 try {
                     isMandatory = getBoolean(R.styleable.TitleSearchListSpinner_isMandatory, false)
+                    paintArrow = getBoolean(R.styleable.TitleSearchListSpinner_paintArrow, true)
                     getString(R.styleable.TitleSearchListSpinner_title)?.let {
                         title = it
                     }
@@ -93,6 +101,7 @@ class TitleSearchListSpinner: LinearLayout {
         spinner = findViewById(R.id.sp_searchable)
 
         spinner.isMandatory = isMandatory
+        spinner.paintArrow = paintArrow
         tvTitleText.text = title
     }
 
