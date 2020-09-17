@@ -115,15 +115,16 @@ open class CustomEditText : AppCompatEditText {
                 return@apply
             }
 
-            background = if (isMandatory) {
+            background =
+                if (isMandatory) {
                     if (!isValid()) {
                         ContextCompat.getDrawable(context, R.drawable.bg_common_invalid)
                     } else {
                         ContextCompat.getDrawable(context, R.drawable.bg_common)
                     }
-            } else {
-                ContextCompat.getDrawable(context, R.drawable.bg_common)
-            }
+                } else {
+                    ContextCompat.getDrawable(context, R.drawable.bg_common)
+                }
 
         }
         setPadding(
@@ -136,12 +137,12 @@ open class CustomEditText : AppCompatEditText {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        //addTextChangedListener(textWatcher())
+        addTextChangedListener(textWatcher())
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        //removeTextChangedListener(textWatcher())
+        removeTextChangedListener(textWatcher())
     }
 
     private fun textWatcher(): TextWatcher = object : TextWatcher {
