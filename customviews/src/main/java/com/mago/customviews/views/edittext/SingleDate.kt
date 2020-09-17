@@ -7,6 +7,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
 import android.text.Editable
+import android.text.format.DateUtils
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
@@ -15,8 +16,10 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.mago.customviews.R
 import com.mago.customviews.util.Constants.DATE_PLACE_HOLDER
+import com.mago.customviews.util.RegexPattern
 import com.mago.customviews.util.RegexPattern.DATE_TIME_PLACEHOLDER
 import java.util.*
+import java.util.regex.Pattern
 
 /**
  * @author by jmartinez
@@ -110,9 +113,7 @@ class SingleDate: LinearLayout{
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        val isNotValid = dateEditText.text.toString().let {
-            (it.isEmpty() || it == DATE_PLACE_HOLDER)
-        }
+        val isNotValid = !isValid()
 
         canvas?.apply {
             val cBounds = RectF(
@@ -198,10 +199,10 @@ class SingleDate: LinearLayout{
 
     fun isValid(): Boolean {
         val text = dateEditText.text.toString()
-        return if (text.isNotEmpty())
-            text != DATE_PLACE_HOLDER
-        else
-            text.isNotEmpty()
+        val pattern = Pattern.compile(RegexPattern.DATE_DD_MM_YYYY)
+        val matcher = pattern.matcher(text)
+
+        return matcher.matches()
     }
 
 

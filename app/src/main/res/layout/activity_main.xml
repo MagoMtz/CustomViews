@@ -32,6 +32,13 @@
                 android:layout_height="80dp"
                 />
 
+            <com.mago.customviews.views.edittext.SingleDate
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="Fecha"
+                app:isMandatory="true"
+                />
+
         </LinearLayout>
 
     </ScrollView>
