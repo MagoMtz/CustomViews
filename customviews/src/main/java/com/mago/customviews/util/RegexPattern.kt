@@ -13,5 +13,5 @@ object RegexPattern {
     const val DATE_TIME_PLACEHOLDER = "[^\\d.]|\\."
     const val E_MAIL = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$"
     const val VALID_ENTER_E_MAIL = "[A-Za-z\\!-@ñÑ_¿¡]+"
-    const val DATE_DD_MM_YYYY = "^[0-3]{1}[0-9]{1}/[0-1]{1}[1-2]{1}/[1-9]{1}[0-9]{3}\$"
+    const val DATE_DD_MM_YYYY = "^([0-2][0-9]|(3)[0-1])(\\/)(((0)[0-9])|((1)[0-2]))(\\/)\\d{4}\$"
 }
