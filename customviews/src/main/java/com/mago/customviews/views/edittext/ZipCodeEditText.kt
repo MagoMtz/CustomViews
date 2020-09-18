@@ -3,6 +3,7 @@ package com.mago.customviews.views.edittext
 import android.content.Context
 import android.graphics.Canvas
 import android.text.Editable
+import android.text.InputFilter
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
@@ -39,6 +40,7 @@ class ZipCodeEditText : AppCompatEditText{
 
     private fun init() {
         inputType = InputType.TYPE_CLASS_PHONE
+        filters = arrayOf(InputFilter.LengthFilter(5))
     }
 
     private fun setupAttributes() {
@@ -85,17 +87,16 @@ class ZipCodeEditText : AppCompatEditText{
     private fun textWatcher(): TextWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
             s?.let { editable ->
-                val count = editable.length
-                val mPattern = Pattern.compile(RegexPattern.ONLY_NUMBERS)
-
-                setSelection(count)
 
                 if (editable.toString() != "") {
-                    val matcher = mPattern.matcher(editable[count -1].toString())
+                    val mPattern = Pattern.compile(RegexPattern.ONLY_NUMBERS)
+                    val matcher = mPattern.matcher(editable.toString())
 
-                    if (!matcher.matches() || count > 5) {
-                        val text = s.subSequence(0, count - 1)
+                    if (matcher.find()) {
+                        val oldSelection = matcher.start()
+                        val text = editable.replace(RegexPattern.ONLY_NUMBERS.toRegex(), "")
                         setText(text)
+                        setSelection(oldSelection)
                     }
                 }
             }
