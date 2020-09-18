@@ -7,6 +7,7 @@ import android.text.InputFilter
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
+import android.util.Log
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import com.mago.customviews.R
@@ -147,10 +148,10 @@ open class CustomEditText : AppCompatEditText {
 
     private fun textWatcher(): TextWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
-            s?.let { editable ->
-                val count = editable.length
-                setSelection(count)
+            if (allChars)
+                return
 
+            s?.let { editable ->
                 // Pattern for only text
                 val pattern = when {
                     onlyNumbers -> RegexPattern.ONLY_NUMBERS
@@ -158,14 +159,16 @@ open class CustomEditText : AppCompatEditText {
                     allChars -> RegexPattern.ALL_CHARS
                     else -> RegexPattern.A_TO_Z
                 }
-                val mPattern = Pattern.compile(pattern)
 
                 if (editable.toString() != "") {
-                    val matcher = mPattern.matcher(editable[count - 1].toString())
+                    val mPattern = Pattern.compile(pattern)
+                    val matcher = mPattern.matcher(editable.toString())
 
-                    if (!matcher.matches()) {
-                        val mText = editable.subSequence(0, count - 1)
-                        this@CustomEditText.setText(mText)
+                    if (matcher.find()) {
+                        val oldSelection = matcher.start()
+                        val mText = editable.replace(pattern.toRegex(), "")
+                        setText(mText)
+                        setSelection(oldSelection)
                     }
                 }
             }
