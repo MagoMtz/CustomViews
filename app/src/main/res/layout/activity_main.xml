@@ -33,6 +33,20 @@
                 app:allChars="true"
                 />
 
+            <com.mago.customviews.views.title.TitleZipCodeEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="zip code"
+                app:isMandatory="true"
+                />
+            <com.mago.customviews.views.title.TitleEmailEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="email"
+                app:isMandatory="true"
+                />
+
+
         </LinearLayout>
 
     </ScrollView>
