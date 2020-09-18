@@ -5,8 +5,10 @@ import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
+import android.util.Log
 import androidx.appcompat.widget.AppCompatEditText
 import com.mago.customviews.util.Constants.DATE_FORMAT
+import com.mago.customviews.util.Constants.DATE_PLACE_HOLDER
 import com.mago.customviews.util.Constants.REPLACE_DATE_FORMAT
 import com.mago.customviews.util.RegexPattern.DATE_TIME_PLACEHOLDER
 import java.util.*
@@ -54,6 +56,9 @@ class DateEditText: AppCompatEditText {
     private fun textWatcher(): TextWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
             val data = s.toString()
+            if (data == "")
+                return
+
             if (data != current) {
                 if (data.replace(DATE_TIME_PLACEHOLDER.toRegex(), "").length == 8) {
                     requestFocus()
@@ -107,7 +112,10 @@ class DateEditText: AppCompatEditText {
 
                 sel = if (sel < 0) 0 else sel
                 current = clean
-                setText(current)
+                if (current == DATE_PLACE_HOLDER)
+                    setText("")
+                else
+                    setText(current)
                 setSelection(if (sel < current.length) sel else current.length)
                 requestLayout()
             }

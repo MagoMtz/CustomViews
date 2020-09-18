@@ -20,23 +20,17 @@
             android:layout_margin="16dp"
             android:orientation="vertical">
 
-            <com.mago.customviews.views.edittext.TextArea
-                android:id="@+id/et_text_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
-
-            <com.mago.customviews.views.title.TitleMultiSelectSearchSpinner
-                android:id="@+id/spinner"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                />
-
             <com.mago.customviews.views.edittext.SingleDate
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:title="Fecha"
                 app:isMandatory="true"
+                />
+
+            <com.mago.customviews.views.title.TitleEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:allChars="true"
                 />
 
         </LinearLayout>
