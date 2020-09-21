@@ -26,6 +26,10 @@ open class CustomEditText : AppCompatEditText {
     var onlyNumbers: Boolean = false
         set(value) {
             field = value
+            if (value) {
+                charsWithBlankSpaces = false
+                allChars = false
+            }
             setupInputType()
             invalidate()
             requestLayout()
@@ -33,6 +37,10 @@ open class CustomEditText : AppCompatEditText {
     var charsWithBlankSpaces: Boolean = false
         set(value) {
             field = value
+            if (value) {
+                onlyNumbers = false
+                allChars = false
+            }
             setupInputType()
             invalidate()
             requestLayout()
@@ -40,6 +48,10 @@ open class CustomEditText : AppCompatEditText {
     var allChars: Boolean = false
         set(value) {
             field = value
+            if (value) {
+                onlyNumbers = false
+                charsWithBlankSpaces = false
+            }
             setupInputType()
             invalidate()
             requestLayout()
