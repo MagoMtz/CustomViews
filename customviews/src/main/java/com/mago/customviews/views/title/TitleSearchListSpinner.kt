@@ -132,4 +132,8 @@ class TitleSearchListSpinner: LinearLayout {
         spinner.setOnListSelectedListener(listSelectedListener)
     }
 
+    fun setHint(hint: String) {
+        spinner.setHint(hint)
+    }
+
 }
