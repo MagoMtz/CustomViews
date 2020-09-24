@@ -109,19 +109,20 @@ class SingleDate: LinearLayout{
             }
     }
 
-    @SuppressLint("DrawAllocation")
+    private fun getLyDateBounds() = RectF(
+        lyDate.left.toFloat(),
+        lyDate.top.toFloat(),
+        lyDate.right.toFloat(),
+        lyDate.bottom.toFloat()
+    )
+
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
         val isNotValid = !isValid()
 
         canvas?.apply {
-            val cBounds = RectF(
-                lyDate.left.toFloat(),
-                lyDate.top.toFloat(),
-                lyDate.right.toFloat(),
-                lyDate.bottom.toFloat()
-            )
+            val cBounds = getLyDateBounds()
 
             if (isMandatory)
                 if (isNotValid)

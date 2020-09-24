@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -121,13 +123,15 @@ class SearchSpinner : AppCompatSpinner, View.OnClickListener, View.OnTouchListen
                 canvas.drawCircle(xOrigin + rectLarge / 2, yCenter, circleRad, circlePaint)
             }
 
-            background = if (!isItemSelected) {
+            val bg = background as LayerDrawable
+            val gradientDrawable = bg.getDrawable(0) as GradientDrawable
+            if (!isItemSelected) {
                 if (isMandatory)
-                    ContextCompat.getDrawable(context, R.drawable.bg_spinner_invalid)
+                    gradientDrawable.setStroke(4, ContextCompat.getColor(context, R.color.frame_invalid))
                 else
-                    ContextCompat.getDrawable(context, R.drawable.bg_spinner)
+                    gradientDrawable.setStroke(4, ContextCompat.getColor(context, R.color.shadow))
             } else
-                ContextCompat.getDrawable(context, R.drawable.bg_spinner)
+                gradientDrawable.setStroke(4, ContextCompat.getColor(context, R.color.shadow))
         }
     }
 

@@ -2,6 +2,9 @@ package com.mago.customviews.views.edittext
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.RectF
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
 import android.text.Editable
 import android.text.InputFilter
 import android.text.InputType
@@ -49,7 +52,6 @@ class ZipCodeEditText : AppCompatEditText{
                 try {
                     isMandatory = getBoolean(R.styleable.ZipCodeEditText_isMandatory, false)
 
-                    background = null
                 } finally {
                     recycle()
                 }
@@ -60,16 +62,15 @@ class ZipCodeEditText : AppCompatEditText{
         super.onDraw(canvas)
 
         canvas?.apply {
-            val cBounds = clipBounds
-            cBounds.inset(0, 8)
-
-            background = if (isMandatory)
+            val bg = background as LayerDrawable
+            val gradientDrawable = bg.getDrawable(0) as GradientDrawable
+            if (isMandatory)
                 if (!isValid())
-                    ContextCompat.getDrawable(context, R.drawable.bg_common_invalid)
+                    gradientDrawable.setStroke(4, ContextCompat.getColor(context, R.color.frame_invalid))
                 else
-                    ContextCompat.getDrawable(context, R.drawable.bg_common)
+                    gradientDrawable.setStroke(4, ContextCompat.getColor(context, R.color.shadow))
             else
-                ContextCompat.getDrawable(context, R.drawable.bg_common)
+                gradientDrawable.setStroke(4, ContextCompat.getColor(context, R.color.shadow))
         }
 
     }

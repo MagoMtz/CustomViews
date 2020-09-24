@@ -2,6 +2,8 @@ package com.mago.customviews.views.edittext
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextUtils
@@ -56,6 +58,7 @@ class TextArea : AppCompatMultiAutoCompleteTextView {
     }
 
     private fun init() {
+        background = ContextCompat.getDrawable(context, R.drawable.bg_common)
         minLines = 1
         setLines(3)
         maxLines = 15
@@ -87,13 +90,15 @@ class TextArea : AppCompatMultiAutoCompleteTextView {
                 return@apply
             }
 
-            background = if (isMandatory)
+            val bg = background as LayerDrawable
+            val gradientDrawable = bg.getDrawable(0) as GradientDrawable
+            if (isMandatory)
                 if (isNotValid)
-                    ContextCompat.getDrawable(context, R.drawable.bg_common_invalid)
+                    gradientDrawable.setStroke(4, ContextCompat.getColor(context, R.color.frame_invalid))
                 else
-                    ContextCompat.getDrawable(context, R.drawable.bg_common)
+                    gradientDrawable.setStroke(4, ContextCompat.getColor(context, R.color.shadow))
             else
-                ContextCompat.getDrawable(context, R.drawable.bg_common)
+                gradientDrawable.setStroke(4, ContextCompat.getColor(context, R.color.shadow))
 
         }
     }

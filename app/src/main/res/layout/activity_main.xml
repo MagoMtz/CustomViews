@@ -29,8 +29,12 @@
 
             <com.mago.customviews.views.title.TitleEditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="65dp"
                 app:allChars="true"
+                app:title="Titulo"
+                app:isMandatory="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 />
 
             <com.mago.customviews.views.title.TitleZipCodeEditText
@@ -45,7 +49,6 @@
                 app:title="email"
                 app:isMandatory="true"
                 />
-
 
         </LinearLayout>
 

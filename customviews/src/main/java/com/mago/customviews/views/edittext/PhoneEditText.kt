@@ -2,6 +2,8 @@ package com.mago.customviews.views.edittext
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
 import android.text.Editable
 import android.text.InputFilter
 import android.text.InputType
@@ -9,9 +11,10 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
+import com.google.android.material.textfield.TextInputEditText
 import com.mago.customviews.R
 
-class PhoneEditText : AppCompatEditText {
+class PhoneEditText : TextInputEditText {
     private lateinit var attributeSet: AttributeSet
 
     var isMandatory: Boolean = false
@@ -61,13 +64,15 @@ class PhoneEditText : AppCompatEditText {
             val cBounds = clipBounds
             cBounds.inset(0, 8)
 
-            background = if (isMandatory)
+            val bg = background as LayerDrawable
+            val gradientDrawable = bg.getDrawable(0) as GradientDrawable
+            if (isMandatory)
                 if (!isValid())
-                    ContextCompat.getDrawable(context, R.drawable.bg_common_invalid)
+                    gradientDrawable.setStroke(4, ContextCompat.getColor(context, R.color.frame_invalid))
                 else
-                    ContextCompat.getDrawable(context, R.drawable.bg_common)
+                    gradientDrawable.setStroke(4, ContextCompat.getColor(context, R.color.shadow))
             else
-                ContextCompat.getDrawable(context, R.drawable.bg_common)
+                gradientDrawable.setStroke(4, ContextCompat.getColor(context, R.color.shadow))
         }
 
     }

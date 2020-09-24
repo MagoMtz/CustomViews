@@ -2,17 +2,20 @@ package com.mago.customviews.views.edittext
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
+import com.google.android.material.textfield.TextInputEditText
 import com.mago.customviews.R
 import com.mago.customviews.util.RegexPattern
 import java.util.regex.Pattern
 
-class EmailEditText : AppCompatEditText{
+class EmailEditText : TextInputEditText {
     private lateinit var attributeSet: AttributeSet
 
     var isMandatory: Boolean = false
@@ -47,7 +50,7 @@ class EmailEditText : AppCompatEditText{
                 try {
                     isMandatory = getBoolean(R.styleable.EmailEditText_isMandatory, false)
 
-                    background = null
+                    //background = null
                 } finally {
                     recycle()
                 }
@@ -63,13 +66,15 @@ class EmailEditText : AppCompatEditText{
             val cBounds = clipBounds
             cBounds.inset(0, 8)
 
-            background = if (isMandatory)
+            val bg = background as LayerDrawable
+            val gradientDrawable = bg.getDrawable(0) as GradientDrawable
+            if (isMandatory)
                 if (!isValid)
-                    ContextCompat.getDrawable(context, R.drawable.bg_common_invalid)
+                    gradientDrawable.setStroke(4, ContextCompat.getColor(context, R.color.frame_invalid))
                 else
-                    ContextCompat.getDrawable(context, R.drawable.bg_common)
+                    gradientDrawable.setStroke(4, ContextCompat.getColor(context, R.color.shadow))
             else
-                ContextCompat.getDrawable(context, R.drawable.bg_common)
+                gradientDrawable.setStroke(4, ContextCompat.getColor(context, R.color.shadow))
         }
 
     }

@@ -2,6 +2,8 @@ package com.mago.customviews.views.edittext
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
 import android.text.Editable
 import android.text.InputFilter
 import android.text.InputType
@@ -10,6 +12,8 @@ import android.util.AttributeSet
 import android.util.Log
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.mago.customviews.R
 import com.mago.customviews.util.CommonUtils
 import com.mago.customviews.util.RegexPattern
@@ -20,7 +24,7 @@ import java.util.regex.Pattern
  * @author by jmartinez
  * @since 15/01/2020.
  */
-open class CustomEditText : AppCompatEditText {
+open class CustomEditText : TextInputEditText {
     private lateinit var attributeSet: AttributeSet
     // Attributes
     var onlyNumbers: Boolean = false
@@ -116,16 +120,17 @@ open class CustomEditText : AppCompatEditText {
                 return@apply
             }
 
-            background =
-                if (isMandatory) {
-                    if (!isValid()) {
-                        ContextCompat.getDrawable(context, R.drawable.bg_common_invalid)
-                    } else {
-                        ContextCompat.getDrawable(context, R.drawable.bg_common)
-                    }
+            val bg = background as LayerDrawable
+            val gradientDrawable = bg.getDrawable(0) as GradientDrawable
+            if (isMandatory) {
+                if (!isValid()) {
+                    gradientDrawable.setStroke(4, ContextCompat.getColor(context, R.color.frame_invalid))
                 } else {
-                    ContextCompat.getDrawable(context, R.drawable.bg_common)
+                    gradientDrawable.setStroke(4, ContextCompat.getColor(context, R.color.shadow))
                 }
+            } else {
+                gradientDrawable.setStroke(4, ContextCompat.getColor(context, R.color.shadow))
+            }
 
         }
         setPadding(
