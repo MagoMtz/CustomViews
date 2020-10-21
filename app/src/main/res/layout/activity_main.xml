@@ -30,7 +30,7 @@
             <com.mago.customviews.views.title.TitleEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:allChars="true"
+                app:charsWithBlankSpaces="true"
                 />
 
             <com.mago.customviews.views.title.TitleZipCodeEditText
